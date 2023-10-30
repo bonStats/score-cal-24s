@@ -362,31 +362,12 @@ Joshua J Bon
 </div>
 
 </section>
-<section id="about-me" class="slide level2">
-<h2>About me</h2>
-<div>
-<ul>
-<li><p><strong>Statistician</strong> Develop statistical algorithms</p></li>
-<li><p><strong>Programmer</strong> (Attempt) to write useful software</p></li>
-<li><p><strong>Data scientist</strong> Design/implement statistical analyses</p></li>
-</ul>
-</div>
-<div class="fragment">
-<div>
-<ul>
-<li>PhD and PostDoc at QUT, Brisbane</li>
-<li>PostDoc at Paris-Dauphine PSL</li>
-</ul>
-</div>
-</div>
-</section>
 <section id="talk-overview" class="slide level2">
 <h2>Talk overview</h2>
 <ul>
 <li class="fragment">Motivation and intuitions</li>
-<li class="fragment">Theory and method</li>
-<li class="fragment">Examples</li>
-<li class="fragment">Theory vs practice</li>
+<li class="fragment">Theory</li>
+<li class="fragment">Example</li>
 </ul>
 <div class="fragment">
 <p>Joint work with</p>
@@ -412,8 +393,8 @@ Joshua J Bon
 </div>
 </div>
 </section>
-<section id="but-we-have-approximate-likelihoods-models-and-algorithms-available" class="slide level2 center">
-<h2>But we have <strong>approximate</strong> likelihoods, models, and algorithms available…</h2>
+<section id="but-we-have-approximations" class="slide level2 center">
+<h2>But we have approximations…</h2>
 </section>
 <section id="approximations-everywhere" class="slide level2">
 <h2>Approximations everywhere</h2>
@@ -443,52 +424,57 @@ Joshua J Bon
 <li class="fragment">Markov chain Monte Carlo (MH, ULA, MALA, HMC)</li>
 </ul>
 </section>
-<section id="illustration-bias-correction" class="slide level2">
-<h2>Illustration: bias correction</h2>
-<p>Assume we have a</p>
-<ul>
-<li class="fragment">Posterior with intractable likelihood</li>
-<li class="fragment">Data simulation is possible but may be expensive</li>
-<li class="fragment">Fast approximate posterior <span class="math inline">\(\hat{\pi}(\theta~\vert~y)\)</span> known to be biased</li>
-</ul>
-<div class="fragment">
-<p>Can we correct the bias (average over <span class="math inline">\(\theta\)</span>) using simulation?</p>
-</div>
+<section id="illustration" class="slide level2 center">
+<h2>Illustration</h2>
 </section>
-<section id="illustration-bias-correction-1" class="slide level2">
-<h2>Illustration: bias correction</h2>
-<p><strong>Simulate the approximate posterior fitting process</strong></p>
-<ol type="1">
-<li class="fragment">Draw from prior <span class="math inline">\(\bar\theta_m \sim \Pi(\cdot)\)</span></li>
-<li class="fragment">Draw new data <span class="math inline">\(\tilde{y}_m \sim P(~\cdot~\vert~\bar\theta_m)\)</span></li>
-<li class="fragment">Sample approximate posterior <span class="math inline">\(\hat\theta_{m,i} \sim \hat{\Pi}(~\cdot~\vert~\tilde{y}_m)\)</span></li>
-</ol>
-</section>
-<section id="illustration-bias-correction-2" class="slide level2">
-<h2>Illustration: bias correction</h2>
-<p><strong>Bias correction</strong></p>
-<ol type="1">
-<li class="fragment">Estimate average bias: <span class="math inline">\(\hat{b} = \sum_{m=1}^{M}\sum_{i=1}^{N}\left(\hat\theta_{m,i} - \bar\theta_m \right)\)</span></li>
-<li class="fragment">Corrected posterior adjusts approximate samples</li>
-</ol>
-<ul>
-<li class="fragment">Correcting transformation: <span class="math inline">\(f(x) = x - \hat{b}\)</span></li>
-<li class="fragment"><span class="math inline">\(\theta \sim f_{\#}\hat{\Pi}(~\cdot~\vert~y)\)</span><br>
-</li>
-<li class="fragment">i.e.&nbsp;<span class="math inline">\(\theta = f(\hat\theta)\)</span>, <span class="math inline">\(\hat\theta \sim \hat{\Pi}(~\cdot~\vert~y)\)</span></li>
-</ul>
-</section>
-<section id="illustration-bias-correction-3" class="slide level2">
-<h2>Illustration: bias correction</h2>
+<section id="correcting-a-posterior" class="slide level2">
+<h2>Correcting a posterior</h2>
 
-<img data-src="index_files/figure-revealjs/bias-plot-1.png" width="960" class="r-stretch"><p><span class="math inline">\(\mathbb{E}(\bar{\theta}) = 1\)</span>, <span class="math inline">\(\mathbb{E}(\hat\theta~\vert~y) = 1.4\)</span></p>
+<img data-src="index_files/figure-revealjs/fig-illustration-1-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;1: Ideal case (approximation in blue)</p></section>
+<section id="correcting-a-posterior-1" class="slide level2">
+<h2>Correcting a posterior</h2>
+
+<img data-src="index_files/figure-revealjs/fig-illustration-2-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;2: Real case (approximation in blue)</p></section>
+<section id="correcting-many-posteriors" class="slide level2">
+<h2>Correcting many posteriors</h2>
+
+<img data-src="index_files/figure-revealjs/fig-illustration-3-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;3: How to proceed? (approximation in blue)</p></section>
+<section id="correcting-many-posteriors-1" class="slide level2">
+<h2>Correcting many posteriors</h2>
+
+<img data-src="index_files/figure-revealjs/fig-illustration-4-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;4: How to proceed? (approximation in blue)</p></section>
+<section id="measure-the-difference" class="slide level2">
+<h2>Measure the difference</h2>
+<p><span class="math display">\[\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert y),\color{red}{\theta})]\]</span></p>
+<p><span class="math display">\[y \sim P(\cdot \vert \color{red}{\theta})\]</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(\color{blue}{K}(\cdot\vert y)\)</span> is the approximate posterior</li>
+<li class="fragment"><span class="math inline">\(\color{red}{\theta}\)</span> is the true data generating parameter</li>
+<li class="fragment"><span class="math inline">\(y\)</span> is the data associated with <span class="math inline">\(\color{red}{\theta}\)</span></li>
+<li class="fragment"><span class="math inline">\(S\)</span> measures the difference between a distribution <span class="math inline">\(\color{blue}{K}(\cdot\vert y)\)</span> and point <span class="math inline">\(\color{red}{\theta}\)</span></li>
+</ul>
+</section>
+<section id="measure-the-difference-1" class="slide level2">
+<h2>Measure the difference</h2>
+<p><span class="math display">\[\color{red}{\mathbb{E}}[S(f_\#\color{blue}{K}(\cdot\vert y),\color{red}{\theta})]\]</span></p>
+<p><span class="math display">\[y \sim P(\cdot \vert \color{red}{\theta})\]</span></p>
+<div>
+<ul>
+<li><span class="math inline">\(\color{blue}{K}(\cdot\vert y)\)</span> is the approximate posterior</li>
+<li><span class="math inline">\(\color{red}{\theta}\)</span> is the true data generating parameter</li>
+<li><span class="math inline">\(y\)</span> is the data associated with <span class="math inline">\(\color{red}{\theta}\)</span></li>
+<li><span class="math inline">\(S\)</span> measures the difference between a distribution <span class="math inline">\(\color{blue}{K}(\cdot\vert y)\)</span> and point <span class="math inline">\(\color{red}{\theta}\)</span></li>
+</ul>
+</div>
 </section>
 <section id="model-calibration-by-simulation" class="slide level2">
 <h2>Model calibration by simulation</h2>
 <ol type="1">
-<li class="fragment"><p>Can we correct the variance? <em>Frequentist</em></p></li>
-<li class="fragment"><p>Correct coverage? <em>Frequentist</em></p></li>
-<li class="fragment"><p>Can we correct the entire distribution? <strong>Bayesian</strong></p></li>
+<li class="fragment">Correct coverage? <em>Frequentist</em>
+<ul>
+<li class="fragment"><span class="math inline">\(\#(\color{red}{\theta} \in \color{blue}{\text{CR}_\alpha})/M \approx \alpha\)</span></li>
+</ul></li>
+<li class="fragment">Can we correct the entire distribution? <strong>Bayesian</strong></li>
 </ol>
 </section>
 <section>

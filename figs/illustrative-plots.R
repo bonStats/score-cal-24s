@@ -33,6 +33,10 @@ Sigma <- diag(2)
 priortrue_data <- rbinorm_tibble(M, mean = mu0, sigma = Sigma0, sim = 1:M, val = "Prior") %>%
   mutate(val = ordered(val, levels = c("Prior", "Data", "Posterior")))
 
+# copy for plotting
+posteriortrue_data <- priortrue_data %>% mutate(val = "Posterior") %>%
+  mutate(val = ordered(val, levels = c("Prior", "Data", "Posterior")))
+
 # data
 obs_list <- priortrue_data %>% 
   pmap(function(x,y,sim,val) rbinorm_tibble(N, mean = c(x,y), sigma = Sigma, sim = sim, val = "Data") )
