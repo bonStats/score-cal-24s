@@ -439,10 +439,6 @@ Joshua J Bon
 <h2>Correcting many posteriors</h2>
 
 <img data-src="index_files/figure-revealjs/fig-illustration-3-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;3: How to proceed? (approximation in blue)</p></section>
-<section id="correcting-many-posteriors-1" class="slide level2">
-<h2>Correcting many posteriors</h2>
-
-<img data-src="index_files/figure-revealjs/fig-illustration-4-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;4: How to proceed? (approximation in blue)</p></section>
 <section id="measure-the-difference" class="slide level2">
 <h2>Measure the difference</h2>
 <p><span class="math display">\[\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert y),\color{red}{\theta})]\]</span></p>
@@ -451,28 +447,36 @@ Joshua J Bon
 <li class="fragment"><span class="math inline">\(\color{blue}{K}(\cdot\vert y)\)</span> is the approximate posterior</li>
 <li class="fragment"><span class="math inline">\(\color{red}{\theta}\)</span> is the true data generating parameter</li>
 <li class="fragment"><span class="math inline">\(y\)</span> is the data associated with <span class="math inline">\(\color{red}{\theta}\)</span></li>
-<li class="fragment"><span class="math inline">\(S\)</span> measures the difference between a distribution <span class="math inline">\(\color{blue}{K}(\cdot\vert y)\)</span> and point <span class="math inline">\(\color{red}{\theta}\)</span></li>
+<li class="fragment"><span class="math inline">\(S\)</span> measures the difference between <span class="math inline">\(\color{blue}{K}(\cdot\vert y)\)</span> and point <span class="math inline">\(\color{red}{\theta}\)</span></li>
 </ul>
 </section>
 <section id="measure-the-difference-1" class="slide level2">
 <h2>Measure the difference</h2>
-<p><span class="math display">\[\color{red}{\mathbb{E}}[S(f_\#\color{blue}{K}(\cdot\vert y),\color{red}{\theta})]\]</span></p>
+<p><span class="math display">\[\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert y),\color{red}{\theta})]\]</span></p>
 <p><span class="math display">\[y \sim P(\cdot \vert \color{red}{\theta})\]</span></p>
-<div>
-<ul>
-<li><span class="math inline">\(\color{blue}{K}(\cdot\vert y)\)</span> is the approximate posterior</li>
-<li><span class="math inline">\(\color{red}{\theta}\)</span> is the true data generating parameter</li>
-<li><span class="math inline">\(y\)</span> is the data associated with <span class="math inline">\(\color{red}{\theta}\)</span></li>
-<li><span class="math inline">\(S\)</span> measures the difference between a distribution <span class="math inline">\(\color{blue}{K}(\cdot\vert y)\)</span> and point <span class="math inline">\(\color{red}{\theta}\)</span></li>
-</ul>
-</div>
 </section>
+<section id="optimise-the-difference" class="slide level2">
+<h2>Optimise the difference</h2>
+<p><span class="math display">\[\max_{f \in \mathcal{F}}\color{red}{\mathbb{E}}[S(\color{purple}{f}_\#\color{blue}{K}(\cdot\vert y),\color{red}{\theta})]\]</span></p>
+<p><span class="math display">\[y \sim P(\cdot \vert \color{red}{\theta})\]</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(\color{purple}{f}\)</span> transforms realisations of <span class="math inline">\(\color{blue}{K}(\cdot\vert y)\)</span></li>
+</ul>
+</section>
+<section id="correcting-many-posteriors-1" class="slide level2">
+<h2>Correcting many posteriors</h2>
+
+<img data-src="index_files/figure-revealjs/fig-illustration-4-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;4: Before correction</p></section>
+<section id="correcting-many-posteriors-2" class="slide level2">
+<h2>Correcting many posteriors</h2>
+
+<img data-src="index_files/figure-revealjs/fig-illustration-5-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;5: After correction</p></section>
 <section id="model-calibration-by-simulation" class="slide level2">
 <h2>Model calibration by simulation</h2>
 <ol type="1">
 <li class="fragment">Correct coverage? <em>Frequentist</em>
 <ul>
-<li class="fragment"><span class="math inline">\(\#(\color{red}{\theta} \in \color{blue}{\text{CR}_\alpha})/M \approx \alpha\)</span></li>
+<li class="fragment"><span class="math inline">\(S(\color{purple}{f}_\#\color{blue}{K}(\cdot\vert y), \color{red}{\theta}) = \vert 1(\color{red}{\theta} \in \color{purple}{\text{CR}_\alpha}) - \alpha \vert\)</span></li>
 </ul></li>
 <li class="fragment">Can we correct the entire distribution? <strong>Bayesian</strong></li>
 </ol>
@@ -482,19 +486,22 @@ Joshua J Bon
 <h1>Theory and method</h1>
 
 </section>
+<section id="scoring-rules" class="slide level2">
+<h2>Scoring rules</h2>
+<p><br></p>
+<p><span class="math inline">\(S(U,x)\)</span> compares probabilistic <em>forecast</em> <span class="math inline">\(U\)</span> to <em>ground truth</em> <span class="math inline">\(x\)</span>.</p>
+<p><span class="math display">\[S(U,V) = \mathbb{E}_{x\sim V} S(U,x)\]</span></p>
+<p>where <span class="math inline">\(V\)</span> is a probability measure.</p>
+</section>
 <section id="proper-scoring-rules" class="slide level2">
 <h2>Proper scoring rules</h2>
-<p><strong>Scoring rule</strong></p>
-<p><span class="math inline">\(S(U,x)\)</span> compares probabilistic <em>forecast</em> <span class="math inline">\(U\)</span> to <em>ground truth</em> <span class="math inline">\(x\)</span>.</p>
-<p>Define <span class="math inline">\(S(U,V) = \mathbb{E}_{x\sim V} S(U,x)\)</span>, where <span class="math inline">\(V\)</span> is a probability measure.</p>
-<div class="fragment">
+<p><br></p>
 <p><span class="math inline">\(S(U, \cdot)\)</span> is <strong>strictly proper</strong> if</p>
 <ul>
 <li class="fragment"><span class="math inline">\(S(U,U) \geq S(U, V)\)</span> for all <span class="math inline">\(V\)</span> in some family, and</li>
 <li class="fragment">equality holds iff <span class="math inline">\(U = V\)</span>.</li>
+<li class="fragment">see <span class="citation" data-cites="gneiting2007strictly">(<a href="#/references" role="doc-biblioref" onclick="">Gneiting and Raftery 2007</a>)</span></li>
 </ul>
-<p>See <span class="citation" data-cites="gneiting2007strictly">(<a href="#/references" role="doc-biblioref" onclick="">Gneiting and Raftery 2007</a>)</span></p>
-</div>
 </section>
 <section id="very-helpful-proper-scoring-rules" class="slide level2">
 <h2>Very helpful proper scoring rules</h2>
@@ -502,83 +509,6 @@ Joshua J Bon
 <div class="fragment">
 <p>Consider the joint data-parameter space instead</p>
 <p><span class="math display">\[\Pi(\text{d}\theta ~\vert~\tilde{y} )P(\text{d}\tilde{y}) = P(\tilde{y}~\vert~\theta)\Pi(\text{d}\theta )\]</span> See <span class="citation" data-cites="pacchiardi2022likelihood">(<a href="#/references" role="doc-biblioref" onclick="">Pacchiardi and Dutta 2022</a>)</span> and others</p>
-</div>
-</section>
-<section id="bayesian-score-calibration" class="slide level2">
-<h2>Bayesian Score Calibration</h2>
-<p>Step 1: <strong>Generate</strong></p>
-<ul>
-<li class="fragment">Sample <span class="math inline">\(M\)</span> replicates of <span class="math inline">\((\bar\theta, \tilde{y}, \hat{\theta}_{1:N})\)</span> <em>in parallel</em></li>
-<li class="fragment">Ground truth, simulated data, posterior</li>
-</ul>
-<div class="fragment">
-<p>Step 2: <strong>Optimise</strong></p>
-<ul>
-<li class="fragment">Find best transformation <span class="math inline">\(f\)</span></li>
-<li class="fragment">Using <span class="math inline">\(S\left(f_{\#}\hat\Pi(\cdot~\vert~\tilde{y}),\bar\theta\right)\)</span> approximated from samples</li>
-</ul>
-</div>
-</section>
-<section id="bayesian-score-calibration-1" class="slide level2">
-<h2>Bayesian Score Calibration</h2>
-<p>Step 3: <strong>Apply</strong></p>
-<ul>
-<li class="fragment"><span class="math inline">\(f\)</span> to posterior of real data</li>
-<li class="fragment">Calculate calibration diagnostics</li>
-</ul>
-</section>
-<section id="step-1-generate" class="slide level2">
-<h2>Step 1: Generate</h2>
-<p><span class="math display">\[
-\bar\theta^{(m)} \sim \bar\Pi \quad \rightarrow \quad \tilde{y}^{(m)} \sim P(
-\:\cdot\;\vert~\bar\theta^{(m)} ) \quad \rightarrow \quad \hat\theta^{(m)}_{1:N} \sim \hat{\Pi}(\;\cdot\;\vert \tilde{y}^{(m)})
-\]</span></p>
-<ul>
-<li class="fragment"><span class="math inline">\(\bar\Pi\)</span> is an importance distribution to concentrate optimisation</li>
-<li class="fragment"><span class="math inline">\(P(\:\cdot\;\vert~\bar\theta )\)</span> is data generating process</li>
-<li class="fragment"><span class="math inline">\(\hat{\Pi}(\;\cdot\;\vert \tilde{y})\)</span> is our approximate model</li>
-</ul>
-<div class="fragment">
-<p><span class="math display">\[\left\{\left(\bar\theta^{(m)}, \tilde{y}^{(m)}, \hat\theta^{(m)}_{1:N}\right)\right\}_{m=1}^M\]</span></p>
-</div>
-</section>
-<section id="step-2-optimise" class="slide level2">
-<h2>Step 2: Optimise</h2>
-<p><span class="math display">\[f^{\star} = \underset{f \in \mathcal{F}}{\arg\max}~ \mathbb{E}\left[w(\bar\theta, \tilde{y})S\left(f_{\#}\hat\Pi(\:\cdot\:\vert\tilde{y}), \bar\theta\right) \right]\]</span> We choose the Energy score and use a sample approximation <span class="math inline">\(S^N\left(f_{\#}\hat\Pi(\:\cdot\:\vert\tilde{y}), \bar\theta\right)\)</span></p>
-</section>
-<section id="step-2-optimise-1" class="slide level2">
-<h2>Step 2: Optimise</h2>
-<p><strong>Energy score approximation</strong> with <span class="math inline">\(u\sim U = f_{\#}\hat\Pi(\:\cdot\:\vert\tilde{y})\)</span> and <span class="math inline">\(k\)</span> is a random permutation vector <span class="math display">\[S^{N}(U, x) = \frac{1}{N}\sum_{i=1}^{N} \left(\frac{1}{2}\Vert u - u_{k_i} \Vert_2^{\beta} - \Vert u - x \Vert_2^{\beta}\right)\]</span> using <span class="math inline">\(\beta = 1\)</span></p>
-</section>
-<section id="step-3-apply" class="slide level2">
-<h2>Step 3: Apply</h2>
-<!-- show theory then samples -->
-<p><strong>Adjusted posterior</strong></p>
-<p>For observed data <span class="math inline">\(y\)</span> we calculate the approximate posterior and adjust.</p>
-<div class="fragment">
-<p><span class="math display">\[\theta \sim f^{\star}_{\#}\hat\Pi(\cdot \vert y)\]</span></p>
-</div>
-<div class="fragment">
-<p><span class="math display">\[\theta = f^{\star}(\hat\theta)\quad\text{where}~ \hat\theta \sim \hat\Pi(\cdot \vert y)\]</span></p>
-</div>
-</section>
-<section id="step-3-apply-1" class="slide level2">
-<h2>Step 3: Apply</h2>
-<p><strong>Calibration diagnostic</strong></p>
-<p><span class="math display">\[\text{CC}(\rho) = \Pr\left\{\bar\theta \in \text{Cr}(f_{\#}^{\star}\hat\Pi(\cdot ~\vert~ \tilde{y}),\rho)\right\}\]</span></p>
-<p>where</p>
-<p><span class="math display">\[\tilde{y} \sim P( \cdot ~\vert~\bar\theta)\]</span></p>
-<p>for the target coverage <span class="math inline">\(\rho \in (0,1)\)</span>.</p>
-</section>
-<section id="step-3-apply-2" class="slide level2">
-<h2>Step 3: Apply</h2>
-<p><strong>Calibration diagnostic</strong></p>
-<p>We consider univariate credible regions and generate plots</p>
-<div class="fragment">
-<p><object data="figs/gen-corr-ou-process-plot-calcheck.pdf" type="application/pdf" width="325" height="300"><p>Unable to display PDF file. <a href="figs/gen-corr-ou-process-plot-calcheck.pdf">Download</a> instead.</p></object></p>
-</div>
-<div class="fragment">
-<p>with <strong>negligible cost</strong>: (ground truth, approximate posterior) pairs already generated.</p>
 </div>
 </section>
 <section id="supporting-theory" class="slide level2">
@@ -611,6 +541,10 @@ Joshua J Bon
 <p>We say <span class="math inline">\(\mathcal{K}\)</span> is sufficiently rich with respect to <span class="math inline">\((Q,\mathcal{P})\)</span> if for all <span class="math inline">\(U \in \mathcal{K}\)</span>, <span class="math inline">\(U(\cdot ~\vert~ \tilde{y}) \in \mathcal{P}\)</span> almost surely and there exists <span class="math inline">\(U \in \mathcal{K}\)</span> such that <span class="math inline">\(U(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})\)</span> almost surely.</p>
 </div>
 </section>
+<section id="bayesian-score-calibration" class="slide level2">
+<h2>Bayesian Score Calibration</h2>
+
+<img data-src="figs/score-cal-schem.png" class="r-stretch"></section>
 <section id="moment-correcting-transformation" class="slide level2">
 <h2>Moment-correcting transformation</h2>
 <p><span class="math display">\[f(x) = L[x - \hat{\mu}(y)] + \hat{\mu}(y) + b\]</span></p>
@@ -643,8 +577,8 @@ Joshua J Bon
 <h1>Examples</h1>
 
 </section>
-<section id="ou-process-limiting-approximation" class="slide level2">
-<h2>OU Process (limiting approximation)</h2>
+<section id="ou-process" class="slide level2">
+<h2>OU Process</h2>
 <p><span class="math display">\[\text{d}X_t = \gamma (\mu - X_t) \text{d}t + \sigma\text{d}W_t\]</span></p>
 <div class="fragment">
 <p>Observe final observation at time <span class="math inline">\(T\)</span> ( <span class="math inline">\(n= 100\)</span>):</p>
@@ -656,17 +590,17 @@ Joshua J Bon
 <p>where <span class="math inline">\(D = \frac{\sigma^2}{2}\)</span>. Fix <span class="math inline">\(\gamma = 2\)</span>, <span class="math inline">\(T=1\)</span>, <span class="math inline">\(x_0 = 10\)</span></p>
 </div>
 </section>
-<section id="ou-process-limiting-approximation-1" class="slide level2">
+<section id="ou-process-limiting-approximation" class="slide level2">
 <h2>OU Process (limiting approximation)</h2>
 <p>Infer <span class="math inline">\(\mu\)</span> and <span class="math inline">\(D\)</span> with <strong>approximate likelihood</strong> based on</p>
 <p><span class="math display">\[X_\infty  \sim \mathcal{N}\left(\mu, \frac{D}{\gamma}\right)\]</span></p>
 </section>
-<section id="ou-process-limiting-approximation-2" class="slide level2">
+<section id="ou-process-limiting-approximation-1" class="slide level2">
 <h2>OU Process (limiting approximation)</h2>
 <p><object data="figs/ou-process-plot-uni-1.pdf" type="application/pdf" width="1000" height="460"><p>Unable to display PDF file. <a href="figs/ou-process-plot-uni-1.pdf">Download</a> instead.</p></object></p>
 <p><span class="math inline">\(M = 100\)</span> and <span class="math inline">\(\bar\Pi = \hat\Pi(\cdot~\vert~y)\)</span> with variance scaled by 2</p>
 </section>
-<section id="ou-process-limiting-approximation-3" class="slide level2">
+<section id="ou-process-limiting-approximation-2" class="slide level2">
 <h2>OU Process (limiting approximation)</h2>
 <p>Comparison for <span class="math inline">\(\mu\)</span></p>
 <div class="cell">
@@ -725,7 +659,7 @@ Joshua J Bon
 </div>
 <p>Estimated from independent replications of the method.</p>
 </section>
-<section id="ou-process-limiting-approximation-4" class="slide level2">
+<section id="ou-process-limiting-approximation-3" class="slide level2">
 <h2>OU Process (limiting approximation)</h2>
 <p>Comparison for <span class="math inline">\(D\)</span></p>
 <div class="cell">
