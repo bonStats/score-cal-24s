@@ -366,7 +366,7 @@ Joshua J Bon
 <h2>Talk overview</h2>
 <ul>
 <li class="fragment">Motivation and intuitions</li>
-<li class="fragment">Theory</li>
+<li class="fragment">Theory and method</li>
 <li class="fragment">Example</li>
 </ul>
 <div class="fragment">
@@ -424,6 +424,29 @@ Joshua J Bon
 <li class="fragment">Markov chain Monte Carlo (MH, ULA, MALA, HMC)</li>
 </ul>
 </section>
+<section id="and-we-can-learn-functions" class="slide level2 center">
+<h2>And we can learn functions…</h2>
+</section>
+<section id="learning-functions" class="slide level2">
+<h2>Learning functions</h2>
+<ul>
+<li class="fragment">Represent posterior approximation with Monte Carlo samples
+<ul>
+<li class="fragment">e.g.&nbsp;MCMC with approximate likelihood</li>
+</ul></li>
+<li class="fragment">Find a function to correct the approximate samples posterior
+<ul>
+<li class="fragment">No need to rerun MCMC
+<ul>
+<li class="fragment">unlike correcting the likelihood directly</li>
+</ul></li>
+<li class="fragment">Do approximate inference once
+<ul>
+<li class="fragment">in parallel for multiple datasets</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
 <section id="illustration" class="slide level2 center">
 <h2>Illustration</h2>
 </section>
@@ -438,29 +461,29 @@ Joshua J Bon
 <section id="correcting-many-posteriors" class="slide level2">
 <h2>Correcting many posteriors</h2>
 
-<img data-src="index_files/figure-revealjs/fig-illustration-3-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;3: How to proceed? (approximation in blue)</p></section>
-<section id="measure-the-difference" class="slide level2">
-<h2>Measure the difference</h2>
-<p><span class="math display">\[\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert y),\color{red}{\theta})]\]</span></p>
-<p><span class="math display">\[y \sim P(\cdot \vert \color{red}{\theta})\]</span></p>
+<img data-src="index_files/figure-revealjs/fig-illustration-3-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;3: Correct on average? (approximation in blue)</p></section>
+<section id="measure-the-similarity" class="slide level2">
+<h2>Measure the similarity</h2>
+<p><span class="math display">\[\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta})]\]</span></p>
+<p><span class="math display">\[\tilde{y} \sim P(\cdot \vert \color{red}{\theta}), \quad \color{red}{\theta} \sim \color{purple}{\Pi}\]</span></p>
 <ul>
-<li class="fragment"><span class="math inline">\(\color{blue}{K}(\cdot\vert y)\)</span> is the approximate posterior</li>
+<li class="fragment"><span class="math inline">\(\color{blue}{K}(\cdot\vert \tilde{y})\)</span> is the approximate posterior</li>
 <li class="fragment"><span class="math inline">\(\color{red}{\theta}\)</span> is the true data generating parameter</li>
-<li class="fragment"><span class="math inline">\(y\)</span> is the data associated with <span class="math inline">\(\color{red}{\theta}\)</span></li>
-<li class="fragment"><span class="math inline">\(S\)</span> measures the difference between <span class="math inline">\(\color{blue}{K}(\cdot\vert y)\)</span> and point <span class="math inline">\(\color{red}{\theta}\)</span></li>
+<li class="fragment"><span class="math inline">\((\color{red}{\theta}, \tilde{y})\)</span> prior-predictive pairs</li>
+<li class="fragment"><span class="math inline">\(S\)</span> measures the similarity between <span class="math inline">\(\color{blue}{K}(\cdot\vert \tilde{y})\)</span> and point <span class="math inline">\(\color{red}{\theta}\)</span></li>
 </ul>
 </section>
-<section id="measure-the-difference-1" class="slide level2">
-<h2>Measure the difference</h2>
-<p><span class="math display">\[\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert y),\color{red}{\theta})]\]</span></p>
-<p><span class="math display">\[y \sim P(\cdot \vert \color{red}{\theta})\]</span></p>
+<section id="measure-the-similarity-1" class="slide level2">
+<h2>Measure the similarity</h2>
+<p><span class="math display">\[\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta})]\]</span></p>
+<p><span class="math display">\[\tilde{y} \sim P(\cdot \vert \color{red}{\theta}), \quad \color{red}{\theta} \sim \color{purple}{\Pi}\]</span></p>
 </section>
-<section id="optimise-the-difference" class="slide level2">
-<h2>Optimise the difference</h2>
-<p><span class="math display">\[\max_{f \in \mathcal{F}}\color{red}{\mathbb{E}}[S(\color{purple}{f}_\#\color{blue}{K}(\cdot\vert y),\color{red}{\theta})]\]</span></p>
-<p><span class="math display">\[y \sim P(\cdot \vert \color{red}{\theta})\]</span></p>
+<section id="optimise-the-similarity" class="slide level2">
+<h2>Optimise the similarity</h2>
+<p><span class="math display">\[\max_{f \in \mathcal{F}}\color{red}{\mathbb{E}}[S(\color{green}{f}_\sharp\color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta})]\]</span></p>
+<p><span class="math display">\[\tilde{y} \sim P(\cdot \vert \color{red}{\theta}), \quad \color{red}{\theta} \sim \color{purple}{\Pi}\]</span></p>
 <ul>
-<li class="fragment"><span class="math inline">\(\color{purple}{f}\)</span> transforms realisations of <span class="math inline">\(\color{blue}{K}(\cdot\vert y)\)</span></li>
+<li class="fragment"><span class="math inline">\(\color{green}{f}\)</span> transforms realisations of <span class="math inline">\(\color{blue}{K}(\cdot\vert \tilde{y})\)</span></li>
 </ul>
 </section>
 <section id="correcting-many-posteriors-1" class="slide level2">
@@ -476,9 +499,12 @@ Joshua J Bon
 <ol type="1">
 <li class="fragment">Correct coverage? <em>Frequentist</em>
 <ul>
-<li class="fragment"><span class="math inline">\(S(\color{purple}{f}_\#\color{blue}{K}(\cdot\vert y), \color{red}{\theta}) = \vert 1(\color{red}{\theta} \in \color{purple}{\text{CR}_\alpha}) - \alpha \vert\)</span></li>
+<li class="fragment"><span class="math inline">\(S(\color{green}{f}_\sharp\color{blue}{K}(\cdot\vert y), \color{red}{\theta}) = \vert 1(\color{red}{\theta} \in \color{purple}{\text{CR}_\alpha}) - \alpha \vert\)</span></li>
 </ul></li>
-<li class="fragment">Can we correct the entire distribution? <strong>Bayesian</strong></li>
+<li class="fragment">Can we correct the entire distribution? <strong>Bayesian</strong>
+<ul>
+<li class="fragment">Proper scoring rules</li>
+</ul></li>
 </ol>
 </section>
 <section>
@@ -495,51 +521,87 @@ Joshua J Bon
 </section>
 <section id="proper-scoring-rules" class="slide level2">
 <h2>Proper scoring rules</h2>
+<p><span class="citation" data-cites="gneiting2007strictly">(<a href="#/references" role="doc-biblioref" onclick="">Gneiting and Raftery 2007</a>)</span></p>
 <p><br></p>
+<div class="fragment">
 <p><span class="math inline">\(S(U, \cdot)\)</span> is <strong>strictly proper</strong> if</p>
 <ul>
-<li class="fragment"><span class="math inline">\(S(U,U) \geq S(U, V)\)</span> for all <span class="math inline">\(V\)</span> in some family, and</li>
+<li class="fragment"><span class="math inline">\(S(V,V) \geq S(U, V)\)</span> for all <span class="math inline">\(V\)</span> in some family, and</li>
 <li class="fragment">equality holds iff <span class="math inline">\(U = V\)</span>.</li>
-<li class="fragment">see <span class="citation" data-cites="gneiting2007strictly">(<a href="#/references" role="doc-biblioref" onclick="">Gneiting and Raftery 2007</a>)</span></li>
 </ul>
-</section>
-<section id="very-helpful-proper-scoring-rules" class="slide level2">
-<h2>Very helpful proper scoring rules</h2>
-<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{U\in \mathcal{P}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S(U,\theta) \right]\]</span></p>
+</div>
 <div class="fragment">
+<p><span class="math display">\[V = \arg\max_{U \in \mathcal{U}} S(U, V)\]</span></p>
+</div>
+</section>
+<section id="what-we-cant-do" class="slide level2">
+<h2>What we can’t do</h2>
+<p><br></p>
+<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f}\in \mathcal{F}}{\arg\max}~ S[\color{green}{f}_\sharp \color{blue}{K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]\]</span></p>
+</section>
+<section id="what-we-cant-do-1" class="slide level2">
+<h2>What we can’t do</h2>
+<p><br></p>
+<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S(\color{green}{f}_\sharp\color{blue}{K}(\cdot\vert y),\theta) \right]\]</span></p>
+</section>
+<section id="what-we-can-do" class="slide level2">
+<h2>What we can do</h2>
+<p><br></p>
 <p>Consider the joint data-parameter space instead</p>
-<p><span class="math display">\[\Pi(\text{d}\theta ~\vert~\tilde{y} )P(\text{d}\tilde{y}) = P(\tilde{y}~\vert~\theta)\Pi(\text{d}\theta )\]</span> See <span class="citation" data-cites="pacchiardi2022likelihood">(<a href="#/references" role="doc-biblioref" onclick="">Pacchiardi and Dutta 2022</a>)</span> and others</p>
+<div class="fragment">
+<p><span class="math display">\[\Pi(\text{d}\theta ~\vert~\tilde{y} )P(\text{d}\tilde{y}) = P(\tilde{y}~\vert~\theta)\Pi(\text{d}\theta )\]</span></p>
+</div>
+<div class="fragment">
+<p>See <span class="citation" data-cites="pacchiardi2022likelihood">Pacchiardi and Dutta (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span> and <span class="citation" data-cites="bon2022bayesian">Bon et al. (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span></p>
+</div>
+</section>
+<section id="what-we-can-do-1" class="slide level2">
+<h2>What we can do</h2>
+<p><br></p>
+<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~\tilde{y} )}\left[S(\color{green}{f}_\sharp \color{blue}{K}(\cdot\vert \tilde{y}),\theta) \right]\]</span></p>
+</section>
+<section id="what-we-can-do-2" class="slide level2">
+<h2>What we can do</h2>
+<p><br></p>
+<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\color{red}{\theta} \sim \color{purple}{\Pi}} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~\color{red}{\theta})}\left[S(\color{green}{f}_\sharp \color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta}) \right]\]</span></p>
+</section>
+<section id="two-steps-further" class="slide level2">
+<h2>Two steps further</h2>
+<p><br></p>
+<ol type="1">
+<li class="fragment"><p>Replace <span class="math inline">\(P(\text{d}\tilde{y})\)</span> with <span class="math inline">\(Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y})v(\tilde{y})\)</span></p></li>
+<li class="fragment"><p>Replace <span class="math inline">\(\Pi\)</span> with <span class="math inline">\(\bar{\Pi}\)</span></p>
+<ul>
+<li class="fragment">correct with importance weight</li>
+</ul></li>
+</ol>
+<div class="fragment">
+<p>It still works!</p>
 </div>
 </section>
 <section id="supporting-theory" class="slide level2">
 <h2>Supporting theory</h2>
 <ul>
-<li class="fragment">Strictly proper score function <span class="math inline">\(S\)</span> for <span class="math inline">\(\mathcal{P}\)</span></li>
-<li class="fragment">Importance distribution <span class="math inline">\(\bar\Pi\)</span> on <span class="math inline">\((\Theta,\vartheta)\)</span> with <span class="math inline">\(\Pi \ll \bar\Pi\)</span> with density <span class="math inline">\(\bar\pi\)</span></li>
-<li class="fragment">Stability function <span class="math inline">\(v:\mathsf{Y} \rightarrow [0,\infty)\)</span>, measurable under <span class="math inline">\(P\)</span> on <span class="math inline">\((\mathsf{Y}, \mathcal{Y})\)</span></li>
-<li class="fragment">Define <span class="math inline">\(Q\)</span> by change of measure <span class="math inline">\(Q(\text{d} \tilde{y}) \propto P(\text{d} \tilde{y})v(\tilde{y})\)</span></li>
-<li class="fragment">Family of kernels <span class="math inline">\(\mathcal{K}\)</span></li>
+<li class="fragment"><p>Strictly proper score function <span class="math inline">\(S\)</span> for <span class="math inline">\(\mathcal{P}\)</span></p></li>
+<li class="fragment"><p>Importance distribution <span class="math inline">\(\bar\Pi\)</span> on <span class="math inline">\((\Theta,\vartheta)\)</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(\Pi \ll \bar\Pi\)</span> with density <span class="math inline">\(\bar\pi\)</span></li>
+</ul></li>
+<li class="fragment"><p>Stability function <span class="math inline">\(v:\mathsf{Y} \rightarrow [0,\infty)\)</span></p>
+<ul>
+<li class="fragment">measurable under <span class="math inline">\(P\)</span> on <span class="math inline">\((\mathsf{Y}, \mathcal{Y})\)</span></li>
+</ul></li>
+<li class="fragment"><p><span class="math inline">\(Q(\text{d} \tilde{y}) \propto P(\text{d} \tilde{y})v(\tilde{y})\)</span></p></li>
+<li class="fragment"><p>Family of kernels <span class="math inline">\(\mathcal{K}\)</span></p></li>
 </ul>
 </section>
 <section id="supporting-theory-1" class="slide level2">
 <h2>Supporting theory</h2>
 <p><strong>Theorem 1</strong>:</p>
 <p>If <span class="math inline">\(\mathcal{K}\)</span> is <em>sufficiently rich</em> then the Markov kernel,</p>
-<p><span class="math display">\[U^{\star}(\cdot~\vert~\cdot) \equiv \underset{U(\cdot~\vert~\cdot) \in \mathcal{K}}{\arg\max}~\mathbb{E}_{\theta \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~ \theta)}\left[w(\theta, \tilde{y}) S(U(\cdot ~\vert~ \tilde{y}),\theta) \right]\]</span></p>
+<p><span class="math display">\[\boxed{K^{\star} \equiv \underset{K \in \mathcal{K}}{\arg\max}~\mathbb{E}_{\theta \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~ \theta)}\left[w(\theta, \tilde{y}) S(K(\cdot ~\vert~ \tilde{y}),\theta) \right]}\]</span></p>
 <p>where <span class="math inline">\(w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\)</span> then</p>
-<p><span class="math display">\[U^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})\]</span> almost surely.</p>
-</section>
-<section id="sufficiently-rich-kernel-family" class="slide level2">
-<h2>Sufficiently rich kernel family</h2>
-<ul>
-<li class="fragment"><span class="math inline">\(\mathcal{K}\)</span> be a family of Markov kernels</li>
-<li class="fragment"><span class="math inline">\(\mathcal{P}\)</span> be a class of probability measures</li>
-<li class="fragment"><span class="math inline">\(Q\)</span> be a probability measure on <span class="math inline">\((\mathsf{Y},\mathcal{Y})\)</span>, and <span class="math inline">\(\tilde{y}\sim Q\)</span></li>
-<li class="fragment"><span class="math inline">\(\Pi(\cdot ~\vert~ \tilde{y})\)</span> be the true posterior at <span class="math inline">\(\tilde{y}\)</span>.</li>
-</ul>
-<div class="fragment">
-<p>We say <span class="math inline">\(\mathcal{K}\)</span> is sufficiently rich with respect to <span class="math inline">\((Q,\mathcal{P})\)</span> if for all <span class="math inline">\(U \in \mathcal{K}\)</span>, <span class="math inline">\(U(\cdot ~\vert~ \tilde{y}) \in \mathcal{P}\)</span> almost surely and there exists <span class="math inline">\(U \in \mathcal{K}\)</span> such that <span class="math inline">\(U(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})\)</span> almost surely.</p>
-</div>
+<p><span class="math display">\[\boxed{U^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}\]</span> almost surely.</p>
 </section>
 <section id="bayesian-score-calibration" class="slide level2">
 <h2>Bayesian Score Calibration</h2>
@@ -556,20 +618,18 @@ Joshua J Bon
 <section id="what-about-the-weights" class="slide level2">
 <h2>What about the weights?</h2>
 <p><span class="math display">\[w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\]</span></p>
-<ul>
-<li class="fragment">New flexibility from stabilising function <span class="math inline">\(v(\tilde{y})\)</span></li>
-<li class="fragment">Hard to find <span class="math inline">\(v(\tilde{y})\)</span> such that <span class="math inline">\(w(\theta, \tilde{y}) \approx 1\)</span></li>
-<li class="fragment">Harder to show finite variance (?)</li>
-</ul>
+<p>Be brave…</p>
+<div class="fragment">
+<p><img data-src="imgs/dumb_patrick.gif"></p>
+</div>
 </section>
 <section id="what-about-the-weights-1" class="slide level2">
 <h2>What about the weights?</h2>
-<p><strong>Clip the weights</strong></p>
-<p><span class="math display">\[\hat{w}(\theta, \tilde{y}) = \min\{w(\theta, \tilde{y}), q_{1-\alpha}\}\]</span></p>
-<p>where <span class="math inline">\(q_{1-\alpha}\)</span> is <span class="math inline">\((1-\alpha)\)</span> quantile of raw weights.</p>
-<div class="fragment">
-<p><strong>Unit weights</strong> (<span class="math inline">\(\alpha = 1\)</span>)</p>
+<p><br></p>
+<p><strong>Unit weights</strong></p>
 <p><span class="math display">\[\hat{w}(\theta, \tilde{y}) = 1\]</span></p>
+<div class="fragment">
+<p>Justified asymptotically using the flexibility of <span class="math inline">\(v(\tilde{y})\)</span></p>
 </div>
 </section></section>
 <section>
@@ -718,6 +778,143 @@ Joshua J Bon
 </div>
 <p>Estimated from independent replications of the method.</p>
 </section>
+<section id="lotka-volterra-sde-quasi-noisy-abc" class="slide level2">
+<h2>Lotka-Volterra SDE (quasi noisy-ABC)</h2>
+<p><a href="https://turing.ml/dev/tutorials/10-bayesian-differential-equations/#inference-of-a-stochastic-differential-equation">Turing.jl Tutorial: Bayesian Estimation of Differential Equations</a></p>
+<p><span class="math display">\[\text{d} X_{t} = (\beta_1 X_{t} - \beta_2 X_{t} Y_{t} ) \text{d} t+ \sigma_1 \text{d} B_{t}^{1}\]</span> <span class="math display">\[\text{d} Y_{t} = (\beta_4 X_{t} Y_{t} - \beta_3 Y_{t} ) \text{d} t+ \sigma_2 \text{d} B_{t}^{2}\]</span></p>
+</section>
+<section id="lotka-volterra-sde-quasi-abc" class="slide level2">
+<h2>Lotka-Volterra SDE (quasi-ABC)</h2>
+<p>Use noisy quasi-likelihood as <strong>approximate model</strong></p>
+<p><span class="math display">\[L(\beta_{1:4}, \tau ~\vert~ x_{1:n}, y_{1:n}) = \tau^{2n}\exp\left(-\frac{\tau^2}{2} \sum_{i=1}^{n}\left[(x_i^\prime - x_i)^{2} + (y_i^\prime - y_i)^{2}\right] \right)\]</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(\{(x_i^\prime,y_i^\prime)\}_{i=1}^{n}\)</span> simulated conditional on <span class="math inline">\(\beta_{1:4}\)</span></li>
+<li class="fragment">Prior <span class="math inline">\(\tau ∼ \text{Gamma}(2, 3)\)</span></li>
+</ul>
+<div class="fragment">
+<p><strong>Further approximation</strong>: use rough numerical integration scheme (Euler-Maruyama <span class="math inline">\(\Delta t=0.01\)</span>).</p>
+</div>
+</section>
+<section id="lotka-volterra-sde-quasi-abc-1" class="slide level2">
+<h2>Lotka-Volterra SDE (quasi-ABC)</h2>
+<p><object data="figs/lotka-posterior-comparison.pdf" type="application/pdf" width="800" height="600"><p>Unable to display PDF file. <a href="figs/lotka-posterior-comparison.pdf">Download</a> instead.</p></object></p>
+</section>
+<section id="lotka-volterra-sde-quasi-abc-2" class="slide level2">
+<h2>Lotka-Volterra SDE (quasi-ABC)</h2>
+<p><object data="figs/lotka-calcheck.pdf" type="application/pdf" width="900" height="600"><p>Unable to display PDF file. <a href="figs/lotka-calcheck.pdf">Download</a> instead.</p></object></p>
+</section>
+<section id="thanks-for-listening" class="slide level2">
+<h2>Thanks for listening</h2>
+<p>Ongoing work: happy to talk</p>
+<ul>
+<li class="fragment">Collaborators: Chris, David<span class="math inline">\(^2\)</span></li>
+<li class="fragment">Helpful commentators</li>
+</ul>
+</section>
+<section id="contact" class="slide level2">
+<h2>Contact</h2>
+<ul>
+<li class="fragment"><p><a href="mailto:joshuajbon@gmail.com">joshuajbon@gmail.com</a></p></li>
+<li class="fragment"><p><a href="https://twitter.com/bonStats">twitter/bonStats</a></p></li>
+</ul>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-bon2022bayesian" class="csl-entry" role="listitem">
+Bon, Joshua J, David J Warne, David J Nott, and Christopher Drovandi. 2022. <span>“Bayesian Score Calibration for Approximate Models.”</span> <em>arXiv Preprint arXiv:2211.05357</em>.
+</div>
+<div id="ref-gneiting2007strictly" class="csl-entry" role="listitem">
+Gneiting, Tilmann, and Adrian E Raftery. 2007. <span>“Strictly Proper Scoring Rules, Prediction, and Estimation.”</span> <em>Journal of the American Statistical Association</em> 102 (477): 359–78.
+</div>
+<div id="ref-pacchiardi2022likelihood" class="csl-entry" role="listitem">
+Pacchiardi, Lorenzo, and Ritabrata Dutta. 2022. <span>“Likelihood-Free Inference with Generative Neural Networks via Scoring Rule Minimization.”</span> <em>arXiv Preprint arXiv:2205.15784</em>.
+</div>
+</div>
+</section></section>
+<section>
+<section id="appendix-theory-vs-practice" class="title-slide slide level1 center">
+<h1>Appendix: Theory vs practice</h1>
+
+</section>
+<section id="justification-of-unit-weights" class="slide level2">
+<h2>Justification of unit weights</h2>
+<p>When we take <span class="math inline">\(\alpha =1\)</span>, <span class="math inline">\(\hat{w} = 1\)</span>!</p>
+<div class="fragment">
+<p><strong>Theorem 2</strong></p>
+<p>Let <span class="math inline">\(g(x) = \bar \pi(x) / \pi(x)\)</span> positive and continuous for <span class="math inline">\(x \in \Theta\)</span>.</p>
+<p>If an estimator <span class="math inline">\(\theta^{\ast}_n \equiv \theta^{\ast}(\tilde{y}_{1:n})\)</span> exists such that <span class="math inline">\(\theta^{\ast}_n \rightarrow z\)</span> a.s. for <span class="math inline">\(n \rightarrow \infty\)</span> when <span class="math inline">\(\tilde{y}_i \sim P(\cdot ~\vert~ z)\)</span> for <span class="math inline">\(z \in \Theta\)</span> then the error when using <span class="math inline">\(\hat{w} = 1\)</span> satisfies <span class="math display">\[\hat{w} - w(\theta,\tilde{y}_{1:n}) \rightarrow 0\]</span> a.s. for <span class="math inline">\(n \rightarrow \infty\)</span></p>
+</div>
+</section>
+<section id="justification-of-unit-weights-1" class="slide level2">
+<h2>Justification of unit weights</h2>
+<p>Theorem 2 is possible because of the stability function justified by Theorem 1.</p>
+<p><span class="math display">\[w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\]</span></p>
+<div class="fragment">
+<p><strong>Trick</strong>: set <span class="math inline">\(v(\tilde{y}) = \frac{\bar\pi(\theta^{\ast}_n )}{\pi(\theta^{\ast}_n )}\)</span> and look at large sample properties.</p>
+</div>
+<div class="fragment">
+<p>Don’t need to explicitly know the estimator <span class="math inline">\(\theta^{\ast}_n\)</span>!</p>
+</div>
+</section>
+<section id="sufficiently-rich-kernel-family" class="slide level2">
+<h2>Sufficiently rich kernel family</h2>
+<ul>
+<li class="fragment"><span class="math inline">\(\mathcal{K}\)</span> be a family of Markov kernels</li>
+<li class="fragment"><span class="math inline">\(\mathcal{P}\)</span> be a class of probability measures</li>
+<li class="fragment"><span class="math inline">\(Q\)</span> be a probability measure on <span class="math inline">\((\mathsf{Y},\mathcal{Y})\)</span>, and <span class="math inline">\(\tilde{y}\sim Q\)</span></li>
+<li class="fragment"><span class="math inline">\(\Pi(\cdot ~\vert~ \tilde{y})\)</span> be the true posterior at <span class="math inline">\(\tilde{y}\)</span>.</li>
+</ul>
+<div class="fragment">
+<p>We say <span class="math inline">\(\mathcal{K}\)</span> is sufficiently rich with respect to <span class="math inline">\((Q,\mathcal{P})\)</span> if for all <span class="math inline">\(U \in \mathcal{K}\)</span>, <span class="math inline">\(U(\cdot ~\vert~ \tilde{y}) \in \mathcal{P}\)</span> almost surely and there exists <span class="math inline">\(U \in \mathcal{K}\)</span> such that <span class="math inline">\(U(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})\)</span> almost surely.</p>
+</div>
+</section>
+<section id="sufficiently-rich-kernel-families" class="slide level2">
+<h2>Sufficiently rich kernel families</h2>
+<ul>
+<li class="fragment">The moment-correcting transformation is typically not sufficiently rich</li>
+<li class="fragment">Unit weights give the stabilising function the following property</li>
+</ul>
+<div class="fragment">
+<p><span class="math inline">\(v(\tilde{y}_{1:n}) \rightarrow \delta_{\hat{\theta}_0}(\tilde{\theta}^\ast_n)\)</span> for <span class="math inline">\(n\rightarrow\infty\)</span> where</p>
+<ul>
+<li class="fragment"><span class="math inline">\(\hat{\theta}_0\)</span> is the MLE for the true data <span class="math inline">\(y\)</span></li>
+<li class="fragment"><span class="math inline">\(\tilde{\theta}^\ast_n\)</span> is the MLE for simulated data <span class="math inline">\(\tilde{y}\)</span></li>
+</ul>
+</div>
+</section>
+<section id="sufficiently-rich-kernel-families-1" class="slide level2">
+<h2>Sufficiently rich kernel families</h2>
+<p><span class="math inline">\(v(\tilde{y}_{1:n}) \rightarrow \delta_{\hat{\theta}_0}(\tilde{\theta}^\ast_n)\)</span></p>
+<p>Recall the distribution is defined as</p>
+<p><span class="math display">\[
+Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
+\]</span></p>
+<ul>
+<li class="fragment">we are concentrating on simulated datasets consistent with <span class="math inline">\(\hat{\theta}_0\)</span></li>
+<li class="fragment">simulated datasets with the same sufficient statistics</li>
+<li class="fragment">approximate posteriors <span class="math inline">\(\hat\Pi(\cdot~\vert~\tilde{y})\)</span> will be equal</li>
+<li class="fragment">global bias and variance correction terms are sufficiently rich</li>
+</ul>
+</section>
+<section id="sufficiently-rich-kernel-families-2" class="slide level2">
+<h2>Sufficiently rich kernel families</h2>
+<p>Results are <em>targeted</em> towards <span class="math inline">\(\bar\Pi\)</span></p>
+<ul>
+<li class="fragment"><p>finite sample approximation using importance sampling</p></li>
+<li class="fragment"><p>manipulation of the weights (unit weights)</p></li>
+<li class="fragment"><p>Trade-off between:</p>
+<ul>
+<li class="fragment">insufficiency of moment-correcting transformation + approximate posterior</li>
+<li class="fragment">targeting high-probability regions of <span class="math inline">\(\bar\Pi\)</span></li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="appendix-another-example" class="title-slide slide level1 center">
+<h1>Appendix: Another example</h1>
+
+</section>
 <section id="bivariate-ou-process-vi" class="slide level2">
 <h2>Bivariate OU Process (VI)</h2>
 <p><span class="math display">\[\text{d}X_t = \gamma (\mu - X_t) \text{d}t + \sigma\text{d}W_t\]</span> <span class="math display">\[\text{d}Y_t = \gamma (\mu - Y_t) \text{d}t + \sigma\text{d}W_t\]</span> <span class="math display">\[Z_t = \rho X_t + (1-\rho)Y_t\]</span></p>
@@ -777,125 +974,8 @@ Joshua J Bon
 <section id="bivariate-ou-process-vi-3" class="slide level2">
 <h2>Bivariate OU Process (VI)</h2>
 <p><object data="figs/gen-corr-ou-process-plot-calcheck.pdf" type="application/pdf" width="650" height="600"><p>Unable to display PDF file. <a href="figs/gen-corr-ou-process-plot-calcheck.pdf">Download</a> instead.</p></object></p>
-</section>
-<section id="lotka-volterra-sde-quasi-noisy-abc" class="slide level2">
-<h2>Lotka-Volterra SDE (quasi noisy-ABC)</h2>
-<p><span class="math display">\[\text{d} X_{t} = (\beta_1 X_{t} - \beta_2 X_{t} Y_{t} ) \text{d} t+ \sigma_1 \text{d} B_{t}^{1}\]</span> <span class="math display">\[\text{d} Y_{t} = (\beta_4 X_{t} Y_{t} - \beta_3 Y_{t} ) \text{d} t+ \sigma_2 \text{d} B_{t}^{2}\]</span></p>
-</section>
-<section id="lotka-volterra-sde-quasi-abc" class="slide level2">
-<h2>Lotka-Volterra SDE (quasi-ABC)</h2>
-<p>Use noisy quasi-likelihood as <strong>approximate model</strong></p>
-<p><span class="math display">\[L(\beta_{1:4}, \tau ~\vert~ x_{1:n}, y_{1:n}) = \tau^{2n}\exp\left(-\frac{\tau^2}{2} \sum_{i=1}^{n}\left[(x_i^\prime - x_i)^{2} + (y_i^\prime - y_i)^{2}\right] \right)\]</span></p>
-<ul>
-<li class="fragment"><span class="math inline">\(\{(x_i^\prime,y_i^\prime)\}_{i=1}^{n}\)</span> simulated conditional on <span class="math inline">\(\beta_{1:4}\)</span></li>
-<li class="fragment">Prior <span class="math inline">\(\tau ∼ \text{Gamma}(2, 3)\)</span></li>
-</ul>
-<div class="fragment">
-<p><strong>Further approximation</strong>: use rough numerical integration scheme (Euler-Maruyama <span class="math inline">\(\Delta t=0.01\)</span>).</p>
-</div>
-</section>
-<section id="lotka-volterra-sde-quasi-abc-1" class="slide level2">
-<h2>Lotka-Volterra SDE (quasi-ABC)</h2>
-<p><object data="figs/lotka-posterior-comparison.pdf" type="application/pdf" width="800" height="600"><p>Unable to display PDF file. <a href="figs/lotka-posterior-comparison.pdf">Download</a> instead.</p></object></p>
-</section>
-<section id="lotka-volterra-sde-quasi-abc-2" class="slide level2">
-<h2>Lotka-Volterra SDE (quasi-ABC)</h2>
-<p><object data="figs/lotka-calcheck.pdf" type="application/pdf" width="900" height="600"><p>Unable to display PDF file. <a href="figs/lotka-calcheck.pdf">Download</a> instead.</p></object></p>
-</section></section>
-<section>
-<section id="theory-vs-practice" class="title-slide slide level1 center">
-<h1>Theory vs practice</h1>
-
-</section>
-<section id="justification-of-unit-weights" class="slide level2">
-<h2>Justification of unit weights</h2>
-<p>When we take <span class="math inline">\(\alpha =1\)</span>, <span class="math inline">\(\hat{w} = 1\)</span>!</p>
-<div class="fragment">
-<p><strong>Theorem 2</strong></p>
-<p>Let <span class="math inline">\(g(x) = \bar \pi(x) / \pi(x)\)</span> positive and continuous for <span class="math inline">\(x \in \Theta\)</span>.</p>
-<p>If an estimator <span class="math inline">\(\theta^{\ast}_n \equiv \theta^{\ast}(\tilde{y}_{1:n})\)</span> exists such that <span class="math inline">\(\theta^{\ast}_n \rightarrow z\)</span> a.s. for <span class="math inline">\(n \rightarrow \infty\)</span> when <span class="math inline">\(\tilde{y}_i \sim P(\cdot ~\vert~ z)\)</span> for <span class="math inline">\(z \in \Theta\)</span> then the error when using <span class="math inline">\(\hat{w} = 1\)</span> satisfies <span class="math display">\[\hat{w} - w(\theta,\tilde{y}_{1:n}) \rightarrow 0\]</span> a.s. for <span class="math inline">\(n \rightarrow \infty\)</span></p>
-</div>
-</section>
-<section id="justification-of-unit-weights-1" class="slide level2">
-<h2>Justification of unit weights</h2>
-<p>Theorem 2 is possible because of the stability function justified by Theorem 1.</p>
-<p><span class="math display">\[w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\]</span></p>
-<div class="fragment">
-<p><strong>Trick</strong>: set <span class="math inline">\(v(\tilde{y}) = \frac{\bar\pi(\theta^{\ast}_n )}{\pi(\theta^{\ast}_n )}\)</span> and look at large sample properties.</p>
-</div>
-<div class="fragment">
-<p>Don’t need to explicitly know the estimator <span class="math inline">\(\theta^{\ast}_n\)</span>!</p>
-</div>
-</section>
-<section id="sufficiently-rich-kernel-families" class="slide level2">
-<h2>Sufficiently rich kernel families</h2>
-<ul>
-<li class="fragment">The moment-correcting transformation is typically not sufficiently rich</li>
-<li class="fragment">Unit weights give the stabilising function the following property</li>
-</ul>
-<div class="fragment">
-<p><span class="math inline">\(v(\tilde{y}_{1:n}) \rightarrow \delta_{\hat{\theta}_0}(\tilde{\theta}^\ast_n)\)</span> for <span class="math inline">\(n\rightarrow\infty\)</span> where</p>
-<ul>
-<li class="fragment"><span class="math inline">\(\hat{\theta}_0\)</span> is the MLE for the true data <span class="math inline">\(y\)</span></li>
-<li class="fragment"><span class="math inline">\(\tilde{\theta}^\ast_n\)</span> is the MLE for simulated data <span class="math inline">\(\tilde{y}\)</span></li>
-</ul>
-</div>
-</section>
-<section id="sufficiently-rich-kernel-families-1" class="slide level2">
-<h2>Sufficiently rich kernel families</h2>
-<p><span class="math inline">\(v(\tilde{y}_{1:n}) \rightarrow \delta_{\hat{\theta}_0}(\tilde{\theta}^\ast_n)\)</span></p>
-<p>Recall the distribution is defined as</p>
-<p><span class="math display">\[
-Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
-\]</span></p>
-<ul>
-<li class="fragment">we are concentrating on simulated datasets consistent with <span class="math inline">\(\hat{\theta}_0\)</span></li>
-<li class="fragment">simulated datasets with the same sufficient statistics</li>
-<li class="fragment">approximate posteriors <span class="math inline">\(\hat\Pi(\cdot~\vert~\tilde{y})\)</span> will be equal</li>
-<li class="fragment">global bias and variance correction terms are sufficiently rich</li>
-</ul>
-</section>
-<section id="sufficiently-rich-kernel-families-2" class="slide level2">
-<h2>Sufficiently rich kernel families</h2>
-<p>Results are <em>targeted</em> towards <span class="math inline">\(\bar\Pi\)</span></p>
-<ul>
-<li class="fragment"><p>finite sample approximation using importance sampling</p></li>
-<li class="fragment"><p>manipulation of the weights (unit weights)</p></li>
-<li class="fragment"><p>Trade-off between:</p>
-<ul>
-<li class="fragment">insufficiency of moment-correcting transformation + approximate posterior</li>
-<li class="fragment">targeting high-probability regions of <span class="math inline">\(\bar\Pi\)</span></li>
-</ul></li>
-</ul>
-</section>
-<section id="thanks" class="slide level2">
-<h2>Thanks</h2>
-<p>Ongoing work: happy to talk</p>
-<ul>
-<li class="fragment">Collaborators: Chris, David<span class="math inline">\(^2\)</span></li>
-<li class="fragment">Helpful commentators</li>
-<li class="fragment">Andrea for inviting me!</li>
-</ul>
-</section>
-<section id="contact" class="slide level2">
-<h2>Contact</h2>
-<ul>
-<li class="fragment"><p><a href="mailto:joshuajbon@gmail.com">joshuajbon@gmail.com</a></p></li>
-<li class="fragment"><p><a href="https://twitter.com/bonStats">twitter/bonStats</a></p></li>
-</ul>
-</section>
-<section id="references" class="slide level2 smaller scrollable">
-<h2>References</h2>
 <div class="footer footer-default">
 
-</div>
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-gneiting2007strictly" class="csl-entry" role="listitem">
-Gneiting, Tilmann, and Adrian E Raftery. 2007. <span>“Strictly Proper Scoring Rules, Prediction, and Estimation.”</span> <em>Journal of the American Statistical Association</em> 102 (477): 359–78.
-</div>
-<div id="ref-pacchiardi2022likelihood" class="csl-entry" role="listitem">
-Pacchiardi, Lorenzo, and Ritabrata Dutta. 2022. <span>“Likelihood-Free Inference with Generative Neural Networks via Scoring Rule Minimization.”</span> <em>arXiv Preprint arXiv:2205.15784</em>.
-</div>
 </div>
 </section></section>
     </div>

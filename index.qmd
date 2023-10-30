@@ -30,7 +30,7 @@ source("figs/illustrative-plots.R")
 ## Talk overview
 
 -   Motivation and intuitions
--   Theory 
+-   Theory and method
 -   Example
 
 . . .
@@ -83,6 +83,19 @@ Current methods for **intractable** likelihoods:
 -   Importance sampling
 -   Sequential Monte Carlo
 -   Markov chain Monte Carlo (MH, ULA, MALA, HMC)
+
+## And we can learn functions... {.center}
+
+## Learning functions
+
+- Represent posterior approximation with Monte Carlo samples 
+    - e.g. MCMC with approximate likelihood
+
+- Find a function to correct the approximate samples posterior
+    - No need to rerun MCMC
+        - unlike correcting the likelihood directly
+    - Do approximate inference once
+        - in parallel for multiple datasets
 
 ## Illustration {.center}
 
@@ -137,7 +150,7 @@ ggplot() +
 #| label: fig-illustration-3
 #| warning: false
 #| echo: false
-#| fig-cap: 'How to proceed? (approximation in blue)'
+#| fig-cap: 'Correct on average? (approximation in blue)'
 
 sim_id <- 2:4
 
@@ -153,30 +166,30 @@ ggplot() +
 
 ```
 
-## Measure the difference
+## Measure the similarity
 
-$$\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert y),\color{red}{\theta})]$$
+$$\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta})]$$
 
-$$y \sim P(\cdot \vert \color{red}{\theta})$$
+$$\tilde{y} \sim P(\cdot \vert \color{red}{\theta}), \quad \color{red}{\theta} \sim \color{purple}{\Pi}$$
 
-- $\color{blue}{K}(\cdot\vert y)$ is the approximate posterior
+- $\color{blue}{K}(\cdot\vert \tilde{y})$ is the approximate posterior
 - $\color{red}{\theta}$ is the true data generating parameter
-- $y$ is the data associated with $\color{red}{\theta}$
-- $S$ measures the difference between $\color{blue}{K}(\cdot\vert y)$ and point $\color{red}{\theta}$
+- $(\color{red}{\theta}, \tilde{y})$ prior-predictive pairs
+- $S$ measures the similarity between $\color{blue}{K}(\cdot\vert \tilde{y})$ and point $\color{red}{\theta}$
 
-## Measure the difference
+## Measure the similarity
 
-$$\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert y),\color{red}{\theta})]$$
+$$\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta})]$$
 
-$$y \sim P(\cdot \vert \color{red}{\theta})$$
+$$\tilde{y} \sim P(\cdot \vert \color{red}{\theta}), \quad \color{red}{\theta} \sim \color{purple}{\Pi}$$
 
-## Optimise the difference
+## Optimise the similarity
 
-$$\max_{f \in \mathcal{F}}\color{red}{\mathbb{E}}[S(\color{purple}{f}_\#\color{blue}{K}(\cdot\vert y),\color{red}{\theta})]$$
+$$\max_{f \in \mathcal{F}}\color{red}{\mathbb{E}}[S(\color{green}{f}_\sharp\color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta})]$$
 
-$$y \sim P(\cdot \vert \color{red}{\theta})$$
+$$\tilde{y} \sim P(\cdot \vert \color{red}{\theta}), \quad \color{red}{\theta} \sim \color{purple}{\Pi}$$
 
-- $\color{purple}{f}$ transforms realisations of $\color{blue}{K}(\cdot\vert y)$ 
+- $\color{green}{f}$ transforms realisations of $\color{blue}{K}(\cdot\vert \tilde{y})$ 
 
 
 ## Correcting many posteriors
@@ -226,8 +239,9 @@ ggplot() +
 ## Model calibration by simulation
 
 1.  Correct coverage? *Frequentist* 
-    - $S(\color{purple}{f}_\#\color{blue}{K}(\cdot\vert y), \color{red}{\theta}) = \vert 1(\color{red}{\theta} \in \color{purple}{\text{CR}_\alpha}) - \alpha \vert$ 
+    - $S(\color{green}{f}_\sharp\color{blue}{K}(\cdot\vert y), \color{red}{\theta}) = \vert 1(\color{red}{\theta} \in \color{purple}{\text{CR}_\alpha}) - \alpha \vert$ 
 2.  Can we correct the entire distribution? **Bayesian**
+    - Proper scoring rules
 
 # Theory and method
 
@@ -243,19 +257,33 @@ where $V$ is a probability measure.
 
 ## Proper scoring rules
 
+[@gneiting2007strictly]
+
 <br>
+
+. . .
 
 $S(U, \cdot)$ is **strictly proper** if
 
--   $S(U,U) \geq S(U, V)$ for all $V$ in some family, and
+-   $S(V,V) \geq S(U, V)$ for all $V$ in some family, and
 -   equality holds iff $U = V$.
--   @gneiting2007strictly
+
+. . . 
+
+$$V = \arg\max_{U \in \mathcal{U}} S(U, V)$$
 
 ## What we can't do
 
 <br>
 
-$$\Pi(\cdot ~\vert~y ) = \underset{U\in \mathcal{P}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S(U,\theta) \right]$$
+$$\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f}\in \mathcal{F}}{\arg\max}~ S[\color{green}{f}_\sharp \color{blue}{K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]$$
+
+## What we can't do
+
+<br>
+
+$$\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S(\color{green}{f}_\sharp\color{blue}{K}(\cdot\vert y),\theta) \right]$$
+
 
 ## What we can do
 
@@ -263,14 +291,51 @@ $$\Pi(\cdot ~\vert~y ) = \underset{U\in \mathcal{P}}{\arg\max}~ \mathbb{E}_{\the
 
 Consider the joint data-parameter space instead
 
-$$\Pi(\text{d}\theta ~\vert~\tilde{y} )P(\text{d}\tilde{y}) = P(\tilde{y}~\vert~\theta)\Pi(\text{d}\theta )$$ See [@pacchiardi2022likelihood] and others
+. . .
+
+$$\Pi(\text{d}\theta ~\vert~\tilde{y} )P(\text{d}\tilde{y}) = P(\tilde{y}~\vert~\theta)\Pi(\text{d}\theta )$$ 
+
+. . .
+
+See @pacchiardi2022likelihood and @bon2022bayesian
+
+## What we can do
+
+<br>
+
+$$\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~\tilde{y} )}\left[S(\color{green}{f}_\sharp \color{blue}{K}(\cdot\vert \tilde{y}),\theta) \right]$$
+
+## What we can do
+
+<br>
+
+$$\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\color{red}{\theta} \sim \color{purple}{\Pi}} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~\color{red}{\theta})}\left[S(\color{green}{f}_\sharp \color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta}) \right]$$
+
+## Two steps further
+
+<br>
+
+1. Replace $P(\text{d}\tilde{y})$ with $Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y})v(\tilde{y})$
+
+2. Replace $\Pi$ with $\bar{\Pi}$ 
+    - correct with importance weight
+
+. . . 
+
+It still works!
 
 ## Supporting theory
 
 -   Strictly proper score function $S$ for $\mathcal{P}$
--   Importance distribution $\bar\Pi$ on $(\Theta,\vartheta)$ with $\Pi \ll \bar\Pi$ with density $\bar\pi$
--   Stability function $v:\mathsf{Y} \rightarrow [0,\infty)$, measurable under $P$ on $(\mathsf{Y}, \mathcal{Y})$
--   Define $Q$ by change of measure $Q(\text{d} \tilde{y}) \propto P(\text{d} \tilde{y})v(\tilde{y})$
+
+-   Importance distribution $\bar\Pi$ on $(\Theta,\vartheta)$
+    - $\Pi \ll \bar\Pi$ with density $\bar\pi$
+    
+-   Stability function $v:\mathsf{Y} \rightarrow [0,\infty)$
+    - measurable under $P$ on $(\mathsf{Y}, \mathcal{Y})$
+    
+-  $Q(\text{d} \tilde{y}) \propto P(\text{d} \tilde{y})v(\tilde{y})$
+
 -   Family of kernels $\mathcal{K}$
 
 ## Supporting theory
@@ -279,22 +344,13 @@ $$\Pi(\text{d}\theta ~\vert~\tilde{y} )P(\text{d}\tilde{y}) = P(\tilde{y}~\vert~
 
 If $\mathcal{K}$ is *sufficiently rich* then the Markov kernel,
 
-$$U^{\star}(\cdot~\vert~\cdot) \equiv \underset{U(\cdot~\vert~\cdot) \in \mathcal{K}}{\arg\max}~\mathbb{E}_{\theta \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~ \theta)}\left[w(\theta, \tilde{y}) S(U(\cdot ~\vert~ \tilde{y}),\theta) \right]$$
+$$\boxed{K^{\star} \equiv \underset{K \in \mathcal{K}}{\arg\max}~\mathbb{E}_{\theta \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~ \theta)}\left[w(\theta, \tilde{y}) S(K(\cdot ~\vert~ \tilde{y}),\theta) \right]}$$
+
 
 where $w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})$ then
 
-$$U^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})$$ almost surely.
+$$\boxed{U^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}$$ almost surely.
 
-## Sufficiently rich kernel family
-
--   $\mathcal{K}$ be a family of Markov kernels
--   $\mathcal{P}$ be a class of probability measures
--   $Q$ be a probability measure on $(\mathsf{Y},\mathcal{Y})$, and $\tilde{y}\sim Q$
--   $\Pi(\cdot ~\vert~ \tilde{y})$ be the true posterior at $\tilde{y}$.
-
-. . .
-
-We say $\mathcal{K}$ is sufficiently rich with respect to $(Q,\mathcal{P})$ if for all $U \in \mathcal{K}$, $U(\cdot ~\vert~ \tilde{y}) \in \mathcal{P}$ almost surely and there exists $U \in \mathcal{K}$ such that $U(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})$ almost surely.
 
 ## Bayesian Score Calibration
 
@@ -308,27 +364,28 @@ $$f(x) = L[x - \hat{\mu}(y)] + \hat{\mu}(y) + b$$
 
 -   $L$ is a lower triangular matrix with positive elements on diagonal.
 
+
 ## What about the weights?
 
 $$w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})$$
 
--   New flexibility from stabilising function $v(\tilde{y})$
--   Hard to find $v(\tilde{y})$ such that $w(\theta, \tilde{y}) \approx 1$
--   Harder to show finite variance (?)
-
-## What about the weights?
-
-**Clip the weights**
-
-$$\hat{w}(\theta, \tilde{y}) = \min\{w(\theta, \tilde{y}), q_{1-\alpha}\}$$
-
-where $q_{1-\alpha}$ is $(1-\alpha)$ quantile of raw weights.
+Be brave...
 
 . . .
 
-**Unit weights** ($\alpha = 1$)
+![](imgs/dumb_patrick.gif)
+
+## What about the weights?
+
+<br>
+
+**Unit weights**
 
 $$\hat{w}(\theta, \tilde{y}) = 1$$
+
+. . .
+
+Justified asymptotically using the flexibility of $v(\tilde{y})$
 
 # Examples
 
@@ -396,39 +453,9 @@ knitr::kable(D_dat_ou1, format = "html")
 
 Estimated from independent replications of the method.
 
-## Bivariate OU Process (VI)
-
-$$\text{d}X_t = \gamma (\mu - X_t) \text{d}t + \sigma\text{d}W_t$$ $$\text{d}Y_t = \gamma (\mu - Y_t) \text{d}t + \sigma\text{d}W_t$$ $$Z_t = \rho X_t + (1-\rho)Y_t$$
-
-Model $(X_t,Z_t)$ with setup as in the univariate case, $(x_0,z_0)=(5,5)$ and use a mean-field **variational approximation**.
-
-## Bivariate OU Process (VI)
-
-{{< pdf figs/gen-corr-ou-process-plot-contour.pdf height=600 width=800 >}}
-
-## Bivariate OU Process (VI)
-
-**Correlation summaries**
-
-```{r, corr-table, echo = FALSE}
-corr_tab <- tribble(
-  ~Posterior, ~Mean, ~`St. Dev.`,
-"Approx", 0.00, 0.02,
-"Adjust (α=0)", 0.18, 0.41,
-"Adjust (α=0.5)", 0.37, 0.16,
-"Adjust (α=1)", 0.37, 0.15,
-"True", 0.42, 0.06
-)
-knitr::kable(corr_tab, format = "html")
-```
-
-$M = 100$ and $\bar\Pi = \hat\Pi(\cdot~\vert~y)$ with variance scaled by 2
-
-## Bivariate OU Process (VI)
-
-{{< pdf figs/gen-corr-ou-process-plot-calcheck.pdf height=600 width=650 >}}
-
 ## Lotka-Volterra SDE (quasi noisy-ABC)
+
+[Turing.jl Tutorial: Bayesian Estimation of Differential Equations](https://turing.ml/dev/tutorials/10-bayesian-differential-equations/#inference-of-a-stochastic-differential-equation)
 
 $$\text{d} X_{t} = (\beta_1 X_{t} - \beta_2 X_{t} Y_{t} ) \text{d} t+ \sigma_1 \text{d} B_{t}^{1}$$ $$\text{d} Y_{t} = (\beta_4 X_{t} Y_{t} - \beta_3 Y_{t} ) \text{d} t+ \sigma_2 \text{d} B_{t}^{2}$$
 
@@ -453,7 +480,25 @@ $$L(\beta_{1:4}, \tau ~\vert~ x_{1:n}, y_{1:n}) = \tau^{2n}\exp\left(-\frac{\tau
 
 {{< pdf figs/lotka-calcheck.pdf height=600 width=900 >}}
 
-# Theory vs practice
+## Thanks for listening
+
+Ongoing work: happy to talk
+
+-   Collaborators: Chris, David$^2$
+-   Helpful commentators
+
+## Contact
+
+-   [joshuajbon\@gmail.com](mailto:joshuajbon@gmail.com)
+
+-   [twitter/bonStats](https://twitter.com/bonStats)
+
+## References
+
+::: {#refs}
+:::
+
+# Appendix: Theory vs practice
 
 ## Justification of unit weights
 
@@ -480,6 +525,17 @@ $$w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})$$
 . . .
 
 Don't need to explicitly know the estimator $\theta^{\ast}_n$!
+
+## Sufficiently rich kernel family
+
+-   $\mathcal{K}$ be a family of Markov kernels
+-   $\mathcal{P}$ be a class of probability measures
+-   $Q$ be a probability measure on $(\mathsf{Y},\mathcal{Y})$, and $\tilde{y}\sim Q$
+-   $\Pi(\cdot ~\vert~ \tilde{y})$ be the true posterior at $\tilde{y}$.
+
+. . .
+
+We say $\mathcal{K}$ is sufficiently rich with respect to $(Q,\mathcal{P})$ if for all $U \in \mathcal{K}$, $U(\cdot ~\vert~ \tilde{y}) \in \mathcal{P}$ almost surely and there exists $U \in \mathcal{K}$ such that $U(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})$ almost surely.
 
 ## Sufficiently rich kernel families
 
@@ -521,18 +577,36 @@ Results are *targeted* towards $\bar\Pi$
     -   insufficiency of moment-correcting transformation + approximate posterior
     -   targeting high-probability regions of $\bar\Pi$
 
-## Thanks
+# Appendix: Another example
 
-Ongoing work: happy to talk
+## Bivariate OU Process (VI)
 
--   Collaborators: Chris, David$^2$
--   Helpful commentators
--   Andrea for inviting me!
+$$\text{d}X_t = \gamma (\mu - X_t) \text{d}t + \sigma\text{d}W_t$$ $$\text{d}Y_t = \gamma (\mu - Y_t) \text{d}t + \sigma\text{d}W_t$$ $$Z_t = \rho X_t + (1-\rho)Y_t$$
 
-## Contact
+Model $(X_t,Z_t)$ with setup as in the univariate case, $(x_0,z_0)=(5,5)$ and use a mean-field **variational approximation**.
 
--   [joshuajbon\@gmail.com](mailto:joshuajbon@gmail.com)
+## Bivariate OU Process (VI)
 
--   [twitter/bonStats](https://twitter.com/bonStats)
+{{< pdf figs/gen-corr-ou-process-plot-contour.pdf height=600 width=800 >}}
 
-## References
+## Bivariate OU Process (VI)
+
+**Correlation summaries**
+
+```{r, corr-table, echo = FALSE}
+corr_tab <- tribble(
+  ~Posterior, ~Mean, ~`St. Dev.`,
+"Approx", 0.00, 0.02,
+"Adjust (α=0)", 0.18, 0.41,
+"Adjust (α=0.5)", 0.37, 0.16,
+"Adjust (α=1)", 0.37, 0.15,
+"True", 0.42, 0.06
+)
+knitr::kable(corr_tab, format = "html")
+```
+
+$M = 100$ and $\bar\Pi = \hat\Pi(\cdot~\vert~y)$ with variance scaled by 2
+
+## Bivariate OU Process (VI)
+
+{{< pdf figs/gen-corr-ou-process-plot-calcheck.pdf height=600 width=650 >}}
