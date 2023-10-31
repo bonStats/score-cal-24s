@@ -367,7 +367,7 @@ Joshua J Bon
 <ul>
 <li class="fragment">Motivation and intuitions</li>
 <li class="fragment">Theory and method</li>
-<li class="fragment">Example</li>
+<li class="fragment">Examples</li>
 </ul>
 <div class="fragment">
 <p>Joint work with</p>
@@ -582,7 +582,7 @@ Joshua J Bon
 <section id="supporting-theory" class="slide level2">
 <h2>Supporting theory</h2>
 <ul>
-<li class="fragment"><p>Strictly proper score function <span class="math inline">\(S\)</span> for <span class="math inline">\(\mathcal{P}\)</span></p></li>
+<li class="fragment"><p>Strictly proper scoring rule <span class="math inline">\(S\)</span> wrt <span class="math inline">\(\mathcal{P}\)</span></p></li>
 <li class="fragment"><p>Importance distribution <span class="math inline">\(\bar\Pi\)</span> on <span class="math inline">\((\Theta,\vartheta)\)</span></p>
 <ul>
 <li class="fragment"><span class="math inline">\(\Pi \ll \bar\Pi\)</span> with density <span class="math inline">\(\bar\pi\)</span></li>
@@ -601,7 +601,7 @@ Joshua J Bon
 <p>If <span class="math inline">\(\mathcal{K}\)</span> is <em>sufficiently rich</em> then the Markov kernel,</p>
 <p><span class="math display">\[\boxed{K^{\star} \equiv \underset{K \in \mathcal{K}}{\arg\max}~\mathbb{E}_{\theta \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~ \theta)}\left[w(\theta, \tilde{y}) S(K(\cdot ~\vert~ \tilde{y}),\theta) \right]}\]</span></p>
 <p>where <span class="math inline">\(w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\)</span> then</p>
-<p><span class="math display">\[\boxed{U^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}\]</span> almost surely.</p>
+<p><span class="math display">\[\boxed{K^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}\]</span> almost surely.</p>
 </section>
 <section id="bayesian-score-calibration" class="slide level2">
 <h2>Bayesian Score Calibration</h2>

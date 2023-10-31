@@ -31,7 +31,7 @@ source("figs/illustrative-plots.R")
 
 -   Motivation and intuitions
 -   Theory and method
--   Example
+-   Examples
 
 . . .
 
@@ -326,7 +326,7 @@ It still works!
 
 ## Supporting theory
 
--   Strictly proper score function $S$ for $\mathcal{P}$
+-   Strictly proper scoring rule $S$ wrt $\mathcal{P}$
 
 -   Importance distribution $\bar\Pi$ on $(\Theta,\vartheta)$
     - $\Pi \ll \bar\Pi$ with density $\bar\pi$
@@ -349,7 +349,7 @@ $$\boxed{K^{\star} \equiv \underset{K \in \mathcal{K}}{\arg\max}~\mathbb{E}_{\th
 
 where $w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})$ then
 
-$$\boxed{U^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}$$ almost surely.
+$$\boxed{K^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}$$ almost surely.
 
 
 ## Bayesian Score Calibration
