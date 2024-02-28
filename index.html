@@ -412,7 +412,7 @@ Joshua J Bon
 <ul>
 <li class="fragment">Laplace</li>
 <li class="fragment">Variational inference</li>
-<li class="fragment">ABC</li>
+<li class="fragment">Approximate Bayesian Computation (ABC)</li>
 </ul>
 </section>
 <section id="approximations-everywhere-2" class="slide level2" data-center="true">
@@ -464,26 +464,33 @@ Joshua J Bon
 <img data-src="index_files/figure-revealjs/fig-illustration-3-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;3: Correct on average? (approximation in blue)</p></section>
 <section id="measure-the-similarity" class="slide level2">
 <h2>Measure the similarity</h2>
-<p><span class="math display">\[\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta})]\]</span></p>
-<p><span class="math display">\[\tilde{y} \sim P(\cdot \vert \color{red}{\theta}), \quad \color{red}{\theta} \sim \color{purple}{\Pi}\]</span></p>
+<p><span class="math display">\[\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]\]</span></p>
+<p><span class="math display">\[\tilde{y} \sim P(\cdot \vert {\color{red}\theta}), \quad {\color{red}\theta} \sim {\color{purple}\Pi}\]</span></p>
 <ul>
-<li class="fragment"><span class="math inline">\(\color{blue}{K}(\cdot\vert \tilde{y})\)</span> is the approximate posterior</li>
-<li class="fragment"><span class="math inline">\(\color{red}{\theta}\)</span> is the true data generating parameter</li>
-<li class="fragment"><span class="math inline">\((\color{red}{\theta}, \tilde{y})\)</span> prior-predictive pairs</li>
-<li class="fragment"><span class="math inline">\(S\)</span> measures the similarity between <span class="math inline">\(\color{blue}{K}(\cdot\vert \tilde{y})\)</span> and point <span class="math inline">\(\color{red}{\theta}\)</span></li>
+<li class="fragment"><span class="math inline">\({\color{blue}K}(\cdot\vert \tilde{y})\)</span> is the approximate posterior</li>
+<li class="fragment"><span class="math inline">\({\color{red}\theta}\)</span> is the true data generating parameter</li>
+<li class="fragment"><span class="math inline">\(({\color{red}\theta}, \tilde{y})\)</span> prior-predictive pairs</li>
+<li class="fragment"><span class="math inline">\(S\)</span> measures the similarity between <span class="math inline">\({\color{blue}K}(\cdot\vert \tilde{y})\)</span> and point <span class="math inline">\({\color{red}\theta}\)</span></li>
 </ul>
-</section>
-<section id="measure-the-similarity-1" class="slide level2">
-<h2>Measure the similarity</h2>
-<p><span class="math display">\[\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta})]\]</span></p>
-<p><span class="math display">\[\tilde{y} \sim P(\cdot \vert \color{red}{\theta}), \quad \color{red}{\theta} \sim \color{purple}{\Pi}\]</span></p>
 </section>
 <section id="optimise-the-similarity" class="slide level2">
 <h2>Optimise the similarity</h2>
-<p><span class="math display">\[\max_{f \in \mathcal{F}}\color{red}{\mathbb{E}}[S(\color{green}{f}_\sharp\color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta})]\]</span></p>
-<p><span class="math display">\[\tilde{y} \sim P(\cdot \vert \color{red}{\theta}), \quad \color{red}{\theta} \sim \color{purple}{\Pi}\]</span></p>
+<p><span class="math display">\[\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]\]</span></p>
+</section>
+<section id="optimise-the-similarity-1" class="slide level2">
+<h2>Optimise the similarity</h2>
+<p><span class="math display">\[\mathbb{E}[S({{\color{green}f}_\sharp\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]\]</span></p>
+</section>
+<section id="optimise-the-similarity-2" class="slide level2">
+<h2>Optimise the similarity</h2>
+<p><span class="math display">\[\max_{f \in \mathcal{F}}\mathbb{E}[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]\]</span></p>
+</section>
+<section id="optimise-the-similarity-3" class="slide level2">
+<h2>Optimise the similarity</h2>
+<p><span class="math display">\[\max_{f \in \mathcal{F}}\mathbb{E}[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]\]</span></p>
+<p><span class="math display">\[\tilde{y} \sim P(\cdot \vert {\color{red}\theta}), \quad {\color{red}\theta} \sim {\color{purple}\Pi}\]</span></p>
 <ul>
-<li class="fragment"><span class="math inline">\(\color{green}{f}\)</span> transforms realisations of <span class="math inline">\(\color{blue}{K}(\cdot\vert \tilde{y})\)</span></li>
+<li class="fragment"><span class="math inline">\({\color{green}f}\)</span> transforms realisations of <span class="math inline">\({\color{blue}K}(\cdot\vert \tilde{y})\)</span></li>
 </ul>
 </section>
 <section id="correcting-many-posteriors-1" class="slide level2">
@@ -499,7 +506,7 @@ Joshua J Bon
 <ol type="1">
 <li class="fragment">Correct coverage? <em>Frequentist</em>
 <ul>
-<li class="fragment"><span class="math inline">\(S(\color{green}{f}_\sharp\color{blue}{K}(\cdot\vert y), \color{red}{\theta}) = \vert 1(\color{red}{\theta} \in \color{purple}{\text{CR}_\alpha}) - \alpha \vert\)</span></li>
+<li class="fragment"><span class="math inline">\(S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert y), {\color{red}\theta}) = \vert 1({\color{red}\theta} \in {\color{purple}\text{CR}_\alpha}) - \alpha \vert\)</span></li>
 </ul></li>
 <li class="fragment">Can we correct the entire distribution? <strong>Bayesian</strong>
 <ul>
@@ -537,12 +544,12 @@ Joshua J Bon
 <section id="what-we-cant-do" class="slide level2">
 <h2>What we can’t do</h2>
 <p><br></p>
-<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f}\in \mathcal{F}}{\arg\max}~ S[\color{green}{f}_\sharp \color{blue}{K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]\]</span></p>
+<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{{\color{green}f}\in \mathcal{F}}{\arg\max}~ S[{\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]\]</span></p>
 </section>
 <section id="what-we-cant-do-1" class="slide level2">
 <h2>What we can’t do</h2>
 <p><br></p>
-<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S(\color{green}{f}_\sharp\color{blue}{K}(\cdot\vert y),\theta) \right]\]</span></p>
+<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{{\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert y),\theta) \right]\]</span></p>
 </section>
 <section id="what-we-can-do" class="slide level2">
 <h2>What we can do</h2>
@@ -558,12 +565,12 @@ Joshua J Bon
 <section id="what-we-can-do-1" class="slide level2">
 <h2>What we can do</h2>
 <p><br></p>
-<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~\tilde{y} )}\left[S(\color{green}{f}_\sharp \color{blue}{K}(\cdot\vert \tilde{y}),\theta) \right]\]</span></p>
+<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{{\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~\tilde{y} )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),\theta) \right]\]</span></p>
 </section>
 <section id="what-we-can-do-2" class="slide level2">
 <h2>What we can do</h2>
 <p><br></p>
-<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\color{red}{\theta} \sim \color{purple}{\Pi}} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~\color{red}{\theta})}\left[S(\color{green}{f}_\sharp \color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta}) \right]\]</span></p>
+<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{{\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{{\color{red}\theta} \sim {\color{purple}\Pi}} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]\]</span></p>
 </section>
 <section id="two-steps-further" class="slide level2">
 <h2>Two steps further</h2>
@@ -582,7 +589,7 @@ Joshua J Bon
 <section id="supporting-theory" class="slide level2">
 <h2>Supporting theory</h2>
 <ul>
-<li class="fragment"><p>Strictly proper scoring rule <span class="math inline">\(S\)</span> wrt <span class="math inline">\(\mathcal{P}\)</span></p></li>
+<li class="fragment"><p>Strictly proper scoring rule <span class="math inline">\(S\)</span> w.r.t. <span class="math inline">\(\mathcal{P}\)</span></p></li>
 <li class="fragment"><p>Importance distribution <span class="math inline">\(\bar\Pi\)</span> on <span class="math inline">\((\Theta,\vartheta)\)</span></p>
 <ul>
 <li class="fragment"><span class="math inline">\(\Pi \ll \bar\Pi\)</span> with density <span class="math inline">\(\bar\pi\)</span></li>
@@ -599,9 +606,9 @@ Joshua J Bon
 <h2>Supporting theory</h2>
 <p><strong>Theorem 1</strong>:</p>
 <p>If <span class="math inline">\(\mathcal{K}\)</span> is <em>sufficiently rich</em> then the Markov kernel,</p>
-<p><span class="math display">\[\boxed{K^{\star} \equiv \underset{K \in \mathcal{K}}{\arg\max}~\mathbb{E}_{\theta \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~ \theta)}\left[w(\theta, \tilde{y}) S(K(\cdot ~\vert~ \tilde{y}),\theta) \right]}\]</span></p>
+<p><span class="math display">\[\bbox[5pt,border: 1px solid blue]{\color{black}K^{\star} \equiv \underset{K \in \mathcal{K}}{\arg\max}~\mathbb{E}_{\theta \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~ \theta)}\left[w(\theta, \tilde{y}) S(K(\cdot ~\vert~ \tilde{y}),\theta) \right]}\]</span></p>
 <p>where <span class="math inline">\(w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\)</span> then</p>
-<p><span class="math display">\[\boxed{K^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}\]</span> almost surely.</p>
+<p><span class="math display">\[\bbox[5pt,border: 1px solid blue]{K^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}\]</span> almost surely.</p>
 </section>
 <section id="bayesian-score-calibration" class="slide level2">
 <h2>Bayesian Score Calibration</h2>
@@ -778,15 +785,16 @@ Joshua J Bon
 </div>
 <p>Estimated from independent replications of the method.</p>
 </section>
-<section id="lotka-volterra-sde-quasi-noisy-abc" class="slide level2">
-<h2>Lotka-Volterra SDE (quasi noisy-ABC)</h2>
+<section id="lotka-volterra-sde-quasi-abc" class="slide level2">
+<h2>Lotka-Volterra SDE (quasi-ABC)</h2>
 <p><a href="https://turing.ml/dev/tutorials/10-bayesian-differential-equations/#inference-of-a-stochastic-differential-equation">Turing.jl Tutorial: Bayesian Estimation of Differential Equations</a></p>
 <p><span class="math display">\[\text{d} X_{t} = (\beta_1 X_{t} - \beta_2 X_{t} Y_{t} ) \text{d} t+ \sigma_1 \text{d} B_{t}^{1}\]</span> <span class="math display">\[\text{d} Y_{t} = (\beta_4 X_{t} Y_{t} - \beta_3 Y_{t} ) \text{d} t+ \sigma_2 \text{d} B_{t}^{2}\]</span></p>
 </section>
-<section id="lotka-volterra-sde-quasi-abc" class="slide level2">
+<section id="lotka-volterra-sde-quasi-abc-1" class="slide level2">
 <h2>Lotka-Volterra SDE (quasi-ABC)</h2>
-<p>Use noisy quasi-likelihood as <strong>approximate model</strong></p>
-<p><span class="math display">\[L(\beta_{1:4}, \tau ~\vert~ x_{1:n}, y_{1:n}) = \tau^{2n}\exp\left(-\frac{\tau^2}{2} \sum_{i=1}^{n}\left[(x_i^\prime - x_i)^{2} + (y_i^\prime - y_i)^{2}\right] \right)\]</span></p>
+<p>Use noisy quasi-likelihood as <strong>approximate likelihood</strong></p>
+<p><span class="math display">\[\begin{aligned}&amp;L(\beta_{1:4}, \tau ~\vert~ x_{1:n}, y_{1:n}) \\
+&amp;= \tau^{2n}\exp\left(-\frac{\tau^2}{2} \sum_{i=1}^{n}\left[(x_i^\prime - x_i)^{2} + (y_i^\prime - y_i)^{2}\right] \right)\end{aligned}\]</span></p>
 <ul>
 <li class="fragment"><span class="math inline">\(\{(x_i^\prime,y_i^\prime)\}_{i=1}^{n}\)</span> simulated conditional on <span class="math inline">\(\beta_{1:4}\)</span></li>
 <li class="fragment">Prior <span class="math inline">\(\tau ∼ \text{Gamma}(2, 3)\)</span></li>
@@ -795,13 +803,26 @@ Joshua J Bon
 <p><strong>Further approximation</strong>: use rough numerical integration scheme (Euler-Maruyama <span class="math inline">\(\Delta t=0.01\)</span>).</p>
 </div>
 </section>
-<section id="lotka-volterra-sde-quasi-abc-1" class="slide level2">
+<section id="lotka-volterra-sde-quasi-abc-2" class="slide level2">
 <h2>Lotka-Volterra SDE (quasi-ABC)</h2>
 <p><object data="figs/lotka-posterior-comparison.pdf" type="application/pdf" width="800" height="600"><p>Unable to display PDF file. <a href="figs/lotka-posterior-comparison.pdf">Download</a> instead.</p></object></p>
 </section>
-<section id="lotka-volterra-sde-quasi-abc-2" class="slide level2">
+<section id="lotka-volterra-sde-quasi-abc-3" class="slide level2">
 <h2>Lotka-Volterra SDE (quasi-ABC)</h2>
 <p><object data="figs/lotka-calcheck.pdf" type="application/pdf" width="900" height="600"><p>Unable to display PDF file. <a href="figs/lotka-calcheck.pdf">Download</a> instead.</p></object></p>
+</section>
+<section id="lotka-volterra-sde-ekf" class="slide level2">
+<h2>Lotka-Volterra SDE (EKF)</h2>
+<p>Use extended Kalman Filter as <strong>approximate likelihood</strong></p>
+<ul>
+<li class="fragment">Discretise SDE at time points <span class="math inline">\(t_0,t_1,\ldots,t_n\)</span></li>
+<li class="fragment">Assume Gaussian at each <span class="math inline">\(t_i\)</span></li>
+<li class="fragment">Approximate transition dynamics by linear assumption</li>
+</ul>
+</section>
+<section id="lotka-volterra-sde-ekf-1" class="slide level2">
+<h2>Lotka-Volterra SDE (EKF)</h2>
+<p><object data="figs/lotka-ekf-calcheck.pdf" type="application/pdf" width="900" height="600"><p>Unable to display PDF file. <a href="figs/lotka-ekf-calcheck.pdf">Download</a> instead.</p></object></p>
 </section>
 <section id="thanks-for-listening" class="slide level2">
 <h2>Thanks for listening</h2>
@@ -1163,7 +1184,7 @@ Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],

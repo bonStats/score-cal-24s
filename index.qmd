@@ -4,7 +4,8 @@ author: "Joshua J Bon"
 institute: "CEREMADE, Université Paris-Dauphine"
 bibliography: refs.bib
 format:
-  revealjs: 
+  revealjs:
+    html-math-method: mathjax 
     theme: default
     df-print: paged
     incremental: true 
@@ -74,7 +75,7 @@ Current methods for **intractable** likelihoods:
 
 -   Laplace
 -   Variational inference
--   ABC
+-   Approximate Bayesian Computation (ABC)
 
 ## Approximations everywhere {center="true"}
 
@@ -88,14 +89,13 @@ Current methods for **intractable** likelihoods:
 
 ## Learning functions
 
-- Represent posterior approximation with Monte Carlo samples 
-    - e.g. MCMC with approximate likelihood
-
-- Find a function to correct the approximate samples posterior
-    - No need to rerun MCMC
-        - unlike correcting the likelihood directly
-    - Do approximate inference once
-        - in parallel for multiple datasets
+-   Represent posterior approximation with Monte Carlo samples
+    -   e.g. MCMC with approximate likelihood
+-   Find a function to correct the approximate samples posterior
+    -   No need to rerun MCMC
+        -   unlike correcting the likelihood directly
+    -   Do approximate inference once
+        -   in parallel for multiple datasets
 
 ## Illustration {.center}
 
@@ -168,29 +168,35 @@ ggplot() +
 
 ## Measure the similarity
 
-$$\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta})]$$
+$$\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
 
-$$\tilde{y} \sim P(\cdot \vert \color{red}{\theta}), \quad \color{red}{\theta} \sim \color{purple}{\Pi}$$
+$$\tilde{y} \sim P(\cdot \vert {\color{red}\theta}), \quad {\color{red}\theta} \sim {\color{purple}\Pi}$$
 
-- $\color{blue}{K}(\cdot\vert \tilde{y})$ is the approximate posterior
-- $\color{red}{\theta}$ is the true data generating parameter
-- $(\color{red}{\theta}, \tilde{y})$ prior-predictive pairs
-- $S$ measures the similarity between $\color{blue}{K}(\cdot\vert \tilde{y})$ and point $\color{red}{\theta}$
-
-## Measure the similarity
-
-$$\color{red}{\mathbb{E}}[S(\color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta})]$$
-
-$$\tilde{y} \sim P(\cdot \vert \color{red}{\theta}), \quad \color{red}{\theta} \sim \color{purple}{\Pi}$$
+-   ${\color{blue}K}(\cdot\vert \tilde{y})$ is the approximate posterior
+-   ${\color{red}\theta}$ is the true data generating parameter
+-   $({\color{red}\theta}, \tilde{y})$ prior-predictive pairs
+-   $S$ measures the similarity between ${\color{blue}K}(\cdot\vert \tilde{y})$ and point ${\color{red}\theta}$
 
 ## Optimise the similarity
 
-$$\max_{f \in \mathcal{F}}\color{red}{\mathbb{E}}[S(\color{green}{f}_\sharp\color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta})]$$
+$$\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
 
-$$\tilde{y} \sim P(\cdot \vert \color{red}{\theta}), \quad \color{red}{\theta} \sim \color{purple}{\Pi}$$
+## Optimise the similarity
 
-- $\color{green}{f}$ transforms realisations of $\color{blue}{K}(\cdot\vert \tilde{y})$ 
+$$\mathbb{E}[S({{\color{green}f}_\sharp\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
 
+## Optimise the similarity
+
+$$\max_{f \in \mathcal{F}}\mathbb{E}[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
+
+
+## Optimise the similarity
+
+$$\max_{f \in \mathcal{F}}\mathbb{E}[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
+
+$$\tilde{y} \sim P(\cdot \vert {\color{red}\theta}), \quad {\color{red}\theta} \sim {\color{purple}\Pi}$$
+
+-   ${\color{green}f}$ transforms realisations of ${\color{blue}K}(\cdot\vert \tilde{y})$
 
 ## Correcting many posteriors
 
@@ -238,10 +244,10 @@ ggplot() +
 
 ## Model calibration by simulation
 
-1.  Correct coverage? *Frequentist* 
-    - $S(\color{green}{f}_\sharp\color{blue}{K}(\cdot\vert y), \color{red}{\theta}) = \vert 1(\color{red}{\theta} \in \color{purple}{\text{CR}_\alpha}) - \alpha \vert$ 
+1.  Correct coverage? *Frequentist*
+    -   $S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert y), {\color{red}\theta}) = \vert 1({\color{red}\theta} \in {\color{purple}\text{CR}_\alpha}) - \alpha \vert$
 2.  Can we correct the entire distribution? **Bayesian**
-    - Proper scoring rules
+    -   Proper scoring rules
 
 # Theory and method
 
@@ -251,7 +257,7 @@ ggplot() +
 
 $S(U,x)$ compares probabilistic *forecast* $U$ to *ground truth* $x$.
 
-$$S(U,V) = \mathbb{E}_{x\sim V} S(U,x)$$ 
+$$S(U,V) = \mathbb{E}_{x\sim V} S(U,x)$$
 
 where $V$ is a probability measure.
 
@@ -268,7 +274,7 @@ $S(U, \cdot)$ is **strictly proper** if
 -   $S(V,V) \geq S(U, V)$ for all $V$ in some family, and
 -   equality holds iff $U = V$.
 
-. . . 
+. . .
 
 $$V = \arg\max_{U \in \mathcal{U}} S(U, V)$$
 
@@ -276,14 +282,13 @@ $$V = \arg\max_{U \in \mathcal{U}} S(U, V)$$
 
 <br>
 
-$$\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f}\in \mathcal{F}}{\arg\max}~ S[\color{green}{f}_\sharp \color{blue}{K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]$$
+$$\Pi(\cdot ~\vert~y ) = \underset{{\color{green}f}\in \mathcal{F}}{\arg\max}~ S[{\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]$$
 
 ## What we can't do
 
 <br>
 
-$$\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S(\color{green}{f}_\sharp\color{blue}{K}(\cdot\vert y),\theta) \right]$$
-
+$$\Pi(\cdot ~\vert~y ) = \underset{{\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert y),\theta) \right]$$
 
 ## What we can do
 
@@ -293,7 +298,7 @@ Consider the joint data-parameter space instead
 
 . . .
 
-$$\Pi(\text{d}\theta ~\vert~\tilde{y} )P(\text{d}\tilde{y}) = P(\tilde{y}~\vert~\theta)\Pi(\text{d}\theta )$$ 
+$$\Pi(\text{d}\theta ~\vert~\tilde{y} )P(\text{d}\tilde{y}) = P(\tilde{y}~\vert~\theta)\Pi(\text{d}\theta )$$
 
 . . .
 
@@ -303,38 +308,41 @@ See @pacchiardi2022likelihood and @bon2022bayesian
 
 <br>
 
-$$\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~\tilde{y} )}\left[S(\color{green}{f}_\sharp \color{blue}{K}(\cdot\vert \tilde{y}),\theta) \right]$$
+$$\Pi(\cdot ~\vert~y ) = \underset{{\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~\tilde{y} )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),\theta) \right]$$
 
 ## What we can do
 
 <br>
 
-$$\Pi(\cdot ~\vert~y ) = \underset{\color{green}{f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\color{red}{\theta} \sim \color{purple}{\Pi}} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~\color{red}{\theta})}\left[S(\color{green}{f}_\sharp \color{blue}{K}(\cdot\vert \tilde{y}),\color{red}{\theta}) \right]$$
+$$\Pi(\cdot ~\vert~y ) = \underset{{\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{{\color{red}\theta} \sim {\color{purple}\Pi}} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
 
 ## Two steps further
 
 <br>
 
-1. Replace $P(\text{d}\tilde{y})$ with $Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y})v(\tilde{y})$
+1.  Replace $P(\text{d}\tilde{y})$ with $Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y})v(\tilde{y})$
 
-2. Replace $\Pi$ with $\bar{\Pi}$ 
-    - correct with importance weight
+2.  Replace $\Pi$ with $\bar{\Pi}$
 
-. . . 
+    -   correct with importance weight
+
+. . .
 
 It still works!
 
 ## Supporting theory
 
--   Strictly proper scoring rule $S$ wrt $\mathcal{P}$
+-   Strictly proper scoring rule $S$ w.r.t. $\mathcal{P}$
 
 -   Importance distribution $\bar\Pi$ on $(\Theta,\vartheta)$
-    - $\Pi \ll \bar\Pi$ with density $\bar\pi$
-    
+
+    -   $\Pi \ll \bar\Pi$ with density $\bar\pi$
+
 -   Stability function $v:\mathsf{Y} \rightarrow [0,\infty)$
-    - measurable under $P$ on $(\mathsf{Y}, \mathcal{Y})$
-    
--  $Q(\text{d} \tilde{y}) \propto P(\text{d} \tilde{y})v(\tilde{y})$
+
+    -   measurable under $P$ on $(\mathsf{Y}, \mathcal{Y})$
+
+-   $Q(\text{d} \tilde{y}) \propto P(\text{d} \tilde{y})v(\tilde{y})$
 
 -   Family of kernels $\mathcal{K}$
 
@@ -344,13 +352,11 @@ It still works!
 
 If $\mathcal{K}$ is *sufficiently rich* then the Markov kernel,
 
-$$\boxed{K^{\star} \equiv \underset{K \in \mathcal{K}}{\arg\max}~\mathbb{E}_{\theta \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~ \theta)}\left[w(\theta, \tilde{y}) S(K(\cdot ~\vert~ \tilde{y}),\theta) \right]}$$
-
+$$\bbox[5pt,border: 1px solid blue]{\color{black}K^{\star} \equiv \underset{K \in \mathcal{K}}{\arg\max}~\mathbb{E}_{\theta \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~ \theta)}\left[w(\theta, \tilde{y}) S(K(\cdot ~\vert~ \tilde{y}),\theta) \right]}$$
 
 where $w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})$ then
 
-$$\boxed{K^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}$$ almost surely.
-
+$$\bbox[5pt,border: 1px solid blue]{K^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}$$ almost surely.
 
 ## Bayesian Score Calibration
 
@@ -363,7 +369,6 @@ $$f(x) = L[x - \hat{\mu}(y)] + \hat{\mu}(y) + b$$
 -   Mean $\hat{\mu}(y) = \mathbb{E}(\hat{\theta}),\quad \hat{\theta} \sim \hat\Pi(\cdot~\vert~y)$ for $y \in \mathsf{Y}$.
 
 -   $L$ is a lower triangular matrix with positive elements on diagonal.
-
 
 ## What about the weights?
 
@@ -453,7 +458,7 @@ knitr::kable(D_dat_ou1, format = "html")
 
 Estimated from independent replications of the method.
 
-## Lotka-Volterra SDE (quasi noisy-ABC)
+## Lotka-Volterra SDE (quasi-ABC)
 
 [Turing.jl Tutorial: Bayesian Estimation of Differential Equations](https://turing.ml/dev/tutorials/10-bayesian-differential-equations/#inference-of-a-stochastic-differential-equation)
 
@@ -461,9 +466,10 @@ $$\text{d} X_{t} = (\beta_1 X_{t} - \beta_2 X_{t} Y_{t} ) \text{d} t+ \sigma_1 \
 
 ## Lotka-Volterra SDE (quasi-ABC)
 
-Use noisy quasi-likelihood as **approximate model**
+Use noisy quasi-likelihood as **approximate likelihood**
 
-$$L(\beta_{1:4}, \tau ~\vert~ x_{1:n}, y_{1:n}) = \tau^{2n}\exp\left(-\frac{\tau^2}{2} \sum_{i=1}^{n}\left[(x_i^\prime - x_i)^{2} + (y_i^\prime - y_i)^{2}\right] \right)$$
+$$\begin{aligned}&L(\beta_{1:4}, \tau ~\vert~ x_{1:n}, y_{1:n}) \\
+&= \tau^{2n}\exp\left(-\frac{\tau^2}{2} \sum_{i=1}^{n}\left[(x_i^\prime - x_i)^{2} + (y_i^\prime - y_i)^{2}\right] \right)\end{aligned}$$
 
 -   $\{(x_i^\prime,y_i^\prime)\}_{i=1}^{n}$ simulated conditional on $\beta_{1:4}$
 -   Prior $\tau ∼ \text{Gamma}(2, 3)$
@@ -479,6 +485,18 @@ $$L(\beta_{1:4}, \tau ~\vert~ x_{1:n}, y_{1:n}) = \tau^{2n}\exp\left(-\frac{\tau
 ## Lotka-Volterra SDE (quasi-ABC)
 
 {{< pdf figs/lotka-calcheck.pdf height=600 width=900 >}}
+
+## Lotka-Volterra SDE (EKF)
+
+Use extended Kalman Filter as **approximate likelihood**
+
+- Discretise SDE at time points $t_0,t_1,\ldots,t_n$
+- Assume Gaussian at each $t_i$
+- Approximate transition dynamics by linear assumption
+
+## Lotka-Volterra SDE (EKF)
+
+{{< pdf figs/lotka-ekf-calcheck.pdf height=600 width=900 >}}
 
 ## Thanks for listening
 
