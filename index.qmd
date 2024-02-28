@@ -183,7 +183,7 @@ $$\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
 
 ## Optimise the similarity
 
-$$\mathbb{E}[S({{\color{green}f}_\sharp\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
+$$\mathbb{E}[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
 
 ## Optimise the similarity
 
