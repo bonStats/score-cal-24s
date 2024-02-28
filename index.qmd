@@ -282,13 +282,13 @@ $$V = \arg\max_{U \in \mathcal{U}} S(U, V)$$
 
 <br>
 
-$$\Pi(\cdot ~\vert~y ) = \underset{{\color{green}f}\in \mathcal{F}}{\arg\max}~ S[{\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]$$
+$$\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f}\in \mathcal{F}}{\arg\max}~ S[{\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]$$
 
 ## What we can't do
 
 <br>
 
-$$\Pi(\cdot ~\vert~y ) = \underset{{\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert y),\theta) \right]$$
+$$\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert y),\theta) \right]$$
 
 ## What we can do
 
@@ -308,13 +308,13 @@ See @pacchiardi2022likelihood and @bon2022bayesian
 
 <br>
 
-$$\Pi(\cdot ~\vert~y ) = \underset{{\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~\tilde{y} )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),\theta) \right]$$
+$$\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~\tilde{y} )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),\theta) \right]$$
 
 ## What we can do
 
 <br>
 
-$$\Pi(\cdot ~\vert~y ) = \underset{{\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{{\color{red}\theta} \sim {\color{purple}\Pi}} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
+$$\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim {\color{purple}\Pi}} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
 
 ## Two steps further
 
