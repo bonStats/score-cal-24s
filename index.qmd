@@ -73,7 +73,7 @@ Current methods for **intractable** likelihoods:
 
 **Posterior approximations**
 
--   Laplace
+-   Laplace, INLA
 -   Variational inference
 -   Approximate Bayesian Computation (ABC)
 
@@ -89,13 +89,15 @@ Current methods for **intractable** likelihoods:
 
 ## Learning functions
 
--   Represent posterior approximation with Monte Carlo samples
+1.  Approximate posterior with Monte Carlo samples
     -   e.g. MCMC with approximate likelihood
--   Find a function to correct the approximate samples posterior
+
+2.   Find a function to correct the approximate samples posterior
     -   No need to rerun MCMC
         -   unlike correcting the likelihood directly
-    -   Do approximate inference once
-        -   in parallel for multiple datasets
+    -   Do approximate inference once (real data)
+        -   in parallel for multiple datasets (simulated data)
+
 
 ## Illustration {.center}
 
@@ -358,6 +360,19 @@ where $w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})$ 
 
 $$\bbox[5pt,border: 1px solid blue]{K^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}$$ almost surely.
 
+
+## Sufficiently rich kernel family
+
+-   $\mathcal{K}$ be a family of Markov kernels
+-   $\mathcal{P}$ be a class of probability measures
+-   $Q$ be a probability measure on $(\mathsf{Y},\mathcal{Y})$, and $\tilde{y}\sim Q$
+-   $\Pi(\cdot ~\vert~ \tilde{y})$ be the true posterior at $\tilde{y}$.
+
+. . .
+
+We say $\mathcal{K}$ is sufficiently rich with respect to $(Q,\mathcal{P})$ if for all $U \in \mathcal{K}$, $U(\cdot ~\vert~ \tilde{y}) \in \mathcal{P}$ almost surely and there exists $U \in \mathcal{K}$ such that $U(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})$ almost surely.
+
+
 ## Bayesian Score Calibration
 
 ![](figs/score-cal-schem.png)
@@ -431,7 +446,7 @@ mu_dat_ou1 <- tibble::tribble(
   ~`Posterior`, ~`MSE`, ~`Bias`, ~`St. Dev`, ~`Coverage (90%)`,
       "Approx", 1.54, 1.21, 0.22, 0,
       "Adjust (α=0)", 0.12, 0.15, 0.20, 64,
-      "Adjust (α=0.5)", 0.12, 0.15, 0.23, 81,
+      #"Adjust (α=0.5)", 0.12, 0.15, 0.23, 81,
       "Adjust (α=1)", 0.12, 0.15, 0.23, 82,
       "True", 0.12, -0.01, 0.26, 94
   )
@@ -449,7 +464,7 @@ D_dat_ou1 <- tibble::tribble(
   ~`Posterior`, ~`MSE`, ~`Bias`, ~`St. Dev`, ~`Coverage (90%)`,
       "Approx", 4.73, 0.18, 1.46, 85,
       "Adjust (α=0)", 4.83, 0.28, 1.24, 72,
-      "Adjust (α=0.5)", 5.08, 0.41, 1.42, 81,
+      #"Adjust (α=0.5)", 5.08, 0.41, 1.42, 81,
       "Adjust (α=1)", 5.13, 0.42, 1.45, 83,
       "True", 5.00, 0.37, 1.48, 85
   )
@@ -460,7 +475,7 @@ Estimated from independent replications of the method.
 
 ## Lotka-Volterra SDE (quasi-ABC)
 
-[Turing.jl Tutorial: Bayesian Estimation of Differential Equations](https://turing.ml/dev/tutorials/10-bayesian-differential-equations/#inference-of-a-stochastic-differential-equation)
+[Turing.jl Tutorial: Bayesian Estimation of Differential Equations](https://turinglang.org/v0.30/tutorials/10-bayesian-differential-equations/#inference-of-a-stochastic-differential-equation)
 
 $$\text{d} X_{t} = (\beta_1 X_{t} - \beta_2 X_{t} Y_{t} ) \text{d} t+ \sigma_1 \text{d} B_{t}^{1}$$ $$\text{d} Y_{t} = (\beta_4 X_{t} Y_{t} - \beta_3 Y_{t} ) \text{d} t+ \sigma_2 \text{d} B_{t}^{2}$$
 
@@ -498,12 +513,12 @@ Use extended Kalman Filter as **approximate likelihood**
 
 {{< pdf figs/lotka-ekf-calcheck.pdf height=600 width=900 >}}
 
-## Thanks for listening
+## Thank you
 
 Ongoing work: happy to talk
 
 -   Collaborators: Chris, David$^2$
--   Helpful commentators
+-   Helpful commentators: Ming Xu, Aad van der Vaart
 
 ## Contact
 
@@ -555,7 +570,7 @@ Don't need to explicitly know the estimator $\theta^{\ast}_n$!
 
 We say $\mathcal{K}$ is sufficiently rich with respect to $(Q,\mathcal{P})$ if for all $U \in \mathcal{K}$, $U(\cdot ~\vert~ \tilde{y}) \in \mathcal{P}$ almost surely and there exists $U \in \mathcal{K}$ such that $U(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})$ almost surely.
 
-## Sufficiently rich kernel families
+## Sufficiently rich kernel family
 
 -   The moment-correcting transformation is typically not sufficiently rich
 -   Unit weights give the stabilising function the following property
@@ -567,7 +582,7 @@ $v(\tilde{y}_{1:n}) \rightarrow \delta_{\hat{\theta}_0}(\tilde{\theta}^\ast_n)$ 
 -   $\hat{\theta}_0$ is the MLE for the true data $y$
 -   $\tilde{\theta}^\ast_n$ is the MLE for simulated data $\tilde{y}$
 
-## Sufficiently rich kernel families
+## Sufficiently rich kernel family
 
 $v(\tilde{y}_{1:n}) \rightarrow \delta_{\hat{\theta}_0}(\tilde{\theta}^\ast_n)$
 
@@ -577,12 +592,12 @@ $$
 Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
 $$
 
--   we are concentrating on simulated datasets consistent with $\hat{\theta}_0$
+-   concentrating on simulated datasets consistent with $\hat{\theta}_0$
 -   simulated datasets with the same sufficient statistics
 -   approximate posteriors $\hat\Pi(\cdot~\vert~\tilde{y})$ will be equal
--   global bias and variance correction terms are sufficiently rich
+-   global bias and variance correction terms are sufficiently rich asymptotically
 
-## Sufficiently rich kernel families
+## Sufficiently rich kernel family
 
 Results are *targeted* towards $\bar\Pi$
 

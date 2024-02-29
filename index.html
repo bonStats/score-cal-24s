@@ -410,7 +410,7 @@ Joshua J Bon
 <h2>Approximations everywhere</h2>
 <p><strong>Posterior approximations</strong></p>
 <ul>
-<li class="fragment">Laplace</li>
+<li class="fragment">Laplace, INLA</li>
 <li class="fragment">Variational inference</li>
 <li class="fragment">Approximate Bayesian Computation (ABC)</li>
 </ul>
@@ -429,23 +429,17 @@ Joshua J Bon
 </section>
 <section id="learning-functions" class="slide level2">
 <h2>Learning functions</h2>
-<ul>
-<li class="fragment">Represent posterior approximation with Monte Carlo samples
+<ol type="1">
+<li class="fragment">Approximate posterior with Monte Carlo samples
 <ul>
 <li class="fragment">e.g.&nbsp;MCMC with approximate likelihood</li>
 </ul></li>
-<li class="fragment">Find a function to correct the approximate samples posterior
+<li class="fragment">Find a function to correct the approximate samples posterior - No need to rerun MCMC
 <ul>
-<li class="fragment">No need to rerun MCMC
-<ul>
-<li class="fragment">unlike correcting the likelihood directly</li>
+<li class="fragment">unlike correcting the likelihood directly - Do approximate inference once (real data)</li>
+<li class="fragment">in parallel for multiple datasets (simulated data)</li>
 </ul></li>
-<li class="fragment">Do approximate inference once
-<ul>
-<li class="fragment">in parallel for multiple datasets</li>
-</ul></li>
-</ul></li>
-</ul>
+</ol>
 </section>
 <section id="illustration" class="slide level2 center">
 <h2>Illustration</h2>
@@ -610,6 +604,18 @@ Joshua J Bon
 <p>where <span class="math inline">\(w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\)</span> then</p>
 <p><span class="math display">\[\bbox[5pt,border: 1px solid blue]{K^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}\]</span> almost surely.</p>
 </section>
+<section id="sufficiently-rich-kernel-family" class="slide level2">
+<h2>Sufficiently rich kernel family</h2>
+<ul>
+<li class="fragment"><span class="math inline">\(\mathcal{K}\)</span> be a family of Markov kernels</li>
+<li class="fragment"><span class="math inline">\(\mathcal{P}\)</span> be a class of probability measures</li>
+<li class="fragment"><span class="math inline">\(Q\)</span> be a probability measure on <span class="math inline">\((\mathsf{Y},\mathcal{Y})\)</span>, and <span class="math inline">\(\tilde{y}\sim Q\)</span></li>
+<li class="fragment"><span class="math inline">\(\Pi(\cdot ~\vert~ \tilde{y})\)</span> be the true posterior at <span class="math inline">\(\tilde{y}\)</span>.</li>
+</ul>
+<div class="fragment">
+<p>We say <span class="math inline">\(\mathcal{K}\)</span> is sufficiently rich with respect to <span class="math inline">\((Q,\mathcal{P})\)</span> if for all <span class="math inline">\(U \in \mathcal{K}\)</span>, <span class="math inline">\(U(\cdot ~\vert~ \tilde{y}) \in \mathcal{P}\)</span> almost surely and there exists <span class="math inline">\(U \in \mathcal{K}\)</span> such that <span class="math inline">\(U(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})\)</span> almost surely.</p>
+</div>
+</section>
 <section id="bayesian-score-calibration" class="slide level2">
 <h2>Bayesian Score Calibration</h2>
 
@@ -698,20 +704,13 @@ Joshua J Bon
 <td style="text-align: right;">64</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Adjust (α=0.5)</td>
-<td style="text-align: right;">0.12</td>
-<td style="text-align: right;">0.15</td>
-<td style="text-align: right;">0.23</td>
-<td style="text-align: right;">81</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">Adjust (α=1)</td>
 <td style="text-align: right;">0.12</td>
 <td style="text-align: right;">0.15</td>
 <td style="text-align: right;">0.23</td>
 <td style="text-align: right;">82</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">True</td>
 <td style="text-align: right;">0.12</td>
 <td style="text-align: right;">-0.01</td>
@@ -757,20 +756,13 @@ Joshua J Bon
 <td style="text-align: right;">72</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Adjust (α=0.5)</td>
-<td style="text-align: right;">5.08</td>
-<td style="text-align: right;">0.41</td>
-<td style="text-align: right;">1.42</td>
-<td style="text-align: right;">81</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">Adjust (α=1)</td>
 <td style="text-align: right;">5.13</td>
 <td style="text-align: right;">0.42</td>
 <td style="text-align: right;">1.45</td>
 <td style="text-align: right;">83</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">True</td>
 <td style="text-align: right;">5.00</td>
 <td style="text-align: right;">0.37</td>
@@ -787,7 +779,7 @@ Joshua J Bon
 </section>
 <section id="lotka-volterra-sde-quasi-abc" class="slide level2">
 <h2>Lotka-Volterra SDE (quasi-ABC)</h2>
-<p><a href="https://turing.ml/dev/tutorials/10-bayesian-differential-equations/#inference-of-a-stochastic-differential-equation">Turing.jl Tutorial: Bayesian Estimation of Differential Equations</a></p>
+<p><a href="https://turinglang.org/v0.30/tutorials/10-bayesian-differential-equations/#inference-of-a-stochastic-differential-equation">Turing.jl Tutorial: Bayesian Estimation of Differential Equations</a></p>
 <p><span class="math display">\[\text{d} X_{t} = (\beta_1 X_{t} - \beta_2 X_{t} Y_{t} ) \text{d} t+ \sigma_1 \text{d} B_{t}^{1}\]</span> <span class="math display">\[\text{d} Y_{t} = (\beta_4 X_{t} Y_{t} - \beta_3 Y_{t} ) \text{d} t+ \sigma_2 \text{d} B_{t}^{2}\]</span></p>
 </section>
 <section id="lotka-volterra-sde-quasi-abc-1" class="slide level2">
@@ -824,12 +816,12 @@ Joshua J Bon
 <h2>Lotka-Volterra SDE (EKF)</h2>
 <p><object data="figs/lotka-ekf-calcheck.pdf" type="application/pdf" width="900" height="600"><p>Unable to display PDF file. <a href="figs/lotka-ekf-calcheck.pdf">Download</a> instead.</p></object></p>
 </section>
-<section id="thanks-for-listening" class="slide level2">
-<h2>Thanks for listening</h2>
+<section id="thank-you" class="slide level2">
+<h2>Thank you</h2>
 <p>Ongoing work: happy to talk</p>
 <ul>
 <li class="fragment">Collaborators: Chris, David<span class="math inline">\(^2\)</span></li>
-<li class="fragment">Helpful commentators</li>
+<li class="fragment">Helpful commentators: Ming Xu, Aad van der Vaart</li>
 </ul>
 </section>
 <section id="contact" class="slide level2">
@@ -878,7 +870,7 @@ Pacchiardi, Lorenzo, and Ritabrata Dutta. 2022. <span>“Likelihood-Free Inferen
 <p>Don’t need to explicitly know the estimator <span class="math inline">\(\theta^{\ast}_n\)</span>!</p>
 </div>
 </section>
-<section id="sufficiently-rich-kernel-family" class="slide level2">
+<section id="sufficiently-rich-kernel-family-1" class="slide level2">
 <h2>Sufficiently rich kernel family</h2>
 <ul>
 <li class="fragment"><span class="math inline">\(\mathcal{K}\)</span> be a family of Markov kernels</li>
@@ -890,8 +882,8 @@ Pacchiardi, Lorenzo, and Ritabrata Dutta. 2022. <span>“Likelihood-Free Inferen
 <p>We say <span class="math inline">\(\mathcal{K}\)</span> is sufficiently rich with respect to <span class="math inline">\((Q,\mathcal{P})\)</span> if for all <span class="math inline">\(U \in \mathcal{K}\)</span>, <span class="math inline">\(U(\cdot ~\vert~ \tilde{y}) \in \mathcal{P}\)</span> almost surely and there exists <span class="math inline">\(U \in \mathcal{K}\)</span> such that <span class="math inline">\(U(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})\)</span> almost surely.</p>
 </div>
 </section>
-<section id="sufficiently-rich-kernel-families" class="slide level2">
-<h2>Sufficiently rich kernel families</h2>
+<section id="sufficiently-rich-kernel-family-2" class="slide level2">
+<h2>Sufficiently rich kernel family</h2>
 <ul>
 <li class="fragment">The moment-correcting transformation is typically not sufficiently rich</li>
 <li class="fragment">Unit weights give the stabilising function the following property</li>
@@ -904,22 +896,22 @@ Pacchiardi, Lorenzo, and Ritabrata Dutta. 2022. <span>“Likelihood-Free Inferen
 </ul>
 </div>
 </section>
-<section id="sufficiently-rich-kernel-families-1" class="slide level2">
-<h2>Sufficiently rich kernel families</h2>
+<section id="sufficiently-rich-kernel-family-3" class="slide level2">
+<h2>Sufficiently rich kernel family</h2>
 <p><span class="math inline">\(v(\tilde{y}_{1:n}) \rightarrow \delta_{\hat{\theta}_0}(\tilde{\theta}^\ast_n)\)</span></p>
 <p>Recall the distribution is defined as</p>
 <p><span class="math display">\[
 Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
 \]</span></p>
 <ul>
-<li class="fragment">we are concentrating on simulated datasets consistent with <span class="math inline">\(\hat{\theta}_0\)</span></li>
+<li class="fragment">concentrating on simulated datasets consistent with <span class="math inline">\(\hat{\theta}_0\)</span></li>
 <li class="fragment">simulated datasets with the same sufficient statistics</li>
 <li class="fragment">approximate posteriors <span class="math inline">\(\hat\Pi(\cdot~\vert~\tilde{y})\)</span> will be equal</li>
-<li class="fragment">global bias and variance correction terms are sufficiently rich</li>
+<li class="fragment">global bias and variance correction terms are sufficiently rich asymptotically</li>
 </ul>
 </section>
-<section id="sufficiently-rich-kernel-families-2" class="slide level2">
-<h2>Sufficiently rich kernel families</h2>
+<section id="sufficiently-rich-kernel-family-4" class="slide level2">
+<h2>Sufficiently rich kernel family</h2>
 <p>Results are <em>targeted</em> towards <span class="math inline">\(\bar\Pi\)</span></p>
 <ul>
 <li class="fragment"><p>finite sample approximation using importance sampling</p></li>
