@@ -8,10 +8,10 @@
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+  <meta name="generator" content="quarto-1.4.553">
 
   <meta name="author" content="Joshua J Bon">
-  <title>Bayesian score calibration for approximate models</title>
+  <title>Bayesian scoring rule calibration for approximate models</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -33,6 +33,7 @@
     div.csl-bib-body { }
     div.csl-entry {
       clear: both;
+      margin-bottom: 0em;
     }
     .hanging-indent div.csl-entry {
       margin-left:2em;
@@ -176,7 +177,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -339,7 +341,6 @@
       margin-right: 0; 
     }
   </style>
-  
   <link href="index_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
   <script src="index_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
@@ -348,7 +349,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Bayesian score calibration for approximate models</h1>
+  <h1 class="title">Bayesian scoring rule calibration for approximate models</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -366,8 +367,9 @@ Joshua J Bon
 <h2>Talk overview</h2>
 <ul>
 <li class="fragment">Motivation and intuitions</li>
-<li class="fragment">Theory and method</li>
+<li class="fragment">Method</li>
 <li class="fragment">Examples</li>
+<li class="fragment">Theory</li>
 </ul>
 <div class="fragment">
 <p>Joint work with</p>
@@ -378,68 +380,105 @@ Joshua J Bon
 </ul>
 </div>
 </section>
-<section id="motivation-little-rascal-likelihoods" class="slide level2">
-<h2>Motivation: “Little rascal” likelihoods</h2>
-<div class="columns">
-<div class="column" style="width:70%;">
-<p>Current methods for <strong>intractable</strong> likelihoods:</p>
+<section id="approximations-in-bayesian-inference" class="slide level2">
+<h2>Approximations in Bayesian inference</h2>
+<p>Bayesian inference requires likelihoods, but…</p>
 <ul>
-<li class="fragment">10,000s of realisations of the data generating process (ABC, pseudo-marginal MCMC)</li>
-<li class="fragment">May not target the true posterior (ABC)</li>
-<li class="fragment">How to identify method failure?</li>
+<li class="fragment">Intractable likelihoods
+<ul>
+<li class="fragment">Require approximations</li>
+</ul></li>
+<li class="fragment">Computationally expensive likelihoods
+<ul>
+<li class="fragment">Want good approximations</li>
+</ul></li>
+<li class="fragment">Posterior evaluation
+<ul>
+<li class="fragment">Need good approximations*</li>
+</ul></li>
 </ul>
-</div><div class="column" style="width:30%;">
-<p><img data-src="imgs/little_rascals_our_gang_waiting.gif"></p>
-</div>
-</div>
 </section>
-<section id="but-we-have-approximations" class="slide level2 center">
-<h2>But we have approximations…</h2>
+<section id="bayesian-inference" class="slide level2">
+<h2>Bayesian Inference</h2>
+
+<img data-src="imgs/little_rascals_our_gang_waiting.gif" class="r-stretch"></section>
+<section id="approximations-everywhere" class="slide level2 center">
+<h2>Approximations everywhere…</h2>
 </section>
-<section id="approximations-everywhere" class="slide level2">
-<h2>Approximations everywhere</h2>
-<p><strong>Likelihood approximations</strong></p>
+<section id="likelihood-approximations" class="slide level2">
+<h2>Likelihood approximations</h2>
 <ul>
 <li class="fragment">Limiting distributions</li>
 <li class="fragment">Whittle likelihood</li>
 <li class="fragment">Model simplification (e.g.&nbsp;SDE -&gt; ODE)</li>
 <li class="fragment">Linear noise approximation</li>
+<li class="fragment">Kalman filter</li>
+<li class="fragment">Particle filters</li>
 </ul>
 </section>
-<section id="approximations-everywhere-1" class="slide level2">
-<h2>Approximations everywhere</h2>
-<p><strong>Posterior approximations</strong></p>
+<section id="posterior-approximations" class="slide level2">
+<h2>Posterior approximations</h2>
 <ul>
-<li class="fragment">Laplace, INLA</li>
+<li class="fragment">Laplace</li>
+<li class="fragment">INLA</li>
 <li class="fragment">Variational inference</li>
-<li class="fragment">Approximate Bayesian Computation (ABC)</li>
+<li class="fragment">Psuedo-marginal MCMC</li>
+<li class="fragment">Approximate Bayesian Computation</li>
 </ul>
 </section>
-<section id="approximations-everywhere-2" class="slide level2" data-center="true">
-<h2>Approximations everywhere</h2>
-<p><strong>Sampling approximations</strong></p>
+<section id="sampling-approximations" class="slide level2">
+<h2>Sampling approximations</h2>
 <ul>
 <li class="fragment">Importance sampling</li>
 <li class="fragment">Sequential Monte Carlo</li>
 <li class="fragment">Markov chain Monte Carlo (MH, ULA, MALA, HMC)</li>
 </ul>
 </section>
-<section id="and-we-can-learn-functions" class="slide level2 center">
-<h2>And we can learn functions…</h2>
+<section id="a-good-approximation" class="slide level2">
+<h2>A good approximation?</h2>
+
+<img data-src="imgs/buster-keaton.gif" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="can-we-correct-posteriors-based-on-approximations" class="slide level2 center">
+<h2>Can we correct posteriors based on approximation(s)?</h2>
 </section>
-<section id="learning-functions" class="slide level2">
-<h2>Learning functions</h2>
-<ol type="1">
-<li class="fragment">Approximate posterior with Monte Carlo samples
+<section id="correcting-approximate-posteriors" class="slide level2">
+<h2>Correcting approximate posteriors</h2>
+<p><span class="math display">\[\begin{aligned}&amp;\text{True posterior}:\quad &amp;\Pi(\cdot\vert y) \\
+&amp;\text{Approximate posterior}:\quad &amp;\check{\Pi}(\cdot\vert y) \\
+&amp;\text{Finite-sample approximate posterior}:\quad &amp;\hat{\Pi}(\cdot\vert y)\end{aligned}\]</span></p>
+</section>
+<section id="correcting-approximate-posteriors-1" class="slide level2">
+<h2>Correcting approximate posteriors</h2>
 <ul>
-<li class="fragment">e.g.&nbsp;MCMC with approximate likelihood</li>
-</ul></li>
-<li class="fragment">Find a function to correct the approximate samples posterior - No need to rerun MCMC
+<li class="fragment">Generally theory motivating <span class="math inline">\(\Pi(\cdot\vert y) \approx \check{\Pi}(\cdot\vert y)\)</span>
 <ul>
-<li class="fragment">unlike correcting the likelihood directly - Do approximate inference once (real data)</li>
-<li class="fragment">in parallel for multiple datasets (simulated data)</li>
+<li class="fragment">But not for finite and/or given realisation of the data</li>
 </ul></li>
-</ol>
+<li class="fragment">Theory for <span class="math inline">\(\check{\Pi}(\cdot\vert y) \approx \hat{\Pi}(\cdot\vert y)\)</span> as <span class="math inline">\(N \rightarrow \infty\)</span>
+<ul>
+<li class="fragment">and empirical tests for finite <span class="math inline">\(N\)</span></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<p>What about <span class="math inline">\(\Pi(\cdot\vert y) \approx \hat{\Pi}(\cdot\vert y)\)</span>?</p>
+</div>
+</section>
+<section id="transforming-approximate-posteriors" class="slide level2">
+<h2>Transforming approximate posteriors</h2>
+<p>Find a function to correct approximate posteriors</p>
+<p><span class="math display">\[\Pi(\cdot\vert y) \approx {\color{green}f}_\sharp\hat{\Pi}(\cdot\vert y)\]</span> using samples from <span class="math inline">\(\hat{\Pi}(\cdot\vert y)\)</span></p>
+<ul>
+<li class="fragment">No need to rerun MC/MCMC/SMC
+<ul>
+<li class="fragment">unlike correcting the likelihood directly<br>
+</li>
+</ul></li>
+<li class="fragment">Correction acts on all levels of approximation</li>
+<li class="fragment">But we still can’t evaluate <span class="math inline">\(\Pi(\cdot\vert y)\)</span>!</li>
+</ul>
+<div class="fragment">
+<p><strong>Use a calibration-based approach…</strong></p>
+</div>
 </section>
 <section id="illustration" class="slide level2 center">
 <h2>Illustration</h2>
@@ -447,54 +486,61 @@ Joshua J Bon
 <section id="correcting-a-posterior" class="slide level2">
 <h2>Correcting a posterior</h2>
 
-<img data-src="index_files/figure-revealjs/fig-illustration-1-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;1: Ideal case (approximation in blue)</p></section>
+<img data-src="index_files/figure-revealjs/fig-illustration-1-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;1: Ideal case (approximation in blue)
+</p></section>
 <section id="correcting-a-posterior-1" class="slide level2">
 <h2>Correcting a posterior</h2>
 
-<img data-src="index_files/figure-revealjs/fig-illustration-2-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;2: Real case (approximation in blue)</p></section>
+<img data-src="index_files/figure-revealjs/fig-illustration-2-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;2: Real case (approximation in blue)
+</p></section>
 <section id="correcting-many-posteriors" class="slide level2">
 <h2>Correcting many posteriors</h2>
 
-<img data-src="index_files/figure-revealjs/fig-illustration-3-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;3: Correct on average? (approximation in blue)</p></section>
+<img data-src="index_files/figure-revealjs/fig-illustration-3-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;3: Correct on average? (approximation in blue)
+</p></section>
 <section id="measure-the-similarity" class="slide level2">
 <h2>Measure the similarity</h2>
-<p><span class="math display">\[\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]\]</span></p>
+<p>Let <span class="math inline">\({\color{blue}K}\)</span> be a Markov kernel, e.g.&nbsp;<span class="math inline">\({\color{blue}K}(\cdot\vert\tilde{y}) = \hat{\Pi}(\cdot\vert\tilde{y})\)</span>.</p>
+<div class="fragment">
+<p>Measure the similarity to the truth with <span class="math inline">\(S:\mathcal{P} \times \Theta \rightarrow \mathbb{R}\)</span></p>
+<p><span class="math display">\[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})\]</span></p>
 <p><span class="math display">\[\tilde{y} \sim P(\cdot \vert {\color{red}\theta}), \quad {\color{red}\theta} \sim {\color{purple}\Pi}\]</span></p>
 <ul>
-<li class="fragment"><span class="math inline">\({\color{blue}K}(\cdot\vert \tilde{y})\)</span> is the approximate posterior</li>
 <li class="fragment"><span class="math inline">\({\color{red}\theta}\)</span> is the true data generating parameter</li>
 <li class="fragment"><span class="math inline">\(({\color{red}\theta}, \tilde{y})\)</span> prior-predictive pairs</li>
-<li class="fragment"><span class="math inline">\(S\)</span> measures the similarity between <span class="math inline">\({\color{blue}K}(\cdot\vert \tilde{y})\)</span> and point <span class="math inline">\({\color{red}\theta}\)</span></li>
 </ul>
+</div>
 </section>
 <section id="optimise-the-similarity" class="slide level2">
 <h2>Optimise the similarity</h2>
-<p><span class="math display">\[\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]\]</span></p>
+<p>Consider the average over prior-predictive pairs <span class="math inline">\(({\color{red}\theta}, \tilde{y})\)</span></p>
+<p><span class="math display">\[\max_{{\color{blue}K} \in \mathcal{K}}\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]\]</span></p>
 </section>
 <section id="optimise-the-similarity-1" class="slide level2">
 <h2>Optimise the similarity</h2>
-<p><span class="math display">\[\mathbb{E}[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]\]</span></p>
-</section>
-<section id="optimise-the-similarity-2" class="slide level2">
-<h2>Optimise the similarity</h2>
-<p><span class="math display">\[\max_{f \in \mathcal{F}}\mathbb{E}[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]\]</span></p>
-</section>
-<section id="optimise-the-similarity-3" class="slide level2">
-<h2>Optimise the similarity</h2>
-<p><span class="math display">\[\max_{f \in \mathcal{F}}\mathbb{E}[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]\]</span></p>
-<p><span class="math display">\[\tilde{y} \sim P(\cdot \vert {\color{red}\theta}), \quad {\color{red}\theta} \sim {\color{purple}\Pi}\]</span></p>
-<ul>
-<li class="fragment"><span class="math inline">\({\color{green}f}\)</span> transforms realisations of <span class="math inline">\({\color{blue}K}(\cdot\vert \tilde{y})\)</span></li>
-</ul>
+<p>Consider the average over prior-predictive pairs <span class="math inline">\(({\color{red}\theta}, \tilde{y})\)</span></p>
+<div class="fragment">
+<p>Choose <span class="math inline">\(\mathcal{K} = \{{\color{green}f}_\sharp\hat\Pi: {\color{green}f} \in \mathcal{F}\}\)</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[\max_{{\color{green}f} \in \mathcal{F}}\mathbb{E}[S({\color{green}f}_\sharp\hat\Pi(\cdot\vert \tilde{y}),{\color{red}\theta})]\]</span></p>
+</div>
 </section>
 <section id="correcting-many-posteriors-1" class="slide level2">
 <h2>Correcting many posteriors</h2>
 
-<img data-src="index_files/figure-revealjs/fig-illustration-4-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;4: Before correction</p></section>
+<img data-src="index_files/figure-revealjs/fig-illustration-4-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;4: Before correction
+</p></section>
 <section id="correcting-many-posteriors-2" class="slide level2">
 <h2>Correcting many posteriors</h2>
 
-<img data-src="index_files/figure-revealjs/fig-illustration-5-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;5: After correction</p></section>
+<img data-src="index_files/figure-revealjs/fig-illustration-5-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;5: After correction
+</p></section>
 <section id="model-calibration-by-simulation" class="slide level2">
 <h2>Model calibration by simulation</h2>
 <ol type="1">
@@ -509,8 +555,8 @@ Joshua J Bon
 </ol>
 </section>
 <section>
-<section id="theory-and-method" class="title-slide slide level1 center">
-<h1>Theory and method</h1>
+<section id="bsrc-method" class="title-slide slide level1 center">
+<h1>BSRC method</h1>
 
 </section>
 <section id="scoring-rules" class="slide level2">
@@ -559,12 +605,12 @@ Joshua J Bon
 <section id="what-we-can-do-1" class="slide level2">
 <h2>What we can do</h2>
 <p><br></p>
-<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~\tilde{y} )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),\theta) \right]\]</span></p>
+<p><span class="math display">\[{\color{purple}\Pi}(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{{\color{red}\theta} \sim {\color{purple}\Pi}(\cdot ~\vert~\tilde{y} )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]\]</span></p>
 </section>
 <section id="what-we-can-do-2" class="slide level2">
 <h2>What we can do</h2>
 <p><br></p>
-<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim {\color{purple}\Pi}} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]\]</span></p>
+<p><span class="math display">\[{\color{purple}\Pi}(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim {\color{purple}\Pi}} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]\]</span></p>
 </section>
 <section id="two-steps-further" class="slide level2">
 <h2>Two steps further</h2>
@@ -580,71 +626,27 @@ Joshua J Bon
 <p>It still works!</p>
 </div>
 </section>
-<section id="supporting-theory" class="slide level2">
-<h2>Supporting theory</h2>
-<ul>
-<li class="fragment"><p>Strictly proper scoring rule <span class="math inline">\(S\)</span> w.r.t. <span class="math inline">\(\mathcal{P}\)</span></p></li>
-<li class="fragment"><p>Importance distribution <span class="math inline">\(\bar\Pi\)</span> on <span class="math inline">\((\Theta,\vartheta)\)</span></p>
-<ul>
-<li class="fragment"><span class="math inline">\(\Pi \ll \bar\Pi\)</span> with density <span class="math inline">\(\bar\pi\)</span></li>
-</ul></li>
-<li class="fragment"><p>Stability function <span class="math inline">\(v:\mathsf{Y} \rightarrow [0,\infty)\)</span></p>
-<ul>
-<li class="fragment">measurable under <span class="math inline">\(P\)</span> on <span class="math inline">\((\mathsf{Y}, \mathcal{Y})\)</span></li>
-</ul></li>
-<li class="fragment"><p><span class="math inline">\(Q(\text{d} \tilde{y}) \propto P(\text{d} \tilde{y})v(\tilde{y})\)</span></p></li>
-<li class="fragment"><p>Family of kernels <span class="math inline">\(\mathcal{K}\)</span></p></li>
-</ul>
+<section id="bsrc-optimisation-problem" class="slide level2">
+<h2>BSRC optimisation problem</h2>
+<p><span class="math display">\[\underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[w({\color{red}\theta}, \tilde{y})S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]\]</span></p>
+<p><span class="math display">\[w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\]</span></p>
 </section>
-<section id="supporting-theory-1" class="slide level2">
-<h2>Supporting theory</h2>
-<p><strong>Theorem 1</strong>:</p>
-<p>If <span class="math inline">\(\mathcal{K}\)</span> is <em>sufficiently rich</em> then the Markov kernel,</p>
-<p><span class="math display">\[\bbox[5pt,border: 1px solid blue]{\color{black}K^{\star} \equiv \underset{K \in \mathcal{K}}{\arg\max}~\mathbb{E}_{\theta \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~ \theta)}\left[w(\theta, \tilde{y}) S(K(\cdot ~\vert~ \tilde{y}),\theta) \right]}\]</span></p>
-<p>where <span class="math inline">\(w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\)</span> then</p>
-<p><span class="math display">\[\bbox[5pt,border: 1px solid blue]{K^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}\]</span> almost surely.</p>
-</section>
-<section id="sufficiently-rich-kernel-family" class="slide level2">
-<h2>Sufficiently rich kernel family</h2>
-<ul>
-<li class="fragment"><span class="math inline">\(\mathcal{K}\)</span> be a family of Markov kernels</li>
-<li class="fragment"><span class="math inline">\(\mathcal{P}\)</span> be a class of probability measures</li>
-<li class="fragment"><span class="math inline">\(Q\)</span> be a probability measure on <span class="math inline">\((\mathsf{Y},\mathcal{Y})\)</span>, and <span class="math inline">\(\tilde{y}\sim Q\)</span></li>
-<li class="fragment"><span class="math inline">\(\Pi(\cdot ~\vert~ \tilde{y})\)</span> be the true posterior at <span class="math inline">\(\tilde{y}\)</span>.</li>
-</ul>
-<div class="fragment">
-<p>We say <span class="math inline">\(\mathcal{K}\)</span> is sufficiently rich with respect to <span class="math inline">\((Q,\mathcal{P})\)</span> if for all <span class="math inline">\(U \in \mathcal{K}\)</span>, <span class="math inline">\(U(\cdot ~\vert~ \tilde{y}) \in \mathcal{P}\)</span> almost surely and there exists <span class="math inline">\(U \in \mathcal{K}\)</span> such that <span class="math inline">\(U(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})\)</span> almost surely.</p>
-</div>
-</section>
-<section id="bayesian-score-calibration" class="slide level2">
-<h2>Bayesian Score Calibration</h2>
-
-<img data-src="figs/score-cal-schem.png" class="r-stretch"></section>
 <section id="moment-correcting-transformation" class="slide level2">
 <h2>Moment-correcting transformation</h2>
-<p><span class="math display">\[f(x) = L[x - \hat{\mu}(y)] + \hat{\mu}(y) + b\]</span></p>
+<p>Need a family of functions, <span class="math inline">\(f \in \mathcal{F}\)</span>.</p>
+<div class="fragment">
+<p>Start simple:</p>
+<p><span class="math display">\[f(x) = A[x - \hat{\mu}(y)] + \hat{\mu}(y) + b\]</span></p>
 <ul>
 <li class="fragment"><p>Mean <span class="math inline">\(\hat{\mu}(y) = \mathbb{E}(\hat{\theta}),\quad \hat{\theta} \sim \hat\Pi(\cdot~\vert~y)\)</span> for <span class="math inline">\(y \in \mathsf{Y}\)</span>.</p></li>
-<li class="fragment"><p><span class="math inline">\(L\)</span> is a lower triangular matrix with positive elements on diagonal.</p></li>
+<li class="fragment"><p><span class="math inline">\(A\)</span> is a square matrix with positive elements on diagonal such that <span class="math inline">\(AA^\top\)</span> is positive definite.</p></li>
 </ul>
-</section>
-<section id="what-about-the-weights" class="slide level2">
-<h2>What about the weights?</h2>
-<p><span class="math display">\[w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\]</span></p>
-<p>Be brave…</p>
-<div class="fragment">
-<p><img data-src="imgs/dumb_patrick.gif"></p>
 </div>
 </section>
-<section id="what-about-the-weights-1" class="slide level2">
-<h2>What about the weights?</h2>
-<p><br></p>
-<p><strong>Unit weights</strong></p>
-<p><span class="math display">\[\hat{w}(\theta, \tilde{y}) = 1\]</span></p>
-<div class="fragment">
-<p>Justified asymptotically using the flexibility of <span class="math inline">\(v(\tilde{y})\)</span></p>
-</div>
-</section></section>
+<section id="bayesian-scoring-rule-calibration" class="slide level2">
+<h2>Bayesian scoring rule calibration</h2>
+
+<img data-src="figs/score-cal-schem.png" class="r-stretch"></section></section>
 <section>
 <section id="examples" class="title-slide slide level1 center">
 <h1>Examples</h1>
@@ -678,6 +680,7 @@ Joshua J Bon
 <p>Comparison for <span class="math inline">\(\mu\)</span></p>
 <div class="cell">
 <div class="cell-output-display">
+<div>
 <table data-quarto-postprocess="true">
 <thead>
 <tr class="header">
@@ -723,6 +726,7 @@ Joshua J Bon
 
 </div>
 </div>
+</div>
 <p>Estimated from independent replications of the method.</p>
 </section>
 <section id="ou-process-limiting-approximation-3" class="slide level2">
@@ -730,6 +734,7 @@ Joshua J Bon
 <p>Comparison for <span class="math inline">\(D\)</span></p>
 <div class="cell">
 <div class="cell-output-display">
+<div>
 <table data-quarto-postprocess="true">
 <thead>
 <tr class="header">
@@ -775,6 +780,7 @@ Joshua J Bon
 
 </div>
 </div>
+</div>
 <p>Estimated from independent replications of the method.</p>
 </section>
 <section id="lotka-volterra-sde-quasi-abc" class="slide level2">
@@ -816,13 +822,99 @@ Joshua J Bon
 <h2>Lotka-Volterra SDE (EKF)</h2>
 <p><object data="figs/lotka-ekf-calcheck.pdf" type="application/pdf" width="900" height="600"><p>Unable to display PDF file. <a href="figs/lotka-ekf-calcheck.pdf">Download</a> instead.</p></object></p>
 </section>
-<section id="thank-you" class="slide level2">
-<h2>Thank you</h2>
+<section id="allee-effect-model" class="slide level2">
+<h2>Allee effect model</h2>
+<p>To add</p>
+</section></section>
+<section>
+<section id="theory" class="title-slide slide level1 center">
+<h1>Theory</h1>
+
+</section>
+<section id="supporting-theory" class="slide level2">
+<h2>Supporting theory</h2>
+<ul>
+<li class="fragment"><p>Strictly proper scoring rule <span class="math inline">\(S\)</span> w.r.t. <span class="math inline">\(\mathcal{P}\)</span></p></li>
+<li class="fragment"><p>Importance distribution <span class="math inline">\(\bar\Pi\)</span> on <span class="math inline">\((\Theta,\vartheta)\)</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(\Pi \ll \bar\Pi\)</span> with density <span class="math inline">\(\bar\pi\)</span></li>
+</ul></li>
+<li class="fragment"><p>Stability function <span class="math inline">\(v:\mathsf{Y} \rightarrow [0,\infty)\)</span></p>
+<ul>
+<li class="fragment">measurable under <span class="math inline">\(P\)</span> on <span class="math inline">\((\mathsf{Y}, \mathcal{Y})\)</span></li>
+</ul></li>
+<li class="fragment"><p><span class="math inline">\(Q(\text{d} \tilde{y}) \propto P(\text{d} \tilde{y})v(\tilde{y})\)</span></p></li>
+<li class="fragment"><p>Family of kernels <span class="math inline">\(\mathcal{K}\)</span></p></li>
+</ul>
+</section>
+<section id="supporting-theory-theorem-1" class="slide level2">
+<h2>Supporting theory: Theorem 1</h2>
+<p>If <span class="math inline">\(\mathcal{K}\)</span> is <em>sufficiently rich</em> then the Markov kernel,</p>
+<p><span class="math display">\[\bbox[5pt,border: 1px solid blue]{\color{black}K^{\star} \equiv \underset{K \in \mathcal{K}}{\arg\max}~\mathbb{E}_{\theta \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~ \theta)}\left[w(\theta, \tilde{y}) S(K(\cdot ~\vert~ \tilde{y}),\theta) \right]}\]</span></p>
+<p>where <span class="math inline">\(w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\)</span> then</p>
+<p><span class="math display">\[\bbox[5pt,border: 1px solid blue]{K^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}\]</span> almost surely.</p>
+</section>
+<section id="sufficiently-rich-kernel-family" class="slide level2">
+<h2>Sufficiently rich kernel family</h2>
+<ul>
+<li class="fragment"><span class="math inline">\(\mathcal{K}\)</span> be a family of Markov kernels</li>
+<li class="fragment"><span class="math inline">\(\mathcal{P}\)</span> be a class of probability measures</li>
+<li class="fragment"><span class="math inline">\(Q\)</span> be a probability measure on <span class="math inline">\((\mathsf{Y},\mathcal{Y})\)</span>, and <span class="math inline">\(\tilde{y}\sim Q\)</span></li>
+<li class="fragment"><span class="math inline">\(\Pi(\cdot ~\vert~ \tilde{y})\)</span> be the true posterior at <span class="math inline">\(\tilde{y}\)</span>.</li>
+</ul>
+<div class="fragment">
+<p>We say <span class="math inline">\(\mathcal{K}\)</span> is sufficiently rich with respect to <span class="math inline">\((Q,\mathcal{P})\)</span> if for all <span class="math inline">\(U \in \mathcal{K}\)</span>, <span class="math inline">\(U(\cdot ~\vert~ \tilde{y}) \in \mathcal{P}\)</span> almost surely and there exists <span class="math inline">\(U \in \mathcal{K}\)</span> such that <span class="math inline">\(U(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})\)</span> almost surely.</p>
+</div>
+</section>
+<section id="what-about-the-weights" class="slide level2">
+<h2>What about the weights?</h2>
+<p><span class="math display">\[w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\]</span></p>
+<p>Unstable, high variance?</p>
+<ul>
+<li class="fragment">Truncate the weights <span class="citation" data-cites="ionides2008truncated">(<a href="#/references" role="doc-biblioref" onclick="">Ionides 2008</a>)</span></li>
+<li class="fragment">PSIS <span class="citation" data-cites="vehtari2024psis">(<a href="#/references" role="doc-biblioref" onclick="">Vehtari et al. 2024</a>)</span></li>
+<li class="fragment">Be brave…</li>
+</ul>
+</section>
+<section id="what-about-the-weights-1" class="slide level2">
+<h2>What about the weights?</h2>
+<p><br></p>
+<p><strong>Unit weights</strong></p>
+<p><span class="math display">\[\hat{w}(\theta, \tilde{y}) = 1\]</span></p>
+<div class="fragment">
+<p>Justified asymptotically using the flexibility of <span class="math inline">\(v(\tilde{y})\)</span></p>
+</div>
+</section>
+<section id="unit-weights-theorem-2" class="slide level2">
+<h2>Unit weights: Theorem 2</h2>
+<p>Let <span class="math inline">\(g(x) = \bar \pi(x) / \pi(x)\)</span> positive and continuous for <span class="math inline">\(x \in \Theta\)</span>.</p>
+<p>If an estimator <span class="math inline">\(\theta^{\ast}_n \equiv \theta^{\ast}(\tilde{y}_{1:n})\)</span> exists such that <span class="math inline">\(\theta^{\ast}_n \rightarrow z\)</span> a.s. for <span class="math inline">\(n \rightarrow \infty\)</span> when <span class="math inline">\(\tilde{y}_i \sim P(\cdot ~\vert~ z)\)</span> for <span class="math inline">\(z \in \Theta\)</span> then the error when using <span class="math inline">\(\hat{w} = 1\)</span> satisfies <span class="math display">\[\hat{w} - w(\theta,\tilde{y}_{1:n}) \rightarrow 0\]</span> a.s. for <span class="math inline">\(n \rightarrow \infty\)</span></p>
+</section>
+<section id="justification-of-unit-weights" class="slide level2">
+<h2>Justification of unit weights</h2>
+<p>Theorem 2 is possible because of the stability function justified by Theorem 1.</p>
+<p><span class="math display">\[w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\]</span></p>
+<div class="fragment">
+<p><strong>Trick</strong>: set <span class="math inline">\(v(\tilde{y}) = \frac{\bar\pi(\theta^{\ast}_n )}{\pi(\theta^{\ast}_n )}\)</span> and look at large sample properties.</p>
+</div>
+<div class="fragment">
+<p>Don’t need to explicitly know the estimator <span class="math inline">\(\theta^{\ast}_n\)</span>!</p>
+</div>
+</section>
+<section id="approximate-conclusion" class="slide level2">
+<h2>Approximate conclusion</h2>
 <p>Ongoing work: happy to talk</p>
+<ul>
+<li class="fragment">Test more approximate likelihoods</li>
+<li class="fragment">Test more flexible transformation families</li>
+</ul>
+<div class="fragment">
+<p>Thanks to</p>
 <ul>
 <li class="fragment">Collaborators: Chris, David<span class="math inline">\(^2\)</span></li>
 <li class="fragment">Helpful commentators: Ming Xu, Aad van der Vaart</li>
 </ul>
+</div>
 </section>
 <section id="contact" class="slide level2">
 <h2>Contact</h2>
@@ -833,15 +925,21 @@ Joshua J Bon
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-bon2022bayesian" class="csl-entry" role="listitem">
 Bon, Joshua J, David J Warne, David J Nott, and Christopher Drovandi. 2022. <span>“Bayesian Score Calibration for Approximate Models.”</span> <em>arXiv Preprint arXiv:2211.05357</em>.
 </div>
 <div id="ref-gneiting2007strictly" class="csl-entry" role="listitem">
 Gneiting, Tilmann, and Adrian E Raftery. 2007. <span>“Strictly Proper Scoring Rules, Prediction, and Estimation.”</span> <em>Journal of the American Statistical Association</em> 102 (477): 359–78.
 </div>
+<div id="ref-ionides2008truncated" class="csl-entry" role="listitem">
+Ionides, Edward L. 2008. <span>“Truncated Importance Sampling.”</span> <em>Journal of Computational and Graphical Statistics</em> 17 (2): 295–311.
+</div>
 <div id="ref-pacchiardi2022likelihood" class="csl-entry" role="listitem">
 Pacchiardi, Lorenzo, and Ritabrata Dutta. 2022. <span>“Likelihood-Free Inference with Generative Neural Networks via Scoring Rule Minimization.”</span> <em>arXiv Preprint arXiv:2205.15784</em>.
+</div>
+<div id="ref-vehtari2024psis" class="csl-entry" role="listitem">
+Vehtari, Aki, Daniel Simpson, Andrew Gelman, Yuling Yao, and Jonah Gabry. 2024. <span>“Pareto Smoothed Importance Sampling.”</span> <em>Journal of Machine Learning Research</em> 25 (72): 1–58. <a href="http://jmlr.org/papers/v25/19-556.html">http://jmlr.org/papers/v25/19-556.html</a>.
 </div>
 </div>
 </section></section>
@@ -849,26 +947,6 @@ Pacchiardi, Lorenzo, and Ritabrata Dutta. 2022. <span>“Likelihood-Free Inferen
 <section id="appendix-theory-vs-practice" class="title-slide slide level1 center">
 <h1>Appendix: Theory vs practice</h1>
 
-</section>
-<section id="justification-of-unit-weights" class="slide level2">
-<h2>Justification of unit weights</h2>
-<p>When we take <span class="math inline">\(\alpha =1\)</span>, <span class="math inline">\(\hat{w} = 1\)</span>!</p>
-<div class="fragment">
-<p><strong>Theorem 2</strong></p>
-<p>Let <span class="math inline">\(g(x) = \bar \pi(x) / \pi(x)\)</span> positive and continuous for <span class="math inline">\(x \in \Theta\)</span>.</p>
-<p>If an estimator <span class="math inline">\(\theta^{\ast}_n \equiv \theta^{\ast}(\tilde{y}_{1:n})\)</span> exists such that <span class="math inline">\(\theta^{\ast}_n \rightarrow z\)</span> a.s. for <span class="math inline">\(n \rightarrow \infty\)</span> when <span class="math inline">\(\tilde{y}_i \sim P(\cdot ~\vert~ z)\)</span> for <span class="math inline">\(z \in \Theta\)</span> then the error when using <span class="math inline">\(\hat{w} = 1\)</span> satisfies <span class="math display">\[\hat{w} - w(\theta,\tilde{y}_{1:n}) \rightarrow 0\]</span> a.s. for <span class="math inline">\(n \rightarrow \infty\)</span></p>
-</div>
-</section>
-<section id="justification-of-unit-weights-1" class="slide level2">
-<h2>Justification of unit weights</h2>
-<p>Theorem 2 is possible because of the stability function justified by Theorem 1.</p>
-<p><span class="math display">\[w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\]</span></p>
-<div class="fragment">
-<p><strong>Trick</strong>: set <span class="math inline">\(v(\tilde{y}) = \frac{\bar\pi(\theta^{\ast}_n )}{\pi(\theta^{\ast}_n )}\)</span> and look at large sample properties.</p>
-</div>
-<div class="fragment">
-<p>Don’t need to explicitly know the estimator <span class="math inline">\(\theta^{\ast}_n\)</span>!</p>
-</div>
 </section>
 <section id="sufficiently-rich-kernel-family-1" class="slide level2">
 <h2>Sufficiently rich kernel family</h2>
@@ -942,6 +1020,7 @@ Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
 <p><strong>Correlation summaries</strong></p>
 <div class="cell">
 <div class="cell-output-display">
+<div>
 <table data-quarto-postprocess="true">
 <thead>
 <tr class="header">
@@ -982,13 +1061,16 @@ Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
 
 </div>
 </div>
+</div>
 <p><span class="math inline">\(M = 100\)</span> and <span class="math inline">\(\bar\Pi = \hat\Pi(\cdot~\vert~y)\)</span> with variance scaled by 2</p>
 </section>
 <section id="bivariate-ou-process-vi-3" class="slide level2">
 <h2>Bivariate OU Process (VI)</h2>
 <p><object data="figs/gen-corr-ou-process-plot-calcheck.pdf" type="application/pdf" width="650" height="600"><p>Unable to display PDF file. <a href="figs/gen-corr-ou-process-plot-calcheck.pdf">Download</a> instead.</p></object></p>
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </section></section>
     </div>
@@ -1017,7 +1099,6 @@ Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -1316,10 +1397,27 @@ Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1329,8 +1427,17 @@ Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
@@ -1344,7 +1451,11 @@ Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
       const findCites = (el) => {

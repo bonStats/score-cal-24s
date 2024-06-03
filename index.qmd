@@ -1,5 +1,5 @@
 ---
-title: "Bayesian score calibration for approximate models"
+title: "Bayesian scoring rule calibration for approximate models"
 author: "Joshua J Bon"
 institute: "CEREMADE, Université Paris-Dauphine"
 bibliography: refs.bib
@@ -31,8 +31,9 @@ source("figs/illustrative-plots.R")
 ## Talk overview
 
 -   Motivation and intuitions
--   Theory and method
+-   Method
 -   Examples
+-   Theory
 
 . . .
 
@@ -42,61 +43,87 @@ Joint work with
 -   **David Warne**, QUT
 -   **David Nott**, NUS
 
-## Motivation: "Little rascal" likelihoods
 
-::: columns
-::: {.column width="70%"}
-Current methods for **intractable** likelihoods:
+## Approximations in Bayesian inference
 
--   10,000s of realisations of the data generating process (ABC, pseudo-marginal MCMC)
--   May not target the true posterior (ABC)
--   How to identify method failure?
-:::
+Bayesian inference requires likelihoods, but...
 
-::: {.column width="30%"}
+- Intractable likelihoods
+  - Require approximations 
+  
+- Computationally expensive likelihoods
+  - Want good approximations
+  
+- Posterior evaluation
+   - Need good approximations*
+
+## Bayesian Inference
+
 ![](imgs/little_rascals_our_gang_waiting.gif)
-:::
-:::
 
-## But we have approximations... {.center}
+## Approximations everywhere... {.center}
 
-## Approximations everywhere
-
-**Likelihood approximations**
+## Likelihood approximations
 
 -   Limiting distributions
 -   Whittle likelihood
 -   Model simplification (e.g. SDE -\> ODE)
 -   Linear noise approximation
+-   Kalman filter
+-   Particle filters
 
-## Approximations everywhere
+## Posterior approximations
 
-**Posterior approximations**
-
--   Laplace, INLA
+-   Laplace
+-   INLA
 -   Variational inference
--   Approximate Bayesian Computation (ABC)
+-   Psuedo-marginal MCMC
+-   Approximate Bayesian Computation
 
-## Approximations everywhere {center="true"}
-
-**Sampling approximations**
+## Sampling approximations
 
 -   Importance sampling
 -   Sequential Monte Carlo
 -   Markov chain Monte Carlo (MH, ULA, MALA, HMC)
 
-## And we can learn functions... {.center}
+## A good approximation?
 
-## Learning functions
+![](imgs/buster-keaton.gif){fig-align="center"}
 
-1.  Approximate posterior with Monte Carlo samples
-    -   e.g. MCMC with approximate likelihood
+## Can we correct posteriors based on approximation(s)? {.center}
 
-2.   Find a function to correct the approximate samples posterior
-    -   No need to rerun MCMC
-        -   unlike correcting the likelihood directly
-    -   Do approximate inference once (real data)
-        -   in parallel for multiple datasets (simulated data)
+## Correcting approximate posteriors
+
+$$\begin{aligned}&\text{True posterior}:\quad &\Pi(\cdot\vert y) \\ 
+&\text{Approximate posterior}:\quad &\check{\Pi}(\cdot\vert y) \\ 
+&\text{Finite-sample approximate posterior}:\quad &\hat{\Pi}(\cdot\vert y)\end{aligned}$$
+
+## Correcting approximate posteriors
+
+- Generally theory motivating $\Pi(\cdot\vert y) \approx \check{\Pi}(\cdot\vert y)$
+  - But not for finite and/or given realisation of the data
+- Theory for $\check{\Pi}(\cdot\vert y) \approx \hat{\Pi}(\cdot\vert y)$ as $N \rightarrow \infty$ 
+  - and empirical tests for finite $N$
+  
+. . . 
+
+What about $\Pi(\cdot\vert y) \approx \hat{\Pi}(\cdot\vert y)$?
+
+## Transforming approximate posteriors
+
+Find a function to correct approximate posteriors
+
+$$\Pi(\cdot\vert y) \approx {\color{green}f}_\sharp\hat{\Pi}(\cdot\vert y)$$
+using samples from $\hat{\Pi}(\cdot\vert y)$
+
+- No need to rerun MC/MCMC/SMC
+  - unlike correcting the likelihood directly  
+- Correction acts on all levels of approximation
+- But we still can't evaluate $\Pi(\cdot\vert y)$!
+
+. . .
+
+**Use a calibration-based approach...**
 
 
 ## Illustration {.center}
@@ -170,35 +197,38 @@ ggplot() +
 
 ## Measure the similarity
 
-$$\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
+Let ${\color{blue}K}$ be a Markov kernel, e.g. ${\color{blue}K}(\cdot\vert\tilde{y}) = \hat{\Pi}(\cdot\vert\tilde{y})$.
+
+. . . 
+
+Measure the similarity to the truth with $S:\mathcal{P} \times \Theta \rightarrow \mathbb{R}$ 
+
+$$S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})$$
 
 $$\tilde{y} \sim P(\cdot \vert {\color{red}\theta}), \quad {\color{red}\theta} \sim {\color{purple}\Pi}$$
 
--   ${\color{blue}K}(\cdot\vert \tilde{y})$ is the approximate posterior
 -   ${\color{red}\theta}$ is the true data generating parameter
 -   $({\color{red}\theta}, \tilde{y})$ prior-predictive pairs
--   $S$ measures the similarity between ${\color{blue}K}(\cdot\vert \tilde{y})$ and point ${\color{red}\theta}$
 
 ## Optimise the similarity
 
-$$\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
+Consider the average over prior-predictive pairs $({\color{red}\theta}, \tilde{y})$
 
-## Optimise the similarity
-
-$$\mathbb{E}[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
-
-## Optimise the similarity
-
-$$\max_{f \in \mathcal{F}}\mathbb{E}[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
+$$\max_{{\color{blue}K} \in \mathcal{K}}\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
 
 
 ## Optimise the similarity
 
-$$\max_{f \in \mathcal{F}}\mathbb{E}[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
+Consider the average over prior-predictive pairs $({\color{red}\theta}, \tilde{y})$
 
-$$\tilde{y} \sim P(\cdot \vert {\color{red}\theta}), \quad {\color{red}\theta} \sim {\color{purple}\Pi}$$
+. . .
 
--   ${\color{green}f}$ transforms realisations of ${\color{blue}K}(\cdot\vert \tilde{y})$
+Choose $\mathcal{K} = \{{\color{green}f}_\sharp\hat\Pi: {\color{green}f} \in \mathcal{F}\}$
+
+. . .
+
+$$\max_{{\color{green}f} \in \mathcal{F}}\mathbb{E}[S({\color{green}f}_\sharp\hat\Pi(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
+
 
 ## Correcting many posteriors
 
@@ -234,7 +264,7 @@ sim_id <- 5:7
 
 ggplot() +
   geom_hdr(aes(x,y), distributions %>% filter(sim %in% sim_id, val == "Prior"), method = "mvnorm", fill = "purple") +
-  geom_hdr(aes(x,y), distributions %>% filter(sim %in% sim_id, val == "Posterior"), method = "mvnorm", fill = "blue") +
+  geom_hdr(aes(x,y), distributions %>% filter(sim %in% sim_id, val == "Posterior given data"), method = "mvnorm", fill = "blue") +
   geom_point(aes(x,y), obs_data %>% filter(sim %in% sim_id)) +
   #geom_point(aes(x,y), approx_posterior_data %>% filter(sim %in% sim_id), alpha = 0.2) +
   geom_point(aes(x,y), priortrue_data %>% filter(sim %in% sim_id), colour = "red") +
@@ -251,7 +281,7 @@ ggplot() +
 2.  Can we correct the entire distribution? **Bayesian**
     -   Proper scoring rules
 
-# Theory and method
+# BSRC method
 
 ## Scoring rules
 
@@ -310,13 +340,13 @@ See @pacchiardi2022likelihood and @bon2022bayesian
 
 <br>
 
-$$\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~\tilde{y} )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),\theta) \right]$$
+$${\color{purple}\Pi}(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{{\color{red}\theta} \sim {\color{purple}\Pi}(\cdot ~\vert~\tilde{y} )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
 
 ## What we can do
 
 <br>
 
-$$\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim {\color{purple}\Pi}} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
+$${\color{purple}\Pi}(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim {\color{purple}\Pi}} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
 
 ## Two steps further
 
@@ -332,80 +362,31 @@ $$\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~
 
 It still works!
 
-## Supporting theory
+## BSRC optimisation problem
 
--   Strictly proper scoring rule $S$ w.r.t. $\mathcal{P}$
-
--   Importance distribution $\bar\Pi$ on $(\Theta,\vartheta)$
-
-    -   $\Pi \ll \bar\Pi$ with density $\bar\pi$
-
--   Stability function $v:\mathsf{Y} \rightarrow [0,\infty)$
-
-    -   measurable under $P$ on $(\mathsf{Y}, \mathcal{Y})$
-
--   $Q(\text{d} \tilde{y}) \propto P(\text{d} \tilde{y})v(\tilde{y})$
-
--   Family of kernels $\mathcal{K}$
-
-## Supporting theory
-
-**Theorem 1**:
-
-If $\mathcal{K}$ is *sufficiently rich* then the Markov kernel,
-
-$$\bbox[5pt,border: 1px solid blue]{\color{black}K^{\star} \equiv \underset{K \in \mathcal{K}}{\arg\max}~\mathbb{E}_{\theta \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~ \theta)}\left[w(\theta, \tilde{y}) S(K(\cdot ~\vert~ \tilde{y}),\theta) \right]}$$
-
-where $w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})$ then
-
-$$\bbox[5pt,border: 1px solid blue]{K^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}$$ almost surely.
-
-
-## Sufficiently rich kernel family
-
--   $\mathcal{K}$ be a family of Markov kernels
--   $\mathcal{P}$ be a class of probability measures
--   $Q$ be a probability measure on $(\mathsf{Y},\mathcal{Y})$, and $\tilde{y}\sim Q$
--   $\Pi(\cdot ~\vert~ \tilde{y})$ be the true posterior at $\tilde{y}$.
-
-. . .
-
-We say $\mathcal{K}$ is sufficiently rich with respect to $(Q,\mathcal{P})$ if for all $U \in \mathcal{K}$, $U(\cdot ~\vert~ \tilde{y}) \in \mathcal{P}$ almost surely and there exists $U \in \mathcal{K}$ such that $U(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})$ almost surely.
-
-
-## Bayesian Score Calibration
-
-![](figs/score-cal-schem.png)
-
-## Moment-correcting transformation
-
-$$f(x) = L[x - \hat{\mu}(y)] + \hat{\mu}(y) + b$$
-
--   Mean $\hat{\mu}(y) = \mathbb{E}(\hat{\theta}),\quad \hat{\theta} \sim \hat\Pi(\cdot~\vert~y)$ for $y \in \mathsf{Y}$.
-
--   $L$ is a lower triangular matrix with positive elements on diagonal.
-
-## What about the weights?
+$$\underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[w({\color{red}\theta}, \tilde{y})S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
 
 $$w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})$$
 
-Be brave...
+## Moment-correcting transformation
 
-. . .
+Need a family of functions, $f \in \mathcal{F}$. 
 
-![](imgs/dumb_patrick.gif)
+. . . 
 
-## What about the weights?
+Start simple:
 
-<br>
+$$f(x) = A[x - \hat{\mu}(y)] + \hat{\mu}(y) + b$$
 
-**Unit weights**
 
-$$\hat{w}(\theta, \tilde{y}) = 1$$
+-   Mean $\hat{\mu}(y) = \mathbb{E}(\hat{\theta}),\quad \hat{\theta} \sim \hat\Pi(\cdot~\vert~y)$ for $y \in \mathsf{Y}$.
 
-. . .
+-   $A$ is a square matrix with positive elements on diagonal such that $AA^\top$ is positive definite.
 
-Justified asymptotically using the flexibility of $v(\tilde{y})$
+
+## Bayesian scoring rule calibration
+
+![](figs/score-cal-schem.png)
 
 # Examples
 
@@ -513,33 +494,74 @@ Use extended Kalman Filter as **approximate likelihood**
 
 {{< pdf figs/lotka-ekf-calcheck.pdf height=600 width=900 >}}
 
-## Thank you
+## Allee effect model
 
-Ongoing work: happy to talk
+To add
 
--   Collaborators: Chris, David$^2$
--   Helpful commentators: Ming Xu, Aad van der Vaart
+# Theory
 
-## Contact
+## Supporting theory
 
--   [joshuajbon\@gmail.com](mailto:joshuajbon@gmail.com)
+-   Strictly proper scoring rule $S$ w.r.t. $\mathcal{P}$
 
--   [twitter/bonStats](https://twitter.com/bonStats)
+-   Importance distribution $\bar\Pi$ on $(\Theta,\vartheta)$
 
-## References
+    -   $\Pi \ll \bar\Pi$ with density $\bar\pi$
 
-::: {#refs}
-:::
+-   Stability function $v:\mathsf{Y} \rightarrow [0,\infty)$
 
-# Appendix: Theory vs practice
+    -   measurable under $P$ on $(\mathsf{Y}, \mathcal{Y})$
 
-## Justification of unit weights
+-   $Q(\text{d} \tilde{y}) \propto P(\text{d} \tilde{y})v(\tilde{y})$
 
-When we take $\alpha =1$, $\hat{w} = 1$!
+-   Family of kernels $\mathcal{K}$
+
+
+## Supporting theory: Theorem 1
+
+If $\mathcal{K}$ is *sufficiently rich* then the Markov kernel,
+
+$$\bbox[5pt,border: 1px solid blue]{\color{black}K^{\star} \equiv \underset{K \in \mathcal{K}}{\arg\max}~\mathbb{E}_{\theta \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~ \theta)}\left[w(\theta, \tilde{y}) S(K(\cdot ~\vert~ \tilde{y}),\theta) \right]}$$
+
+where $w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})$ then
+
+$$\bbox[5pt,border: 1px solid blue]{K^{\star}(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})}$$ almost surely.
+
+
+## Sufficiently rich kernel family
+
+-   $\mathcal{K}$ be a family of Markov kernels
+-   $\mathcal{P}$ be a class of probability measures
+-   $Q$ be a probability measure on $(\mathsf{Y},\mathcal{Y})$, and $\tilde{y}\sim Q$
+-   $\Pi(\cdot ~\vert~ \tilde{y})$ be the true posterior at $\tilde{y}$.
 
 . . .
 
-**Theorem 2**
+We say $\mathcal{K}$ is sufficiently rich with respect to $(Q,\mathcal{P})$ if for all $U \in \mathcal{K}$, $U(\cdot ~\vert~ \tilde{y}) \in \mathcal{P}$ almost surely and there exists $U \in \mathcal{K}$ such that $U(\cdot ~\vert~ \tilde{y}) = \Pi(\cdot ~\vert~ \tilde{y})$ almost surely.
+
+## What about the weights?
+
+$$w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})$$
+
+Unstable, high variance?
+
+- Truncate the weights [@ionides2008truncated]
+- PSIS [@vehtari2024psis]
+- Be brave...
+
+## What about the weights?
+
+<br>
+
+**Unit weights**
+
+$$\hat{w}(\theta, \tilde{y}) = 1$$
+
+. . .
+
+Justified asymptotically using the flexibility of $v(\tilde{y})$
+
+## Unit weights: Theorem 2
 
 Let $g(x) = \bar \pi(x) / \pi(x)$ positive and continuous for $x \in \Theta$.
 
@@ -558,6 +580,35 @@ $$w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})$$
 . . .
 
 Don't need to explicitly know the estimator $\theta^{\ast}_n$!
+
+## Approximate conclusion
+
+Ongoing work: happy to talk
+
+- Test more approximate likelihoods
+- Test more flexible transformation families
+
+. . .
+
+Thanks to
+
+-   Collaborators: Chris, David$^2$
+-   Helpful commentators: Ming Xu, Aad van der Vaart
+
+## Contact
+
+-   [joshuajbon\@gmail.com](mailto:joshuajbon@gmail.com)
+
+-   [twitter/bonStats](https://twitter.com/bonStats)
+
+
+
+## References
+
+::: {#refs}
+:::
+
+# Appendix: Theory vs practice
 
 ## Sufficiently rich kernel family
 

@@ -31,43 +31,43 @@ Sigma <- diag(2)
 
 # true values from prior
 priortrue_data <- rbinorm_tibble(M, mean = mu0, sigma = Sigma0, sim = 1:M, val = "Prior") %>%
-  mutate(val = ordered(val, levels = c("Prior", "Data", "Posterior")))
+  mutate(val = ordered(val, levels = c("Prior", "Data from prior-predictive", "Posterior given data")))
 
 # copy for plotting
-posteriortrue_data <- priortrue_data %>% mutate(val = "Posterior") %>%
-  mutate(val = ordered(val, levels = c("Prior", "Data", "Posterior")))
+posteriortrue_data <- priortrue_data %>% mutate(val = "Posterior given data") %>%
+  mutate(val = ordered(val, levels = c("Prior", "Data from prior-predictive", "Posterior given data")))
 
 # data
 obs_list <- priortrue_data %>% 
-  pmap(function(x,y,sim,val) rbinorm_tibble(N, mean = c(x,y), sigma = Sigma, sim = sim, val = "Data") )
+  pmap(function(x,y,sim,val) rbinorm_tibble(N, mean = c(x,y), sigma = Sigma, sim = sim, val = "Data from prior-predictive") )
   
 obs_data <- obs_list %>% list_rbind() %>%
-  mutate(val = ordered(val, levels = c("Prior", "Data", "Posterior")))
+  mutate(val = ordered(val, levels = c("Prior", "Data from prior-predictive", "Posterior given data")))
 
 # posterior
 posterior_list <- obs_list %>% 
   map(function(df) posterior(df$x, df$y, df$sim, mu0, Sigma0, Sigma))
 
 posterior_data <- posterior_list %>% 
-  map(function(ls) rbinorm_tibble(S, mean = ls$mean, sigma = ls$sigma, sim = ls$sim, val = "Posterior")) %>%
+  map(function(ls) rbinorm_tibble(S, mean = ls$mean, sigma = ls$sigma, sim = ls$sim, val = "Posterior given data")) %>%
   list_rbind()
 
 approx_posterior_data <- posterior_data %>% 
-  mutate(x = x + 0.5, y = y - 0.5, val = "Posterior") %>%
-  mutate(val = ordered(val, levels = c("Prior", "Data", "Posterior")))
+  mutate(x = x + 0.5, y = y - 0.5, val = "Posterior given data") %>%
+  mutate(val = ordered(val, levels = c("Prior", "Data from prior-predictive", "Posterior given data")))
 
 # background distributions
 
 # distributions <- rbind(
 #   tibble(dist = dist_multivariate_normal(mu = list(mu0), sigma = list(Sigma0)), sim = 1:M, val = "Prior"),
-#   posterior_list %>% map(function(ls) tibble(dist = dist_multivariate_normal(mu = list(ls$mean), sigma = list(ls$sigma)), sim = ls$sim, val = "Posterior")) %>%
+#   posterior_list %>% map(function(ls) tibble(dist = dist_multivariate_normal(mu = list(ls$mean), sigma = list(ls$sigma)), sim = ls$sim, val = "Posterior given data")) %>%
 #     list_rbind
 # )
 
 distributions <- rbind(
   map(1:M, function(s) priortrue_data %>% mutate(sim = s, val = "Prior"))  %>% list_rbind(),
   posterior_data) %>% 
-  mutate(val = ordered(val, levels = c("Prior", "Data", "Posterior")))
+  mutate(val = ordered(val, levels = c("Prior", "Data from prior-predictive", "Posterior given data")))
 
 
 # sim_id <- 1:3
