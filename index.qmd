@@ -214,7 +214,7 @@ $$\tilde{y} \sim P(\cdot \vert {\color{red}\theta}), \quad {\color{red}\theta} \
 
 Consider the average over prior-predictive pairs $({\color{red}\theta}, \tilde{y})$
 
-$$\max_{{\color{blue}K}} \in \mathcal{K}}\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
+$$\max_{{\color{blue}K}\in\mathcal{K}}\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
 
 
 ## Optimise the similarity

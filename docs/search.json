@@ -1,0 +1,443 @@
+[
+  {
+    "objectID": "index.html#talk-overview",
+    "href": "index.html#talk-overview",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Talk overview",
+    "text": "Talk overview\n\nMotivation and intuitions\nMethod\nExamples\nTheory\n\n\nJoint work with\n\nChristopher Drovandi, QUT\nDavid Warne, QUT\nDavid Nott, NUS"
+  },
+  {
+    "objectID": "index.html#approximations-in-bayesian-inference",
+    "href": "index.html#approximations-in-bayesian-inference",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Approximations in Bayesian inference",
+    "text": "Approximations in Bayesian inference\nBayesian inference requires likelihoods, but…\n\nIntractable likelihoods\n\nRequire approximations\n\nComputationally expensive likelihoods\n\nWant good approximations\n\nPosterior evaluation\n\nNeed good approximations*"
+  },
+  {
+    "objectID": "index.html#bayesian-inference",
+    "href": "index.html#bayesian-inference",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Bayesian Inference",
+    "text": "Bayesian Inference"
+  },
+  {
+    "objectID": "index.html#approximations-everywhere",
+    "href": "index.html#approximations-everywhere",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Approximations everywhere…",
+    "text": "Approximations everywhere…"
+  },
+  {
+    "objectID": "index.html#likelihood-approximations",
+    "href": "index.html#likelihood-approximations",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Likelihood approximations",
+    "text": "Likelihood approximations\n\nLimiting distributions\nWhittle likelihood\nModel simplification (e.g. SDE -&gt; ODE)\nLinear noise approximation\nKalman filter\nParticle filters"
+  },
+  {
+    "objectID": "index.html#posterior-approximations",
+    "href": "index.html#posterior-approximations",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Posterior approximations",
+    "text": "Posterior approximations\n\nLaplace\nINLA\nVariational inference\nPsuedo-marginal MCMC\nApproximate Bayesian Computation"
+  },
+  {
+    "objectID": "index.html#sampling-approximations",
+    "href": "index.html#sampling-approximations",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Sampling approximations",
+    "text": "Sampling approximations\n\nImportance sampling\nSequential Monte Carlo\nMarkov chain Monte Carlo (MH, ULA, MALA, HMC)"
+  },
+  {
+    "objectID": "index.html#a-good-approximation",
+    "href": "index.html#a-good-approximation",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "A good approximation?",
+    "text": "A good approximation?"
+  },
+  {
+    "objectID": "index.html#can-we-correct-posteriors-based-on-approximations",
+    "href": "index.html#can-we-correct-posteriors-based-on-approximations",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Can we correct posteriors based on approximation(s)?",
+    "text": "Can we correct posteriors based on approximation(s)?"
+  },
+  {
+    "objectID": "index.html#correcting-approximate-posteriors",
+    "href": "index.html#correcting-approximate-posteriors",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Correcting approximate posteriors",
+    "text": "Correcting approximate posteriors\n\\[\\begin{aligned}&\\text{True posterior}:\\quad &\\Pi(\\cdot\\vert y) \\\\\n&\\text{Approximate posterior}:\\quad &\\check{\\Pi}(\\cdot\\vert y) \\\\\n&\\text{Finite-sample approximate posterior}:\\quad &\\hat{\\Pi}(\\cdot\\vert y)\\end{aligned}\\]"
+  },
+  {
+    "objectID": "index.html#correcting-approximate-posteriors-1",
+    "href": "index.html#correcting-approximate-posteriors-1",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Correcting approximate posteriors",
+    "text": "Correcting approximate posteriors\n\nGenerally theory motivating \\(\\Pi(\\cdot\\vert y) \\approx \\check{\\Pi}(\\cdot\\vert y)\\)\n\nBut not for finite and/or given realisation of the data\n\nTheory for \\(\\check{\\Pi}(\\cdot\\vert y) \\approx \\hat{\\Pi}(\\cdot\\vert y)\\) as \\(N \\rightarrow \\infty\\)\n\nand empirical tests for finite \\(N\\)\n\n\n\nWhat about \\(\\Pi(\\cdot\\vert y) \\approx \\hat{\\Pi}(\\cdot\\vert y)\\)?"
+  },
+  {
+    "objectID": "index.html#transforming-approximate-posteriors",
+    "href": "index.html#transforming-approximate-posteriors",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Transforming approximate posteriors",
+    "text": "Transforming approximate posteriors\nFind a function to correct approximate posteriors\n\\[\\Pi(\\cdot\\vert y) \\approx {\\color{green}f}_\\sharp\\hat{\\Pi}(\\cdot\\vert y)\\] using samples from \\(\\hat{\\Pi}(\\cdot\\vert y)\\)\n\nNo need to rerun MC/MCMC/SMC\n\nunlike correcting the likelihood directly\n\n\nCorrection acts on all levels of approximation\nBut we still can’t evaluate \\(\\Pi(\\cdot\\vert y)\\)!\n\n\nUse a calibration-based approach…"
+  },
+  {
+    "objectID": "index.html#illustration",
+    "href": "index.html#illustration",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Illustration",
+    "text": "Illustration"
+  },
+  {
+    "objectID": "index.html#correcting-a-posterior",
+    "href": "index.html#correcting-a-posterior",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Correcting a posterior",
+    "text": "Correcting a posterior\n\n\nFigure 1: Ideal case (approximation in blue)"
+  },
+  {
+    "objectID": "index.html#correcting-a-posterior-1",
+    "href": "index.html#correcting-a-posterior-1",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Correcting a posterior",
+    "text": "Correcting a posterior\n\n\nFigure 2: Real case (approximation in blue)"
+  },
+  {
+    "objectID": "index.html#correcting-many-posteriors",
+    "href": "index.html#correcting-many-posteriors",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Correcting many posteriors",
+    "text": "Correcting many posteriors\n\n\nFigure 3: Correct on average? (approximation in blue)"
+  },
+  {
+    "objectID": "index.html#measure-the-similarity",
+    "href": "index.html#measure-the-similarity",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Measure the similarity",
+    "text": "Measure the similarity\nLet \\({\\color{blue}K}\\) be a Markov kernel, e.g. \\({\\color{blue}K}(\\cdot\\vert\\tilde{y}) = \\hat{\\Pi}(\\cdot\\vert\\tilde{y})\\).\n\nMeasure the similarity to the truth with \\(S:\\mathcal{P} \\times \\Theta \\rightarrow \\mathbb{R}\\)\n\\[S({\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta})\\]\n\\[\\tilde{y} \\sim P(\\cdot \\vert {\\color{red}\\theta}), \\quad {\\color{red}\\theta} \\sim {\\color{purple}\\Pi}\\]\n\n\\({\\color{red}\\theta}\\) is the true data generating parameter\n\\(({\\color{red}\\theta}, \\tilde{y})\\) prior-predictive pairs"
+  },
+  {
+    "objectID": "index.html#optimise-the-similarity",
+    "href": "index.html#optimise-the-similarity",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Optimise the similarity",
+    "text": "Optimise the similarity\nConsider the average over prior-predictive pairs \\(({\\color{red}\\theta}, \\tilde{y})\\)\n\\[\\max_{{\\color{blue}K}\\in\\mathcal{K}}\\mathbb{E}[S({\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta})]\\]"
+  },
+  {
+    "objectID": "index.html#optimise-the-similarity-1",
+    "href": "index.html#optimise-the-similarity-1",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Optimise the similarity",
+    "text": "Optimise the similarity\nConsider the average over prior-predictive pairs \\(({\\color{red}\\theta}, \\tilde{y})\\)\n\nChoose \\(\\mathcal{K} = \\{{\\color{green}f}_\\sharp\\hat\\Pi: {\\color{green}f} \\in \\mathcal{F}\\}\\)\n\n\n\\[\\max_{{\\color{green}f} \\in \\mathcal{F}}\\mathbb{E}[S({\\color{green}f}_\\sharp\\hat\\Pi(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta})]\\]"
+  },
+  {
+    "objectID": "index.html#correcting-many-posteriors-1",
+    "href": "index.html#correcting-many-posteriors-1",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Correcting many posteriors",
+    "text": "Correcting many posteriors\n\n\nFigure 4: Before correction"
+  },
+  {
+    "objectID": "index.html#correcting-many-posteriors-2",
+    "href": "index.html#correcting-many-posteriors-2",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Correcting many posteriors",
+    "text": "Correcting many posteriors\n\n\nFigure 5: After correction"
+  },
+  {
+    "objectID": "index.html#model-calibration-by-simulation",
+    "href": "index.html#model-calibration-by-simulation",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Model calibration by simulation",
+    "text": "Model calibration by simulation\n\nCorrect coverage? Frequentist\n\n\\(S({\\color{green}f}_\\sharp {\\color{blue}K}(\\cdot\\vert y), {\\color{red}\\theta}) = \\vert 1({\\color{red}\\theta} \\in {\\color{purple}\\text{CR}_\\alpha}) - \\alpha \\vert\\)\n\nCan we correct the entire distribution? Bayesian\n\nProper scoring rules"
+  },
+  {
+    "objectID": "index.html#scoring-rules",
+    "href": "index.html#scoring-rules",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Scoring rules",
+    "text": "Scoring rules\n\n\\(S(U,x)\\) compares probabilistic forecast \\(U\\) to ground truth \\(x\\).\n\\[S(U,V) = \\mathbb{E}_{x\\sim V} S(U,x)\\]\nwhere \\(V\\) is a probability measure."
+  },
+  {
+    "objectID": "index.html#proper-scoring-rules",
+    "href": "index.html#proper-scoring-rules",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Proper scoring rules",
+    "text": "Proper scoring rules\n(Gneiting and Raftery 2007)\n\n\n\\(S(U, \\cdot)\\) is strictly proper if\n\n\\(S(V,V) \\geq S(U, V)\\) for all \\(V\\) in some family, and\nequality holds iff \\(U = V\\).\n\n\n\n\\[V = \\arg\\max_{U \\in \\mathcal{U}} S(U, V)\\]"
+  },
+  {
+    "objectID": "index.html#what-we-cant-do",
+    "href": "index.html#what-we-cant-do",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "What we can’t do",
+    "text": "What we can’t do\n\n\\[\\Pi(\\cdot ~\\vert~y ) = \\underset{ {\\color{green}f}\\in \\mathcal{F}}{\\arg\\max}~ S[{\\color{green}f}_\\sharp {\\color{blue}K}(\\cdot\\vert y),\\Pi(\\cdot ~\\vert~y )]\\]"
+  },
+  {
+    "objectID": "index.html#what-we-cant-do-1",
+    "href": "index.html#what-we-cant-do-1",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "What we can’t do",
+    "text": "What we can’t do\n\n\\[\\Pi(\\cdot ~\\vert~y ) = \\underset{ {\\color{green}f} \\in \\mathcal{F}}{\\arg\\max}~ \\mathbb{E}_{\\theta \\sim \\Pi(\\cdot ~\\vert~y )}\\left[S({\\color{green}f}_\\sharp {\\color{blue}K}(\\cdot\\vert y),\\theta) \\right]\\]"
+  },
+  {
+    "objectID": "index.html#what-we-can-do",
+    "href": "index.html#what-we-can-do",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "What we can do",
+    "text": "What we can do\n\nConsider the joint data-parameter space instead\n\n\\[\\Pi(\\text{d}\\theta ~\\vert~\\tilde{y} )P(\\text{d}\\tilde{y}) = P(\\tilde{y}~\\vert~\\theta)\\Pi(\\text{d}\\theta )\\]\n\n\nSee Pacchiardi and Dutta (2022) and Bon et al. (2022)"
+  },
+  {
+    "objectID": "index.html#what-we-can-do-1",
+    "href": "index.html#what-we-can-do-1",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "What we can do",
+    "text": "What we can do\n\n\\[{\\color{purple}\\Pi}(\\cdot ~\\vert~y ) = \\underset{ {\\color{green}f} \\in \\mathcal{F}}{\\arg\\max}~ \\mathbb{E}_{\\tilde{y} \\sim P} \\mathbb{E}_{{\\color{red}\\theta} \\sim {\\color{purple}\\Pi}(\\cdot ~\\vert~\\tilde{y} )}\\left[S({\\color{green}f}_\\sharp {\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta}) \\right]\\]"
+  },
+  {
+    "objectID": "index.html#what-we-can-do-2",
+    "href": "index.html#what-we-can-do-2",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "What we can do",
+    "text": "What we can do\n\n\\[{\\color{purple}\\Pi}(\\cdot ~\\vert~y ) = \\underset{ {\\color{green}f} \\in \\mathcal{F}}{\\arg\\max}~ \\mathbb{E}_{ {\\color{red}\\theta} \\sim {\\color{purple}\\Pi}} \\mathbb{E}_{\\tilde{y} \\sim P(\\cdot ~\\vert~{\\color{red}\\theta})}\\left[S({\\color{green}f}_\\sharp {\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta}) \\right]\\]"
+  },
+  {
+    "objectID": "index.html#two-steps-further",
+    "href": "index.html#two-steps-further",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Two steps further",
+    "text": "Two steps further\n\n\nReplace \\(P(\\text{d}\\tilde{y})\\) with \\(Q(\\text{d}\\tilde{y}) \\propto P(\\text{d}\\tilde{y})v(\\tilde{y})\\)\nReplace \\(\\Pi\\) with \\(\\bar{\\Pi}\\)\n\ncorrect with importance weight\n\n\n\nIt still works!"
+  },
+  {
+    "objectID": "index.html#bsrc-optimisation-problem",
+    "href": "index.html#bsrc-optimisation-problem",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "BSRC optimisation problem",
+    "text": "BSRC optimisation problem\n\\[\\underset{ {\\color{green}f} \\in \\mathcal{F}}{\\arg\\max}~ \\mathbb{E}_{ {\\color{red}\\theta} \\sim \\bar\\Pi} \\mathbb{E}_{\\tilde{y} \\sim P(\\cdot ~\\vert~{\\color{red}\\theta})}\\left[w({\\color{red}\\theta}, \\tilde{y})S({\\color{green}f}_\\sharp {\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta}) \\right]\\]\n\\[w(\\theta, \\tilde{y}) = \\frac{\\pi(\\theta)}{\\bar\\pi(\\theta)} v(\\tilde{y})\\]"
+  },
+  {
+    "objectID": "index.html#moment-correcting-transformation",
+    "href": "index.html#moment-correcting-transformation",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Moment-correcting transformation",
+    "text": "Moment-correcting transformation\nNeed a family of functions, \\(f \\in \\mathcal{F}\\).\n\nStart simple:\n\\[f(x) = A[x - \\hat{\\mu}(y)] + \\hat{\\mu}(y) + b\\]\n\nMean \\(\\hat{\\mu}(y) = \\mathbb{E}(\\hat{\\theta}),\\quad \\hat{\\theta} \\sim \\hat\\Pi(\\cdot~\\vert~y)\\) for \\(y \\in \\mathsf{Y}\\).\n\\(A\\) is a square matrix with positive elements on diagonal such that \\(AA^\\top\\) is positive definite."
+  },
+  {
+    "objectID": "index.html#bayesian-scoring-rule-calibration",
+    "href": "index.html#bayesian-scoring-rule-calibration",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Bayesian scoring rule calibration",
+    "text": "Bayesian scoring rule calibration"
+  },
+  {
+    "objectID": "index.html#ou-process",
+    "href": "index.html#ou-process",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "OU Process",
+    "text": "OU Process\n\\[\\text{d}X_t = \\gamma (\\mu - X_t) \\text{d}t + \\sigma\\text{d}W_t\\]\n\nObserve final observation at time \\(T\\) ( \\(n= 100\\)):\n\n\n\\[X_T \\sim \\mathcal{N}\\left(  \\mu + (x_0 - \\mu)e^{-\\gamma T}, \\frac{D}{\\gamma}(1- e^{-2\\gamma T}) \\right)\\]\n\n\nwhere \\(D = \\frac{\\sigma^2}{2}\\). Fix \\(\\gamma = 2\\), \\(T=1\\), \\(x_0 = 10\\)"
+  },
+  {
+    "objectID": "index.html#ou-process-limiting-approximation",
+    "href": "index.html#ou-process-limiting-approximation",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "OU Process (limiting approximation)",
+    "text": "OU Process (limiting approximation)\nInfer \\(\\mu\\) and \\(D\\) with approximate likelihood based on\n\\[X_\\infty  \\sim \\mathcal{N}\\left(\\mu, \\frac{D}{\\gamma}\\right)\\]"
+  },
+  {
+    "objectID": "index.html#ou-process-limiting-approximation-1",
+    "href": "index.html#ou-process-limiting-approximation-1",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "OU Process (limiting approximation)",
+    "text": "OU Process (limiting approximation)\nUnable to display PDF file. Download instead.\n\\(M = 100\\) and \\(\\bar\\Pi = \\hat\\Pi(\\cdot~\\vert~y)\\) with variance scaled by 2"
+  },
+  {
+    "objectID": "index.html#ou-process-limiting-approximation-2",
+    "href": "index.html#ou-process-limiting-approximation-2",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "OU Process (limiting approximation)",
+    "text": "OU Process (limiting approximation)\nComparison for \\(\\mu\\)\n\n\n\n\n\n\nPosterior\nMSE\nBias\nSt. Dev\nCoverage (90%)\n\n\n\n\nApprox\n1.54\n1.21\n0.22\n0\n\n\nAdjust (α=0)\n0.12\n0.15\n0.20\n64\n\n\nAdjust (α=1)\n0.12\n0.15\n0.23\n82\n\n\nTrue\n0.12\n-0.01\n0.26\n94\n\n\n\n\n\n\n\n\nEstimated from independent replications of the method."
+  },
+  {
+    "objectID": "index.html#ou-process-limiting-approximation-3",
+    "href": "index.html#ou-process-limiting-approximation-3",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "OU Process (limiting approximation)",
+    "text": "OU Process (limiting approximation)\nComparison for \\(D\\)\n\n\n\n\n\n\nPosterior\nMSE\nBias\nSt. Dev\nCoverage (90%)\n\n\n\n\nApprox\n4.73\n0.18\n1.46\n85\n\n\nAdjust (α=0)\n4.83\n0.28\n1.24\n72\n\n\nAdjust (α=1)\n5.13\n0.42\n1.45\n83\n\n\nTrue\n5.00\n0.37\n1.48\n85\n\n\n\n\n\n\n\n\nEstimated from independent replications of the method."
+  },
+  {
+    "objectID": "index.html#lotka-volterra-sde-quasi-abc",
+    "href": "index.html#lotka-volterra-sde-quasi-abc",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Lotka-Volterra SDE (quasi-ABC)",
+    "text": "Lotka-Volterra SDE (quasi-ABC)\nTuring.jl Tutorial: Bayesian Estimation of Differential Equations\n\\[\\text{d} X_{t} = (\\beta_1 X_{t} - \\beta_2 X_{t} Y_{t} ) \\text{d} t+ \\sigma_1 \\text{d} B_{t}^{1}\\] \\[\\text{d} Y_{t} = (\\beta_4 X_{t} Y_{t} - \\beta_3 Y_{t} ) \\text{d} t+ \\sigma_2 \\text{d} B_{t}^{2}\\]"
+  },
+  {
+    "objectID": "index.html#lotka-volterra-sde-quasi-abc-1",
+    "href": "index.html#lotka-volterra-sde-quasi-abc-1",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Lotka-Volterra SDE (quasi-ABC)",
+    "text": "Lotka-Volterra SDE (quasi-ABC)\nUse noisy quasi-likelihood as approximate likelihood\n\\[\\begin{aligned}&L(\\beta_{1:4}, \\tau ~\\vert~ x_{1:n}, y_{1:n}) \\\\\n&= \\tau^{2n}\\exp\\left(-\\frac{\\tau^2}{2} \\sum_{i=1}^{n}\\left[(x_i^\\prime - x_i)^{2} + (y_i^\\prime - y_i)^{2}\\right] \\right)\\end{aligned}\\]\n\n\\(\\{(x_i^\\prime,y_i^\\prime)\\}_{i=1}^{n}\\) simulated conditional on \\(\\beta_{1:4}\\)\nPrior \\(\\tau ∼ \\text{Gamma}(2, 3)\\)\n\n\nFurther approximation: use rough numerical integration scheme (Euler-Maruyama \\(\\Delta t=0.01\\))."
+  },
+  {
+    "objectID": "index.html#lotka-volterra-sde-quasi-abc-2",
+    "href": "index.html#lotka-volterra-sde-quasi-abc-2",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Lotka-Volterra SDE (quasi-ABC)",
+    "text": "Lotka-Volterra SDE (quasi-ABC)\nUnable to display PDF file. Download instead."
+  },
+  {
+    "objectID": "index.html#lotka-volterra-sde-quasi-abc-3",
+    "href": "index.html#lotka-volterra-sde-quasi-abc-3",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Lotka-Volterra SDE (quasi-ABC)",
+    "text": "Lotka-Volterra SDE (quasi-ABC)\nUnable to display PDF file. Download instead."
+  },
+  {
+    "objectID": "index.html#lotka-volterra-sde-ekf",
+    "href": "index.html#lotka-volterra-sde-ekf",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Lotka-Volterra SDE (EKF)",
+    "text": "Lotka-Volterra SDE (EKF)\nUse extended Kalman Filter as approximate likelihood\n\nDiscretise SDE at time points \\(t_0,t_1,\\ldots,t_n\\)\nAssume Gaussian at each \\(t_i\\)\nApproximate transition dynamics by linear assumption"
+  },
+  {
+    "objectID": "index.html#lotka-volterra-sde-ekf-1",
+    "href": "index.html#lotka-volterra-sde-ekf-1",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Lotka-Volterra SDE (EKF)",
+    "text": "Lotka-Volterra SDE (EKF)\nUnable to display PDF file. Download instead."
+  },
+  {
+    "objectID": "index.html#allee-effect-model",
+    "href": "index.html#allee-effect-model",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Allee effect model",
+    "text": "Allee effect model\nTo add"
+  },
+  {
+    "objectID": "index.html#supporting-theory",
+    "href": "index.html#supporting-theory",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Supporting theory",
+    "text": "Supporting theory\n\nStrictly proper scoring rule \\(S\\) w.r.t. \\(\\mathcal{P}\\)\nImportance distribution \\(\\bar\\Pi\\) on \\((\\Theta,\\vartheta)\\)\n\n\\(\\Pi \\ll \\bar\\Pi\\) with density \\(\\bar\\pi\\)\n\nStability function \\(v:\\mathsf{Y} \\rightarrow [0,\\infty)\\)\n\nmeasurable under \\(P\\) on \\((\\mathsf{Y}, \\mathcal{Y})\\)\n\n\\(Q(\\text{d} \\tilde{y}) \\propto P(\\text{d} \\tilde{y})v(\\tilde{y})\\)\nFamily of kernels \\(\\mathcal{K}\\)"
+  },
+  {
+    "objectID": "index.html#supporting-theory-theorem-1",
+    "href": "index.html#supporting-theory-theorem-1",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Supporting theory: Theorem 1",
+    "text": "Supporting theory: Theorem 1\nIf \\(\\mathcal{K}\\) is sufficiently rich then the Markov kernel,\n\\[\\bbox[5pt,border: 1px solid blue]{\\color{black}K^{\\star} \\equiv \\underset{K \\in \\mathcal{K}}{\\arg\\max}~\\mathbb{E}_{\\theta \\sim \\bar\\Pi} \\mathbb{E}_{\\tilde{y} \\sim P(\\cdot ~\\vert~ \\theta)}\\left[w(\\theta, \\tilde{y}) S(K(\\cdot ~\\vert~ \\tilde{y}),\\theta) \\right]}\\]\nwhere \\(w(\\theta, \\tilde{y}) = \\frac{\\pi(\\theta)}{\\bar\\pi(\\theta)} v(\\tilde{y})\\) then\n\\[\\bbox[5pt,border: 1px solid blue]{K^{\\star}(\\cdot ~\\vert~ \\tilde{y}) = \\Pi(\\cdot ~\\vert~ \\tilde{y})}\\] almost surely."
+  },
+  {
+    "objectID": "index.html#sufficiently-rich-kernel-family",
+    "href": "index.html#sufficiently-rich-kernel-family",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Sufficiently rich kernel family",
+    "text": "Sufficiently rich kernel family\n\n\\(\\mathcal{K}\\) be a family of Markov kernels\n\\(\\mathcal{P}\\) be a class of probability measures\n\\(Q\\) be a probability measure on \\((\\mathsf{Y},\\mathcal{Y})\\), and \\(\\tilde{y}\\sim Q\\)\n\\(\\Pi(\\cdot ~\\vert~ \\tilde{y})\\) be the true posterior at \\(\\tilde{y}\\).\n\n\nWe say \\(\\mathcal{K}\\) is sufficiently rich with respect to \\((Q,\\mathcal{P})\\) if for all \\(U \\in \\mathcal{K}\\), \\(U(\\cdot ~\\vert~ \\tilde{y}) \\in \\mathcal{P}\\) almost surely and there exists \\(U \\in \\mathcal{K}\\) such that \\(U(\\cdot ~\\vert~ \\tilde{y}) = \\Pi(\\cdot ~\\vert~ \\tilde{y})\\) almost surely."
+  },
+  {
+    "objectID": "index.html#what-about-the-weights",
+    "href": "index.html#what-about-the-weights",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "What about the weights?",
+    "text": "What about the weights?\n\\[w(\\theta, \\tilde{y}) = \\frac{\\pi(\\theta)}{\\bar\\pi(\\theta)} v(\\tilde{y})\\]\nUnstable, high variance?\n\nTruncate the weights (Ionides 2008)\nPSIS (Vehtari et al. 2024)\nBe brave…"
+  },
+  {
+    "objectID": "index.html#what-about-the-weights-1",
+    "href": "index.html#what-about-the-weights-1",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "What about the weights?",
+    "text": "What about the weights?\n\nUnit weights\n\\[\\hat{w}(\\theta, \\tilde{y}) = 1\\]\n\nJustified asymptotically using the flexibility of \\(v(\\tilde{y})\\)"
+  },
+  {
+    "objectID": "index.html#unit-weights-theorem-2",
+    "href": "index.html#unit-weights-theorem-2",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Unit weights: Theorem 2",
+    "text": "Unit weights: Theorem 2\nLet \\(g(x) = \\bar \\pi(x) / \\pi(x)\\) positive and continuous for \\(x \\in \\Theta\\).\nIf an estimator \\(\\theta^{\\ast}_n \\equiv \\theta^{\\ast}(\\tilde{y}_{1:n})\\) exists such that \\(\\theta^{\\ast}_n \\rightarrow z\\) a.s. for \\(n \\rightarrow \\infty\\) when \\(\\tilde{y}_i \\sim P(\\cdot ~\\vert~ z)\\) for \\(z \\in \\Theta\\) then the error when using \\(\\hat{w} = 1\\) satisfies \\[\\hat{w} - w(\\theta,\\tilde{y}_{1:n}) \\rightarrow 0\\] a.s. for \\(n \\rightarrow \\infty\\)"
+  },
+  {
+    "objectID": "index.html#justification-of-unit-weights",
+    "href": "index.html#justification-of-unit-weights",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Justification of unit weights",
+    "text": "Justification of unit weights\nTheorem 2 is possible because of the stability function justified by Theorem 1.\n\\[w(\\theta, \\tilde{y}) = \\frac{\\pi(\\theta)}{\\bar\\pi(\\theta)} v(\\tilde{y})\\]\n\nTrick: set \\(v(\\tilde{y}) = \\frac{\\bar\\pi(\\theta^{\\ast}_n )}{\\pi(\\theta^{\\ast}_n )}\\) and look at large sample properties.\n\n\nDon’t need to explicitly know the estimator \\(\\theta^{\\ast}_n\\)!"
+  },
+  {
+    "objectID": "index.html#approximate-conclusion",
+    "href": "index.html#approximate-conclusion",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Approximate conclusion",
+    "text": "Approximate conclusion\nOngoing work: happy to talk\n\nTest more approximate likelihoods\nTest more flexible transformation families\n\n\nThanks to\n\nCollaborators: Chris, David\\(^2\\)\nHelpful commentators: Ming Xu, Aad van der Vaart"
+  },
+  {
+    "objectID": "index.html#contact",
+    "href": "index.html#contact",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Contact",
+    "text": "Contact\n\njoshuajbon@gmail.com\ntwitter/bonStats"
+  },
+  {
+    "objectID": "index.html#references",
+    "href": "index.html#references",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "References",
+    "text": "References\n\n\nBon, Joshua J, David J Warne, David J Nott, and Christopher Drovandi. 2022. “Bayesian Score Calibration for Approximate Models.” arXiv Preprint arXiv:2211.05357.\n\n\nGneiting, Tilmann, and Adrian E Raftery. 2007. “Strictly Proper Scoring Rules, Prediction, and Estimation.” Journal of the American Statistical Association 102 (477): 359–78.\n\n\nIonides, Edward L. 2008. “Truncated Importance Sampling.” Journal of Computational and Graphical Statistics 17 (2): 295–311.\n\n\nPacchiardi, Lorenzo, and Ritabrata Dutta. 2022. “Likelihood-Free Inference with Generative Neural Networks via Scoring Rule Minimization.” arXiv Preprint arXiv:2205.15784.\n\n\nVehtari, Aki, Daniel Simpson, Andrew Gelman, Yuling Yao, and Jonah Gabry. 2024. “Pareto Smoothed Importance Sampling.” Journal of Machine Learning Research 25 (72): 1–58. http://jmlr.org/papers/v25/19-556.html."
+  },
+  {
+    "objectID": "index.html#sufficiently-rich-kernel-family-1",
+    "href": "index.html#sufficiently-rich-kernel-family-1",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Sufficiently rich kernel family",
+    "text": "Sufficiently rich kernel family\n\n\\(\\mathcal{K}\\) be a family of Markov kernels\n\\(\\mathcal{P}\\) be a class of probability measures\n\\(Q\\) be a probability measure on \\((\\mathsf{Y},\\mathcal{Y})\\), and \\(\\tilde{y}\\sim Q\\)\n\\(\\Pi(\\cdot ~\\vert~ \\tilde{y})\\) be the true posterior at \\(\\tilde{y}\\).\n\n\nWe say \\(\\mathcal{K}\\) is sufficiently rich with respect to \\((Q,\\mathcal{P})\\) if for all \\(U \\in \\mathcal{K}\\), \\(U(\\cdot ~\\vert~ \\tilde{y}) \\in \\mathcal{P}\\) almost surely and there exists \\(U \\in \\mathcal{K}\\) such that \\(U(\\cdot ~\\vert~ \\tilde{y}) = \\Pi(\\cdot ~\\vert~ \\tilde{y})\\) almost surely."
+  },
+  {
+    "objectID": "index.html#sufficiently-rich-kernel-family-2",
+    "href": "index.html#sufficiently-rich-kernel-family-2",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Sufficiently rich kernel family",
+    "text": "Sufficiently rich kernel family\n\nThe moment-correcting transformation is typically not sufficiently rich\nUnit weights give the stabilising function the following property\n\n\n\\(v(\\tilde{y}_{1:n}) \\rightarrow \\delta_{\\hat{\\theta}_0}(\\tilde{\\theta}^\\ast_n)\\) for \\(n\\rightarrow\\infty\\) where\n\n\\(\\hat{\\theta}_0\\) is the MLE for the true data \\(y\\)\n\\(\\tilde{\\theta}^\\ast_n\\) is the MLE for simulated data \\(\\tilde{y}\\)"
+  },
+  {
+    "objectID": "index.html#sufficiently-rich-kernel-family-3",
+    "href": "index.html#sufficiently-rich-kernel-family-3",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Sufficiently rich kernel family",
+    "text": "Sufficiently rich kernel family\n\\(v(\\tilde{y}_{1:n}) \\rightarrow \\delta_{\\hat{\\theta}_0}(\\tilde{\\theta}^\\ast_n)\\)\nRecall the distribution is defined as\n\\[\nQ(\\text{d}\\tilde{y}) \\propto P(\\text{d}\\tilde{y}) v(\\tilde{y})\n\\]\n\nconcentrating on simulated datasets consistent with \\(\\hat{\\theta}_0\\)\nsimulated datasets with the same sufficient statistics\napproximate posteriors \\(\\hat\\Pi(\\cdot~\\vert~\\tilde{y})\\) will be equal\nglobal bias and variance correction terms are sufficiently rich asymptotically"
+  },
+  {
+    "objectID": "index.html#sufficiently-rich-kernel-family-4",
+    "href": "index.html#sufficiently-rich-kernel-family-4",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Sufficiently rich kernel family",
+    "text": "Sufficiently rich kernel family\nResults are targeted towards \\(\\bar\\Pi\\)\n\nfinite sample approximation using importance sampling\nmanipulation of the weights (unit weights)\nTrade-off between:\n\ninsufficiency of moment-correcting transformation + approximate posterior\ntargeting high-probability regions of \\(\\bar\\Pi\\)"
+  },
+  {
+    "objectID": "index.html#bivariate-ou-process-vi",
+    "href": "index.html#bivariate-ou-process-vi",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Bivariate OU Process (VI)",
+    "text": "Bivariate OU Process (VI)\n\\[\\text{d}X_t = \\gamma (\\mu - X_t) \\text{d}t + \\sigma\\text{d}W_t\\] \\[\\text{d}Y_t = \\gamma (\\mu - Y_t) \\text{d}t + \\sigma\\text{d}W_t\\] \\[Z_t = \\rho X_t + (1-\\rho)Y_t\\]\nModel \\((X_t,Z_t)\\) with setup as in the univariate case, \\((x_0,z_0)=(5,5)\\) and use a mean-field variational approximation."
+  },
+  {
+    "objectID": "index.html#bivariate-ou-process-vi-1",
+    "href": "index.html#bivariate-ou-process-vi-1",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Bivariate OU Process (VI)",
+    "text": "Bivariate OU Process (VI)\nUnable to display PDF file. Download instead."
+  },
+  {
+    "objectID": "index.html#bivariate-ou-process-vi-2",
+    "href": "index.html#bivariate-ou-process-vi-2",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Bivariate OU Process (VI)",
+    "text": "Bivariate OU Process (VI)\nCorrelation summaries\n\n\n\n\n\n\nPosterior\nMean\nSt. Dev.\n\n\n\n\nApprox\n0.00\n0.02\n\n\nAdjust (α=0)\n0.18\n0.41\n\n\nAdjust (α=0.5)\n0.37\n0.16\n\n\nAdjust (α=1)\n0.37\n0.15\n\n\nTrue\n0.42\n0.06\n\n\n\n\n\n\n\n\n\\(M = 100\\) and \\(\\bar\\Pi = \\hat\\Pi(\\cdot~\\vert~y)\\) with variance scaled by 2"
+  },
+  {
+    "objectID": "index.html#bivariate-ou-process-vi-3",
+    "href": "index.html#bivariate-ou-process-vi-3",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Bivariate OU Process (VI)",
+    "text": "Bivariate OU Process (VI)\nUnable to display PDF file. Download instead."
+  }
+]
