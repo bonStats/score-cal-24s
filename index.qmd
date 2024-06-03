@@ -277,7 +277,7 @@ ggplot() +
 ## Model calibration by simulation
 
 1.  Correct coverage? *Frequentist*
-    -   $S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert y), {\color{red}\theta}) = \vert 1({\color{red}\theta} \in {\color{purple}\text{CR}_\alpha}) - \alpha \vert$
+    -   $S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y), {\color{red}\theta}) = \vert 1({\color{red}\theta} \in {\color{purple}\text{CR}_\alpha}) - \alpha \vert$
 2.  Can we correct the entire distribution? **Bayesian**
     -   Proper scoring rules
 
@@ -320,7 +320,7 @@ $$\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f}\in \mathcal{F}}{\arg\max}~ 
 
 <br>
 
-$$\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S({\color{green}f}_\sharp{\color{blue}K}(\cdot\vert y),\theta) \right]$$
+$$\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\theta) \right]$$
 
 ## What we can do
 
