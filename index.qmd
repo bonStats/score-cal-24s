@@ -518,7 +518,7 @@ Use extended Kalman Filter as **approximate likelihood**
 
 ## MAPK: Biological network
 
-Two-step Mitogen Activated Protein Kinase enzymatic cascade
+Two-step Mitogen Activated Protein Kinase enzymatic cascade [@dhananjaneyulu2012noise; @warne2022multifidelity]
 
 :::: {.columns}
 ```{css, echo=FALSE}
