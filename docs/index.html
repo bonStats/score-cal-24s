@@ -410,7 +410,7 @@ Joshua J Bon
 <ul>
 <li class="fragment">Limiting distributions</li>
 <li class="fragment">Whittle likelihood</li>
-<li class="fragment">Model simplification (e.g.&nbsp;SDE -&gt; ODE)</li>
+<li class="fragment">Model simplification (e.g.&nbsp;SDE <span class="math inline">\(\rightarrow\)</span> ODE)</li>
 <li class="fragment">Linear noise approximation</li>
 <li class="fragment">Kalman filter</li>
 <li class="fragment">Particle filters</li>
@@ -783,33 +783,18 @@ Figure&nbsp;5: After correction
 </div>
 <p>Estimated from independent replications of the method.</p>
 </section>
-<section id="lotka-volterra-sde-quasi-abc" class="slide level2">
-<h2>Lotka-Volterra SDE (quasi-ABC)</h2>
-<p><a href="https://turinglang.org/v0.30/tutorials/10-bayesian-differential-equations/#inference-of-a-stochastic-differential-equation">Turing.jl Tutorial: Bayesian Estimation of Differential Equations</a></p>
-<p><span class="math display">\[\text{d} X_{t} = (\beta_1 X_{t} - \beta_2 X_{t} Y_{t} ) \text{d} t+ \sigma_1 \text{d} B_{t}^{1}\]</span> <span class="math display">\[\text{d} Y_{t} = (\beta_4 X_{t} Y_{t} - \beta_3 Y_{t} ) \text{d} t+ \sigma_2 \text{d} B_{t}^{2}\]</span></p>
-</section>
-<section id="lotka-volterra-sde-quasi-abc-1" class="slide level2">
-<h2>Lotka-Volterra SDE (quasi-ABC)</h2>
-<p>Use noisy quasi-likelihood as <strong>approximate likelihood</strong></p>
-<p><span class="math display">\[\begin{aligned}&amp;L(\beta_{1:4}, \tau ~\vert~ x_{1:n}, y_{1:n}) \\
-&amp;= \tau^{2n}\exp\left(-\frac{\tau^2}{2} \sum_{i=1}^{n}\left[(x_i^\prime - x_i)^{2} + (y_i^\prime - y_i)^{2}\right] \right)\end{aligned}\]</span></p>
-<ul>
-<li class="fragment"><span class="math inline">\(\{(x_i^\prime,y_i^\prime)\}_{i=1}^{n}\)</span> simulated conditional on <span class="math inline">\(\beta_{1:4}\)</span></li>
-<li class="fragment">Prior <span class="math inline">\(\tau ∼ \text{Gamma}(2, 3)\)</span></li>
-</ul>
-<div class="fragment">
-<p><strong>Further approximation</strong>: use rough numerical integration scheme (Euler-Maruyama <span class="math inline">\(\Delta t=0.01\)</span>).</p>
-</div>
-</section>
-<section id="lotka-volterra-sde-quasi-abc-2" class="slide level2">
-<h2>Lotka-Volterra SDE (quasi-ABC)</h2>
-<p><object data="figs/lotka-posterior-comparison.pdf" type="application/pdf" width="800" height="600"><p>Unable to display PDF file. <a href="figs/lotka-posterior-comparison.pdf">Download</a> instead.</p></object></p>
-</section>
-<section id="lotka-volterra-sde-quasi-abc-3" class="slide level2">
-<h2>Lotka-Volterra SDE (quasi-ABC)</h2>
-<p><object data="figs/lotka-calcheck.pdf" type="application/pdf" width="900" height="600"><p>Unable to display PDF file. <a href="figs/lotka-calcheck.pdf">Download</a> instead.</p></object></p>
-</section>
+
+
+
+
 <section id="lotka-volterra-sde-ekf" class="slide level2">
+<h2>Lotka-Volterra SDE (EKF)</h2>
+<p><span class="math display">\[\text{d} X_{t} = (\beta_1 X_{t} - \beta_2 X_{t} Y_{t} ) \text{d} t+ \sigma_1 \text{d} B_{t}^{1}\]</span> <span class="math display">\[\text{d} Y_{t} = (\beta_4 X_{t} Y_{t} - \beta_3 Y_{t} ) \text{d} t+ \sigma_2 \text{d} B_{t}^{2}\]</span></p>
+
+<img data-src="index_files/figure-revealjs/fig-lv-1-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;6: Realisation of Lotka-Volterra SDE
+</p></section>
+<section id="lotka-volterra-sde-ekf-1" class="slide level2">
 <h2>Lotka-Volterra SDE (EKF)</h2>
 <p>Use extended Kalman Filter as <strong>approximate likelihood</strong></p>
 <ul>
@@ -818,13 +803,94 @@ Figure&nbsp;5: After correction
 <li class="fragment">Approximate transition dynamics by linear assumption</li>
 </ul>
 </section>
-<section id="lotka-volterra-sde-ekf-1" class="slide level2">
+<section id="lotka-volterra-sde-ekf-2" class="slide level2">
 <h2>Lotka-Volterra SDE (EKF)</h2>
 <p><object data="figs/lotka-ekf-calcheck.pdf" type="application/pdf" width="900" height="600"><p>Unable to display PDF file. <a href="figs/lotka-ekf-calcheck.pdf">Download</a> instead.</p></object></p>
 </section>
-<section id="allee-effect-model" class="slide level2">
-<h2>Allee effect model</h2>
-<p>To add</p>
+<section id="lotka-volterra-sde-ekf-3" class="slide level2">
+<h2>Lotka-Volterra SDE (EKF)</h2>
+<p><object data="figs/lotka-ekf-posterior-comparison.pdf" type="application/pdf" width="850" height="650"><p>Unable to display PDF file. <a href="figs/lotka-ekf-posterior-comparison.pdf">Download</a> instead.</p></object></p>
+</section>
+<section id="mapk-biological-network" class="slide level2">
+<h2>MAPK: Biological network</h2>
+<p>Two-step Mitogen Activated Protein Kinase enzymatic cascade</p>
+<div class="columns">
+<div class="cell">
+<style type="text/css">
+.math.display .MathJax  {
+  font-size: 80% !important;
+}
+</style>
+</div><div class="column" style="width:30%;">
+<p><span class="math display">\[
+\begin{aligned}
+X + E &amp;\overset{k_1}{\rightarrow} [XE],\\
+X^* + P_1 &amp;\overset{k_4}{\rightarrow} [X^{a}P_1], \\
+X^{a} + Y &amp;\overset{k_7}{\rightarrow} [X^{a}Y], \\
+Y^{a} + P_2 &amp;\overset{k_{10}}{\rightarrow} [Y^{a}P_2] \\
+\end{aligned}\]</span></p>
+</div><div class="column" style="width:30%;">
+<p><span class="math display">\[
+\begin{aligned}
+~[XE] &amp;\overset{k_2}{\rightarrow} X + E, \\
+[X^{a}P_1] &amp;\overset{k_5}{\rightarrow} X^{a} + P_1, \\
+[X^{a}Y] &amp;\overset{k_8}{\rightarrow} X^{a} + Y, \\
+[Y^{a}P_2] &amp;\overset{k_{11}}{\rightarrow} Y^{a} + P_2, \\
+\end{aligned}\]</span></p>
+</div><div class="column" style="width:30%;">
+<p><span class="math display">\[
+\begin{aligned}
+~[XE] &amp;\overset{k_3}{\rightarrow} X^{a}+ E, \\
+[X^{a}P_1] &amp;\overset{k_6}{\rightarrow} X + P_1, \\
+[X^{a}Y] &amp;\overset{k_9}{\rightarrow} X^{a} + Y^{a}, \\
+[Y^{a}P_2] &amp;\overset{k_{12}}{\rightarrow} Y + P_2. \\
+\end{aligned}\]</span></p>
+</div>
+</div>
+<ul>
+<li class="fragment"><span class="math inline">\(k_1,\ldots,k_{12}\)</span> are kinetic rate parameters</li>
+<li class="fragment">Cascade reactions essential for cell signalling processes</li>
+<li class="fragment">Translates to Markov jump process</li>
+</ul>
+</section>
+<section id="mapk-biological-network-1" class="slide level2">
+<h2>MAPK: Biological network</h2>
+
+<img data-src="index_files/figure-revealjs/fig-mapk-1-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;7: Realisation of MAPK MJP
+</p></section>
+<section id="mapk-biological-network-2" class="slide level2">
+<h2>MAPK: Biological network</h2>
+
+<img data-src="index_files/figure-revealjs/fig-mapk-2-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;8: Realisation of MAPK MJP
+</p></section>
+<section id="mapk-biological-network-3" class="slide level2">
+<h2>MAPK: Biological network</h2>
+
+<img data-src="index_files/figure-revealjs/fig-mapk-3-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">
+Figure&nbsp;9: Observed molecules from MAPK MJP
+</p></section>
+<section id="mapk-biological-network-4" class="slide level2">
+<h2>MAPK: Biological network</h2>
+<p>Assume observation process</p>
+<p><span class="math display">\[[X^\text{obs}_t~Y^\text{obs}_t] \sim \mathcal{N}([X^a_t, Y^a_t], \sigma^2)\]</span> at times <span class="math inline">\(t \in \{0,4,8,\ldots,200\}\)</span> with <span class="math inline">\(\sigma = 1\)</span>.</p>
+<div class="fragment">
+<p>Approximations:</p>
+<ol type="1">
+<li class="fragment">Large count limit (MJP <span class="math inline">\(\rightarrow\)</span> SDE)</li>
+<li class="fragment">EKF for likelihood approximation (<span class="math inline">\(dt = 1\)</span>)</li>
+<li class="fragment"><span class="math inline">\(N=1000\)</span> samples from HMC</li>
+</ol>
+</div>
+</section>
+<section id="mapk-biological-network-5" class="slide level2">
+<h2>MAPK: Biological network</h2>
+<p><object data="figs/rn-calcheck-20240603.pdf" type="application/pdf" width="900" height="600"><p>Unable to display PDF file. <a href="figs/rn-calcheck-20240603.pdf">Download</a> instead.</p></object></p>
+</section>
+<section id="mapk-biological-network-6" class="slide level2">
+<h2>MAPK: Biological network</h2>
+<p><object data="figs/rn-posterior-comparison-20240603.pdf" type="application/pdf" width="850" height="650"><p>Unable to display PDF file. <a href="figs/rn-posterior-comparison-20240603.pdf">Download</a> instead.</p></object></p>
 </section></section>
 <section>
 <section id="theory" class="title-slide slide level1 center">

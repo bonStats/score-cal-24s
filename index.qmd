@@ -25,7 +25,8 @@ library(distributional)
 library(ggdist)
 
 source("figs/illustrative-plots.R")
-
+source("figs/mapk-data-plot.R")
+source("figs/lv-data-plot.R")
 ```
 
 ## Talk overview
@@ -67,7 +68,7 @@ Bayesian inference requires likelihoods, but...
 
 -   Limiting distributions
 -   Whittle likelihood
--   Model simplification (e.g. SDE -\> ODE)
+-   Model simplification (e.g. SDE $\rightarrow$ ODE)
 -   Linear noise approximation
 -   Kalman filter
 -   Particle filters
@@ -454,13 +455,13 @@ knitr::kable(D_dat_ou1, format = "html")
 
 Estimated from independent replications of the method.
 
-## Lotka-Volterra SDE (quasi-ABC)
+## Lotka-Volterra SDE (quasi-ABC) {visibility="hidden"}
 
 [Turing.jl Tutorial: Bayesian Estimation of Differential Equations](https://turinglang.org/v0.30/tutorials/10-bayesian-differential-equations/#inference-of-a-stochastic-differential-equation)
 
 $$\text{d} X_{t} = (\beta_1 X_{t} - \beta_2 X_{t} Y_{t} ) \text{d} t+ \sigma_1 \text{d} B_{t}^{1}$$ $$\text{d} Y_{t} = (\beta_4 X_{t} Y_{t} - \beta_3 Y_{t} ) \text{d} t+ \sigma_2 \text{d} B_{t}^{2}$$
 
-## Lotka-Volterra SDE (quasi-ABC)
+## Lotka-Volterra SDE (quasi-ABC) {visibility="hidden"}
 
 Use noisy quasi-likelihood as **approximate likelihood**
 
@@ -474,13 +475,30 @@ $$\begin{aligned}&L(\beta_{1:4}, \tau ~\vert~ x_{1:n}, y_{1:n}) \\
 
 **Further approximation**: use rough numerical integration scheme (Euler-Maruyama $\Delta t=0.01$).
 
-## Lotka-Volterra SDE (quasi-ABC)
+## Lotka-Volterra SDE (quasi-ABC) {visibility="hidden"}
 
 {{< pdf figs/lotka-posterior-comparison.pdf height=600 width=800 >}}
 
-## Lotka-Volterra SDE (quasi-ABC)
+## Lotka-Volterra SDE (quasi-ABC) {visibility="hidden"}
 
 {{< pdf figs/lotka-calcheck.pdf height=600 width=900 >}}
+
+## Lotka-Volterra SDE (EKF)
+
+$$\text{d} X_{t} = (\beta_1 X_{t} - \beta_2 X_{t} Y_{t} ) \text{d} t+ \sigma_1 \text{d} B_{t}^{1}$$ $$\text{d} Y_{t} = (\beta_4 X_{t} Y_{t} - \beta_3 Y_{t} ) \text{d} t+ \sigma_2 \text{d} B_{t}^{2}$$
+
+```{r}
+#| label: fig-lv-1
+#| warning: false
+#| echo: false
+#| fig-cap: 'Realisation of Lotka-Volterra SDE'
+
+ggplot(lv,aes(x = t, y = Value, color = Species)) + 
+  geom_line() +
+  theme_bw() + theme(legend.title = element_blank()) +
+  xlab("Time") + ylab("Species value") 
+
+```
 
 ## Lotka-Volterra SDE (EKF)
 
@@ -494,9 +512,130 @@ Use extended Kalman Filter as **approximate likelihood**
 
 {{< pdf figs/lotka-ekf-calcheck.pdf height=600 width=900 >}}
 
-## Allee effect model
+## Lotka-Volterra SDE (EKF)
 
-To add
+{{< pdf figs/lotka-ekf-posterior-comparison.pdf height=650 width=850 >}}
+
+## MAPK: Biological network
+
+Two-step Mitogen Activated Protein Kinase enzymatic cascade
+
+:::: {.columns}
+```{css, echo=FALSE}
+.math.display .MathJax  {
+  font-size: 80% !important;
+}
+```
+::: {.column width="30%"}
+$$
+\begin{aligned}
+X + E &\overset{k_1}{\rightarrow} [XE],\\
+X^* + P_1 &\overset{k_4}{\rightarrow} [X^{a}P_1], \\
+X^{a} + Y &\overset{k_7}{\rightarrow} [X^{a}Y], \\
+Y^{a} + P_2 &\overset{k_{10}}{\rightarrow} [Y^{a}P_2] \\
+\end{aligned}$$
+:::
+
+::: {.column width="30%"}
+$$
+\begin{aligned}
+~[XE] &\overset{k_2}{\rightarrow} X + E, \\
+[X^{a}P_1] &\overset{k_5}{\rightarrow} X^{a} + P_1, \\
+[X^{a}Y] &\overset{k_8}{\rightarrow} X^{a} + Y, \\
+[Y^{a}P_2] &\overset{k_{11}}{\rightarrow} Y^{a} + P_2, \\
+\end{aligned}$$
+:::
+
+::: {.column width="30%"}
+$$
+\begin{aligned}
+~[XE] &\overset{k_3}{\rightarrow} X^{a}+ E, \\
+[X^{a}P_1] &\overset{k_6}{\rightarrow} X + P_1, \\
+[X^{a}Y] &\overset{k_9}{\rightarrow} X^{a} + Y^{a}, \\
+[Y^{a}P_2] &\overset{k_{12}}{\rightarrow} Y + P_2. \\
+\end{aligned}$$
+:::
+
+::::
+
+- $k_1,\ldots,k_{12}$ are kinetic rate parameters
+- Cascade reactions essential for cell signalling processes
+- Translates to Markov jump process
+
+## MAPK: Biological network
+
+```{r}
+#| label: fig-mapk-1
+#| warning: false
+#| echo: false
+#| fig-cap: 'Realisation of MAPK MJP'
+
+ggplot(rn,aes(x = t, y = count, color = protein)) + 
+  geom_line() +
+  scale_color_manual(labels = plabels,values = pcolour) + 
+  theme_bw() + theme(legend.title = element_blank()) +
+  xlab("Time") + ylab("Copy number (molecules)") +
+  ylim(c(0,800))
+
+```
+
+## MAPK: Biological network
+
+```{r}
+#| label: fig-mapk-2
+#| warning: false
+#| echo: false
+#| fig-cap: 'Realisation of MAPK MJP'
+
+ggplot(rn,aes(x = t, y = count, color = protein)) + 
+  geom_line() +
+  scale_color_manual(labels = plabels,values = pcolour) + 
+  theme_bw() + theme(legend.title = element_blank()) +
+  xlab("Time") + ylab("Copy number (molecules)") +
+  ylim(c(0,80))
+
+```
+
+## MAPK: Biological network
+
+```{r}
+#| label: fig-mapk-3
+#| warning: false
+#| echo: false
+#| fig-cap: 'Observed molecules from MAPK MJP'
+
+rn %>% filter(protein %in% c("X^*","Y^*")) %>%
+ggplot(aes(x = t, y = count, color = protein)) + 
+  geom_line() +
+  scale_color_manual(labels = plabels[c(4,9)],values = pcolour) + 
+  theme_bw() + theme(legend.title = element_blank()) +
+  xlab("Time") + ylab("Copy number (molecules)") +
+  ylim(c(0,800))
+
+```
+
+## MAPK: Biological network
+
+Assume observation process
+
+$$[X^\text{obs}_t~Y^\text{obs}_t] \sim \mathcal{N}([X^a_t, Y^a_t], \sigma^2)$$
+at times $t \in \{0,4,8,\ldots,200\}$ with $\sigma = 1$.
+
+. . .
+
+Approximations:
+
+1. Large count limit (MJP $\rightarrow$ SDE)
+2. EKF for likelihood approximation ($dt = 1$)
+3. $N=1000$ samples from HMC
+
+## MAPK: Biological network
+
+{{< pdf figs/rn-calcheck-20240603.pdf height=600 width=900 >}}
+
+## MAPK: Biological network
+
+{{< pdf figs/rn-posterior-comparison-20240603.pdf height=650 width=850 >}}
 
 # Theory
 

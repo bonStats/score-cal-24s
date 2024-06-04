@@ -32,7 +32,7 @@
     "href": "index.html#likelihood-approximations",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "Likelihood approximations",
-    "text": "Likelihood approximations\n\nLimiting distributions\nWhittle likelihood\nModel simplification (e.g. SDE -&gt; ODE)\nLinear noise approximation\nKalman filter\nParticle filters"
+    "text": "Likelihood approximations\n\nLimiting distributions\nWhittle likelihood\nModel simplification (e.g. SDE \\(\\rightarrow\\) ODE)\nLinear noise approximation\nKalman filter\nParticle filters"
   },
   {
     "objectID": "index.html#posterior-approximations",
@@ -266,53 +266,81 @@
     "text": "OU Process (limiting approximation)\nComparison for \\(D\\)\n\n\n\n\n\n\nPosterior\nMSE\nBias\nSt. Dev\nCoverage (90%)\n\n\n\n\nApprox\n4.73\n0.18\n1.46\n85\n\n\nAdjust (α=0)\n4.83\n0.28\n1.24\n72\n\n\nAdjust (α=1)\n5.13\n0.42\n1.45\n83\n\n\nTrue\n5.00\n0.37\n1.48\n85\n\n\n\n\n\n\n\n\nEstimated from independent replications of the method."
   },
   {
-    "objectID": "index.html#lotka-volterra-sde-quasi-abc",
-    "href": "index.html#lotka-volterra-sde-quasi-abc",
-    "title": "Bayesian scoring rule calibration for approximate models",
-    "section": "Lotka-Volterra SDE (quasi-ABC)",
-    "text": "Lotka-Volterra SDE (quasi-ABC)\nTuring.jl Tutorial: Bayesian Estimation of Differential Equations\n\\[\\text{d} X_{t} = (\\beta_1 X_{t} - \\beta_2 X_{t} Y_{t} ) \\text{d} t+ \\sigma_1 \\text{d} B_{t}^{1}\\] \\[\\text{d} Y_{t} = (\\beta_4 X_{t} Y_{t} - \\beta_3 Y_{t} ) \\text{d} t+ \\sigma_2 \\text{d} B_{t}^{2}\\]"
-  },
-  {
-    "objectID": "index.html#lotka-volterra-sde-quasi-abc-1",
-    "href": "index.html#lotka-volterra-sde-quasi-abc-1",
-    "title": "Bayesian scoring rule calibration for approximate models",
-    "section": "Lotka-Volterra SDE (quasi-ABC)",
-    "text": "Lotka-Volterra SDE (quasi-ABC)\nUse noisy quasi-likelihood as approximate likelihood\n\\[\\begin{aligned}&L(\\beta_{1:4}, \\tau ~\\vert~ x_{1:n}, y_{1:n}) \\\\\n&= \\tau^{2n}\\exp\\left(-\\frac{\\tau^2}{2} \\sum_{i=1}^{n}\\left[(x_i^\\prime - x_i)^{2} + (y_i^\\prime - y_i)^{2}\\right] \\right)\\end{aligned}\\]\n\n\\(\\{(x_i^\\prime,y_i^\\prime)\\}_{i=1}^{n}\\) simulated conditional on \\(\\beta_{1:4}\\)\nPrior \\(\\tau ∼ \\text{Gamma}(2, 3)\\)\n\n\nFurther approximation: use rough numerical integration scheme (Euler-Maruyama \\(\\Delta t=0.01\\))."
-  },
-  {
-    "objectID": "index.html#lotka-volterra-sde-quasi-abc-2",
-    "href": "index.html#lotka-volterra-sde-quasi-abc-2",
-    "title": "Bayesian scoring rule calibration for approximate models",
-    "section": "Lotka-Volterra SDE (quasi-ABC)",
-    "text": "Lotka-Volterra SDE (quasi-ABC)\nUnable to display PDF file. Download instead."
-  },
-  {
-    "objectID": "index.html#lotka-volterra-sde-quasi-abc-3",
-    "href": "index.html#lotka-volterra-sde-quasi-abc-3",
-    "title": "Bayesian scoring rule calibration for approximate models",
-    "section": "Lotka-Volterra SDE (quasi-ABC)",
-    "text": "Lotka-Volterra SDE (quasi-ABC)\nUnable to display PDF file. Download instead."
-  },
-  {
     "objectID": "index.html#lotka-volterra-sde-ekf",
     "href": "index.html#lotka-volterra-sde-ekf",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "Lotka-Volterra SDE (EKF)",
-    "text": "Lotka-Volterra SDE (EKF)\nUse extended Kalman Filter as approximate likelihood\n\nDiscretise SDE at time points \\(t_0,t_1,\\ldots,t_n\\)\nAssume Gaussian at each \\(t_i\\)\nApproximate transition dynamics by linear assumption"
+    "text": "Lotka-Volterra SDE (EKF)\n\\[\\text{d} X_{t} = (\\beta_1 X_{t} - \\beta_2 X_{t} Y_{t} ) \\text{d} t+ \\sigma_1 \\text{d} B_{t}^{1}\\] \\[\\text{d} Y_{t} = (\\beta_4 X_{t} Y_{t} - \\beta_3 Y_{t} ) \\text{d} t+ \\sigma_2 \\text{d} B_{t}^{2}\\]\n\n\nFigure 6: Realisation of Lotka-Volterra SDE"
   },
   {
     "objectID": "index.html#lotka-volterra-sde-ekf-1",
     "href": "index.html#lotka-volterra-sde-ekf-1",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "Lotka-Volterra SDE (EKF)",
+    "text": "Lotka-Volterra SDE (EKF)\nUse extended Kalman Filter as approximate likelihood\n\nDiscretise SDE at time points \\(t_0,t_1,\\ldots,t_n\\)\nAssume Gaussian at each \\(t_i\\)\nApproximate transition dynamics by linear assumption"
+  },
+  {
+    "objectID": "index.html#lotka-volterra-sde-ekf-2",
+    "href": "index.html#lotka-volterra-sde-ekf-2",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Lotka-Volterra SDE (EKF)",
     "text": "Lotka-Volterra SDE (EKF)\nUnable to display PDF file. Download instead."
   },
   {
-    "objectID": "index.html#allee-effect-model",
-    "href": "index.html#allee-effect-model",
+    "objectID": "index.html#lotka-volterra-sde-ekf-3",
+    "href": "index.html#lotka-volterra-sde-ekf-3",
     "title": "Bayesian scoring rule calibration for approximate models",
-    "section": "Allee effect model",
-    "text": "Allee effect model\nTo add"
+    "section": "Lotka-Volterra SDE (EKF)",
+    "text": "Lotka-Volterra SDE (EKF)\nUnable to display PDF file. Download instead."
+  },
+  {
+    "objectID": "index.html#mapk-biological-network",
+    "href": "index.html#mapk-biological-network",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "MAPK: Biological network",
+    "text": "MAPK: Biological network\nTwo-step Mitogen Activated Protein Kinase enzymatic cascade\n\n\n\n\n\\[\n\\begin{aligned}\nX + E &\\overset{k_1}{\\rightarrow} [XE],\\\\\nX^* + P_1 &\\overset{k_4}{\\rightarrow} [X^{a}P_1], \\\\\nX^{a} + Y &\\overset{k_7}{\\rightarrow} [X^{a}Y], \\\\\nY^{a} + P_2 &\\overset{k_{10}}{\\rightarrow} [Y^{a}P_2] \\\\\n\\end{aligned}\\]\n\n\\[\n\\begin{aligned}\n~[XE] &\\overset{k_2}{\\rightarrow} X + E, \\\\\n[X^{a}P_1] &\\overset{k_5}{\\rightarrow} X^{a} + P_1, \\\\\n[X^{a}Y] &\\overset{k_8}{\\rightarrow} X^{a} + Y, \\\\\n[Y^{a}P_2] &\\overset{k_{11}}{\\rightarrow} Y^{a} + P_2, \\\\\n\\end{aligned}\\]\n\n\\[\n\\begin{aligned}\n~[XE] &\\overset{k_3}{\\rightarrow} X^{a}+ E, \\\\\n[X^{a}P_1] &\\overset{k_6}{\\rightarrow} X + P_1, \\\\\n[X^{a}Y] &\\overset{k_9}{\\rightarrow} X^{a} + Y^{a}, \\\\\n[Y^{a}P_2] &\\overset{k_{12}}{\\rightarrow} Y + P_2. \\\\\n\\end{aligned}\\]\n\n\n\n\\(k_1,\\ldots,k_{12}\\) are kinetic rate parameters\nCascade reactions essential for cell signalling processes\nTranslates to Markov jump process"
+  },
+  {
+    "objectID": "index.html#mapk-biological-network-1",
+    "href": "index.html#mapk-biological-network-1",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "MAPK: Biological network",
+    "text": "MAPK: Biological network\n\n\nFigure 7: Realisation of MAPK MJP"
+  },
+  {
+    "objectID": "index.html#mapk-biological-network-2",
+    "href": "index.html#mapk-biological-network-2",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "MAPK: Biological network",
+    "text": "MAPK: Biological network\n\n\nFigure 8: Realisation of MAPK MJP"
+  },
+  {
+    "objectID": "index.html#mapk-biological-network-3",
+    "href": "index.html#mapk-biological-network-3",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "MAPK: Biological network",
+    "text": "MAPK: Biological network\n\n\nFigure 9: Observed molecules from MAPK MJP"
+  },
+  {
+    "objectID": "index.html#mapk-biological-network-4",
+    "href": "index.html#mapk-biological-network-4",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "MAPK: Biological network",
+    "text": "MAPK: Biological network\nAssume observation process\n\\[[X^\\text{obs}_t~Y^\\text{obs}_t] \\sim \\mathcal{N}([X^a_t, Y^a_t], \\sigma^2)\\] at times \\(t \\in \\{0,4,8,\\ldots,200\\}\\) with \\(\\sigma = 1\\).\n\nApproximations:\n\nLarge count limit (MJP \\(\\rightarrow\\) SDE)\nEKF for likelihood approximation (\\(dt = 1\\))\n\\(N=1000\\) samples from HMC"
+  },
+  {
+    "objectID": "index.html#mapk-biological-network-5",
+    "href": "index.html#mapk-biological-network-5",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "MAPK: Biological network",
+    "text": "MAPK: Biological network\nUnable to display PDF file. Download instead."
+  },
+  {
+    "objectID": "index.html#mapk-biological-network-6",
+    "href": "index.html#mapk-biological-network-6",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "MAPK: Biological network",
+    "text": "MAPK: Biological network\nUnable to display PDF file. Download instead."
   },
   {
     "objectID": "index.html#supporting-theory",
