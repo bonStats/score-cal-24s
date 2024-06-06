@@ -366,7 +366,7 @@ Joshua J Bon
 <section id="talk-overview" class="slide level2">
 <h2>Talk overview</h2>
 <ul>
-<li class="fragment">Motivation and intuitions</li>
+<li class="fragment">Motivation</li>
 <li class="fragment">Method</li>
 <li class="fragment">Examples</li>
 <li class="fragment">Theory</li>
@@ -380,28 +380,28 @@ Joshua J Bon
 </ul>
 </div>
 </section>
+<section id="bayesian-inference" class="slide level2">
+<h2>Bayesian Inference</h2>
+
+<img data-src="imgs/little_rascals_our_gang_waiting.gif" class="r-stretch"></section>
 <section id="approximations-in-bayesian-inference" class="slide level2">
 <h2>Approximations in Bayesian inference</h2>
 <p>Bayesian inference requires likelihoods, but…</p>
 <ul>
 <li class="fragment">Intractable likelihoods
 <ul>
-<li class="fragment">Require approximations</li>
+<li class="fragment">Use approximations</li>
 </ul></li>
 <li class="fragment">Computationally expensive likelihoods
 <ul>
-<li class="fragment">Want good approximations</li>
+<li class="fragment">Use approximations</li>
 </ul></li>
 <li class="fragment">Posterior evaluation
 <ul>
-<li class="fragment">Need good approximations*</li>
+<li class="fragment">Use approximations</li>
 </ul></li>
 </ul>
 </section>
-<section id="bayesian-inference" class="slide level2">
-<h2>Bayesian Inference</h2>
-
-<img data-src="imgs/little_rascals_our_gang_waiting.gif" class="r-stretch"></section>
 <section id="approximations-everywhere" class="slide level2 center">
 <h2>Approximations everywhere…</h2>
 </section>
@@ -438,8 +438,11 @@ Joshua J Bon
 <h2>A good approximation?</h2>
 
 <img data-src="imgs/buster-keaton.gif" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="can-we-check-posteriors-based-on-approximations" class="slide level2 center">
+<h2>Can we check posteriors based on approximation(s)?</h2>
+</section>
 <section id="can-we-correct-posteriors-based-on-approximations" class="slide level2 center">
-<h2>Can we correct posteriors based on approximation(s)?</h2>
+<h2>Can we <span style="color:red;">correct</span> posteriors based on approximation(s)?</h2>
 </section>
 <section id="correcting-approximate-posteriors" class="slide level2">
 <h2>Correcting approximate posteriors</h2>
@@ -629,7 +632,7 @@ Figure&nbsp;5: After correction
 <section id="bsrc-optimisation-problem" class="slide level2">
 <h2>BSRC optimisation problem</h2>
 <p><span class="math display">\[\underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[w({\color{red}\theta}, \tilde{y})S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]\]</span></p>
-<p><span class="math display">\[w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})\]</span></p>
+<p><span class="math display">\[w({\color{red}\theta}, \tilde{y}) = \frac{\pi({\color{red}\theta})}{\bar\pi({\color{red}\theta})} v(\tilde{y})\]</span></p>
 </section>
 <section id="moment-correcting-transformation" class="slide level2">
 <h2>Moment-correcting transformation</h2>
@@ -673,7 +676,7 @@ Figure&nbsp;5: After correction
 <section id="ou-process-limiting-approximation-1" class="slide level2">
 <h2>OU Process (limiting approximation)</h2>
 <p><object data="figs/ou-process-plot-uni-1.pdf" type="application/pdf" width="1000" height="460"><p>Unable to display PDF file. <a href="figs/ou-process-plot-uni-1.pdf">Download</a> instead.</p></object></p>
-<p><span class="math inline">\(M = 100\)</span> and <span class="math inline">\(\bar\Pi = \hat\Pi(\cdot~\vert~y)\)</span> with variance scaled by 2</p>
+<p><span class="math inline">\(M = 100\)</span> and <span class="math inline">\(\bar\Pi = \hat\Pi(\cdot~\vert~y)\)</span> scaled by 2</p>
 </section>
 <section id="ou-process-limiting-approximation-2" class="slide level2">
 <h2>OU Process (limiting approximation)</h2>
@@ -787,28 +790,35 @@ Figure&nbsp;5: After correction
 
 
 
-<section id="lotka-volterra-sde-ekf" class="slide level2">
-<h2>Lotka-Volterra SDE (EKF)</h2>
+<section id="lotka-volterra-sde" class="slide level2">
+<h2>Lotka-Volterra SDE</h2>
 <p><span class="math display">\[\text{d} X_{t} = (\beta_1 X_{t} - \beta_2 X_{t} Y_{t} ) \text{d} t+ \sigma_1 \text{d} B_{t}^{1}\]</span> <span class="math display">\[\text{d} Y_{t} = (\beta_4 X_{t} Y_{t} - \beta_3 Y_{t} ) \text{d} t+ \sigma_2 \text{d} B_{t}^{2}\]</span></p>
 
 <img data-src="index_files/figure-revealjs/fig-lv-1-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">
 Figure&nbsp;6: Realisation of Lotka-Volterra SDE
 </p></section>
-<section id="lotka-volterra-sde-ekf-1" class="slide level2">
-<h2>Lotka-Volterra SDE (EKF)</h2>
+<section id="lotka-volterra-sde-1" class="slide level2">
+<h2>Lotka-Volterra SDE</h2>
 <p>Use extended Kalman Filter as <strong>approximate likelihood</strong></p>
 <ul>
 <li class="fragment">Discretise SDE at time points <span class="math inline">\(t_0,t_1,\ldots,t_n\)</span></li>
 <li class="fragment">Assume Gaussian at each <span class="math inline">\(t_i\)</span></li>
 <li class="fragment">Approximate transition dynamics by linear assumption</li>
 </ul>
+<div class="fragment">
+<p>BSRC settings</p>
+<ul>
+<li class="fragment"><span class="math inline">\(M = 200\)</span></li>
+<li class="fragment"><span class="math inline">\(\bar\Pi = \hat\Pi(\cdot~\vert~y)\)</span> scaled by 2</li>
+</ul>
+</div>
 </section>
-<section id="lotka-volterra-sde-ekf-2" class="slide level2">
-<h2>Lotka-Volterra SDE (EKF)</h2>
+<section id="lotka-volterra-sde-2" class="slide level2">
+<h2>Lotka-Volterra SDE</h2>
 <p><object data="figs/lotka-ekf-calcheck.pdf" type="application/pdf" width="900" height="600"><p>Unable to display PDF file. <a href="figs/lotka-ekf-calcheck.pdf">Download</a> instead.</p></object></p>
 </section>
-<section id="lotka-volterra-sde-ekf-3" class="slide level2">
-<h2>Lotka-Volterra SDE (EKF)</h2>
+<section id="lotka-volterra-sde-3" class="slide level2">
+<h2>Lotka-Volterra SDE</h2>
 <p><object data="figs/lotka-ekf-posterior-comparison.pdf" type="application/pdf" width="850" height="650"><p>Unable to display PDF file. <a href="figs/lotka-ekf-posterior-comparison.pdf">Download</a> instead.</p></object></p>
 </section>
 <section id="mapk-biological-network" class="slide level2">
@@ -882,6 +892,9 @@ Figure&nbsp;9: Observed molecules from MAPK MJP
 <li class="fragment">EKF for likelihood approximation (<span class="math inline">\(dt = 1\)</span>)</li>
 <li class="fragment"><span class="math inline">\(N=1000\)</span> samples from HMC</li>
 </ol>
+</div>
+<div class="fragment">
+<p>BSRC settings: <span class="math inline">\(M = 200\)</span> and <span class="math inline">\(\bar\Pi = \hat\Pi(\cdot~\vert~y)\)</span>, scaled by 1.5</p>
 </div>
 </section>
 <section id="mapk-biological-network-5" class="slide level2">
@@ -1134,7 +1147,7 @@ Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
 </div>
 </div>
 </div>
-<p><span class="math inline">\(M = 100\)</span> and <span class="math inline">\(\bar\Pi = \hat\Pi(\cdot~\vert~y)\)</span> with variance scaled by 2</p>
+<p><span class="math inline">\(M = 100\)</span> and <span class="math inline">\(\bar\Pi = \hat\Pi(\cdot~\vert~y)\)</span> scaled by 2</p>
 </section>
 <section id="bivariate-ou-process-vi-3" class="slide level2">
 <h2>Bivariate OU Process (VI)</h2>

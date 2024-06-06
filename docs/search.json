@@ -4,14 +4,7 @@
     "href": "index.html#talk-overview",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "Talk overview",
-    "text": "Talk overview\n\nMotivation and intuitions\nMethod\nExamples\nTheory\n\n\nJoint work with\n\nChristopher Drovandi, QUT\nDavid Warne, QUT\nDavid Nott, NUS"
-  },
-  {
-    "objectID": "index.html#approximations-in-bayesian-inference",
-    "href": "index.html#approximations-in-bayesian-inference",
-    "title": "Bayesian scoring rule calibration for approximate models",
-    "section": "Approximations in Bayesian inference",
-    "text": "Approximations in Bayesian inference\nBayesian inference requires likelihoods, but…\n\nIntractable likelihoods\n\nRequire approximations\n\nComputationally expensive likelihoods\n\nWant good approximations\n\nPosterior evaluation\n\nNeed good approximations*"
+    "text": "Talk overview\n\nMotivation\nMethod\nExamples\nTheory\n\n\nJoint work with\n\nChristopher Drovandi, QUT\nDavid Warne, QUT\nDavid Nott, NUS"
   },
   {
     "objectID": "index.html#bayesian-inference",
@@ -19,6 +12,13 @@
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "Bayesian Inference",
     "text": "Bayesian Inference"
+  },
+  {
+    "objectID": "index.html#approximations-in-bayesian-inference",
+    "href": "index.html#approximations-in-bayesian-inference",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Approximations in Bayesian inference",
+    "text": "Approximations in Bayesian inference\nBayesian inference requires likelihoods, but…\n\nIntractable likelihoods\n\nUse approximations\n\nComputationally expensive likelihoods\n\nUse approximations\n\nPosterior evaluation\n\nUse approximations"
   },
   {
     "objectID": "index.html#approximations-everywhere",
@@ -54,6 +54,13 @@
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "A good approximation?",
     "text": "A good approximation?"
+  },
+  {
+    "objectID": "index.html#can-we-check-posteriors-based-on-approximations",
+    "href": "index.html#can-we-check-posteriors-based-on-approximations",
+    "title": "Bayesian scoring rule calibration for approximate models",
+    "section": "Can we check posteriors based on approximation(s)?",
+    "text": "Can we check posteriors based on approximation(s)?"
   },
   {
     "objectID": "index.html#can-we-correct-posteriors-based-on-approximations",
@@ -214,7 +221,7 @@
     "href": "index.html#bsrc-optimisation-problem",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "BSRC optimisation problem",
-    "text": "BSRC optimisation problem\n\\[\\underset{ {\\color{green}f} \\in \\mathcal{F}}{\\arg\\max}~ \\mathbb{E}_{ {\\color{red}\\theta} \\sim \\bar\\Pi} \\mathbb{E}_{\\tilde{y} \\sim P(\\cdot ~\\vert~{\\color{red}\\theta})}\\left[w({\\color{red}\\theta}, \\tilde{y})S({\\color{green}f}_\\sharp {\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta}) \\right]\\]\n\\[w(\\theta, \\tilde{y}) = \\frac{\\pi(\\theta)}{\\bar\\pi(\\theta)} v(\\tilde{y})\\]"
+    "text": "BSRC optimisation problem\n\\[\\underset{ {\\color{green}f} \\in \\mathcal{F}}{\\arg\\max}~ \\mathbb{E}_{ {\\color{red}\\theta} \\sim \\bar\\Pi} \\mathbb{E}_{\\tilde{y} \\sim P(\\cdot ~\\vert~{\\color{red}\\theta})}\\left[w({\\color{red}\\theta}, \\tilde{y})S({\\color{green}f}_\\sharp {\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta}) \\right]\\]\n\\[w({\\color{red}\\theta}, \\tilde{y}) = \\frac{\\pi({\\color{red}\\theta})}{\\bar\\pi({\\color{red}\\theta})} v(\\tilde{y})\\]"
   },
   {
     "objectID": "index.html#moment-correcting-transformation",
@@ -249,7 +256,7 @@
     "href": "index.html#ou-process-limiting-approximation-1",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "OU Process (limiting approximation)",
-    "text": "OU Process (limiting approximation)\nUnable to display PDF file. Download instead.\n\\(M = 100\\) and \\(\\bar\\Pi = \\hat\\Pi(\\cdot~\\vert~y)\\) with variance scaled by 2"
+    "text": "OU Process (limiting approximation)\nUnable to display PDF file. Download instead.\n\\(M = 100\\) and \\(\\bar\\Pi = \\hat\\Pi(\\cdot~\\vert~y)\\) scaled by 2"
   },
   {
     "objectID": "index.html#ou-process-limiting-approximation-2",
@@ -266,32 +273,32 @@
     "text": "OU Process (limiting approximation)\nComparison for \\(D\\)\n\n\n\n\n\n\nPosterior\nMSE\nBias\nSt. Dev\nCoverage (90%)\n\n\n\n\nApprox\n4.73\n0.18\n1.46\n85\n\n\nAdjust (α=0)\n4.83\n0.28\n1.24\n72\n\n\nAdjust (α=1)\n5.13\n0.42\n1.45\n83\n\n\nTrue\n5.00\n0.37\n1.48\n85\n\n\n\n\n\n\n\n\nEstimated from independent replications of the method."
   },
   {
-    "objectID": "index.html#lotka-volterra-sde-ekf",
-    "href": "index.html#lotka-volterra-sde-ekf",
+    "objectID": "index.html#lotka-volterra-sde",
+    "href": "index.html#lotka-volterra-sde",
     "title": "Bayesian scoring rule calibration for approximate models",
-    "section": "Lotka-Volterra SDE (EKF)",
-    "text": "Lotka-Volterra SDE (EKF)\n\\[\\text{d} X_{t} = (\\beta_1 X_{t} - \\beta_2 X_{t} Y_{t} ) \\text{d} t+ \\sigma_1 \\text{d} B_{t}^{1}\\] \\[\\text{d} Y_{t} = (\\beta_4 X_{t} Y_{t} - \\beta_3 Y_{t} ) \\text{d} t+ \\sigma_2 \\text{d} B_{t}^{2}\\]\n\n\nFigure 6: Realisation of Lotka-Volterra SDE"
+    "section": "Lotka-Volterra SDE",
+    "text": "Lotka-Volterra SDE\n\\[\\text{d} X_{t} = (\\beta_1 X_{t} - \\beta_2 X_{t} Y_{t} ) \\text{d} t+ \\sigma_1 \\text{d} B_{t}^{1}\\] \\[\\text{d} Y_{t} = (\\beta_4 X_{t} Y_{t} - \\beta_3 Y_{t} ) \\text{d} t+ \\sigma_2 \\text{d} B_{t}^{2}\\]\n\n\nFigure 6: Realisation of Lotka-Volterra SDE"
   },
   {
-    "objectID": "index.html#lotka-volterra-sde-ekf-1",
-    "href": "index.html#lotka-volterra-sde-ekf-1",
+    "objectID": "index.html#lotka-volterra-sde-1",
+    "href": "index.html#lotka-volterra-sde-1",
     "title": "Bayesian scoring rule calibration for approximate models",
-    "section": "Lotka-Volterra SDE (EKF)",
-    "text": "Lotka-Volterra SDE (EKF)\nUse extended Kalman Filter as approximate likelihood\n\nDiscretise SDE at time points \\(t_0,t_1,\\ldots,t_n\\)\nAssume Gaussian at each \\(t_i\\)\nApproximate transition dynamics by linear assumption"
+    "section": "Lotka-Volterra SDE",
+    "text": "Lotka-Volterra SDE\nUse extended Kalman Filter as approximate likelihood\n\nDiscretise SDE at time points \\(t_0,t_1,\\ldots,t_n\\)\nAssume Gaussian at each \\(t_i\\)\nApproximate transition dynamics by linear assumption\n\n\nBSRC settings\n\n\\(M = 200\\)\n\\(\\bar\\Pi = \\hat\\Pi(\\cdot~\\vert~y)\\) scaled by 2"
   },
   {
-    "objectID": "index.html#lotka-volterra-sde-ekf-2",
-    "href": "index.html#lotka-volterra-sde-ekf-2",
+    "objectID": "index.html#lotka-volterra-sde-2",
+    "href": "index.html#lotka-volterra-sde-2",
     "title": "Bayesian scoring rule calibration for approximate models",
-    "section": "Lotka-Volterra SDE (EKF)",
-    "text": "Lotka-Volterra SDE (EKF)\nUnable to display PDF file. Download instead."
+    "section": "Lotka-Volterra SDE",
+    "text": "Lotka-Volterra SDE\nUnable to display PDF file. Download instead."
   },
   {
-    "objectID": "index.html#lotka-volterra-sde-ekf-3",
-    "href": "index.html#lotka-volterra-sde-ekf-3",
+    "objectID": "index.html#lotka-volterra-sde-3",
+    "href": "index.html#lotka-volterra-sde-3",
     "title": "Bayesian scoring rule calibration for approximate models",
-    "section": "Lotka-Volterra SDE (EKF)",
-    "text": "Lotka-Volterra SDE (EKF)\nUnable to display PDF file. Download instead."
+    "section": "Lotka-Volterra SDE",
+    "text": "Lotka-Volterra SDE\nUnable to display PDF file. Download instead."
   },
   {
     "objectID": "index.html#mapk-biological-network",
@@ -326,7 +333,7 @@
     "href": "index.html#mapk-biological-network-4",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "MAPK: Biological network",
-    "text": "MAPK: Biological network\nAssume observation process\n\\[[X^\\text{obs}_t~Y^\\text{obs}_t] \\sim \\mathcal{N}([X^a_t, Y^a_t], \\sigma^2)\\] at times \\(t \\in \\{0,4,8,\\ldots,200\\}\\) with \\(\\sigma = 1\\).\n\nApproximations:\n\nLarge count limit (MJP \\(\\rightarrow\\) SDE)\nEKF for likelihood approximation (\\(dt = 1\\))\n\\(N=1000\\) samples from HMC"
+    "text": "MAPK: Biological network\nAssume observation process\n\\[[X^\\text{obs}_t~Y^\\text{obs}_t] \\sim \\mathcal{N}([X^a_t, Y^a_t], \\sigma^2)\\] at times \\(t \\in \\{0,4,8,\\ldots,200\\}\\) with \\(\\sigma = 1\\).\n\nApproximations:\n\nLarge count limit (MJP \\(\\rightarrow\\) SDE)\nEKF for likelihood approximation (\\(dt = 1\\))\n\\(N=1000\\) samples from HMC\n\n\n\nBSRC settings: \\(M = 200\\) and \\(\\bar\\Pi = \\hat\\Pi(\\cdot~\\vert~y)\\), scaled by 1.5"
   },
   {
     "objectID": "index.html#mapk-biological-network-5",
@@ -459,7 +466,7 @@
     "href": "index.html#bivariate-ou-process-vi-2",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "Bivariate OU Process (VI)",
-    "text": "Bivariate OU Process (VI)\nCorrelation summaries\n\n\n\n\n\n\nPosterior\nMean\nSt. Dev.\n\n\n\n\nApprox\n0.00\n0.02\n\n\nAdjust (α=0)\n0.18\n0.41\n\n\nAdjust (α=0.5)\n0.37\n0.16\n\n\nAdjust (α=1)\n0.37\n0.15\n\n\nTrue\n0.42\n0.06\n\n\n\n\n\n\n\n\n\\(M = 100\\) and \\(\\bar\\Pi = \\hat\\Pi(\\cdot~\\vert~y)\\) with variance scaled by 2"
+    "text": "Bivariate OU Process (VI)\nCorrelation summaries\n\n\n\n\n\n\nPosterior\nMean\nSt. Dev.\n\n\n\n\nApprox\n0.00\n0.02\n\n\nAdjust (α=0)\n0.18\n0.41\n\n\nAdjust (α=0.5)\n0.37\n0.16\n\n\nAdjust (α=1)\n0.37\n0.15\n\n\nTrue\n0.42\n0.06\n\n\n\n\n\n\n\n\n\\(M = 100\\) and \\(\\bar\\Pi = \\hat\\Pi(\\cdot~\\vert~y)\\) scaled by 2"
   },
   {
     "objectID": "index.html#bivariate-ou-process-vi-3",

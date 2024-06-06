@@ -31,7 +31,7 @@ source("figs/lv-data-plot.R")
 
 ## Talk overview
 
--   Motivation and intuitions
+-   Motivation
 -   Method
 -   Examples
 -   Theory
@@ -44,23 +44,22 @@ Joint work with
 -   **David Warne**, QUT
 -   **David Nott**, NUS
 
+## Bayesian Inference
+
+![](imgs/little_rascals_our_gang_waiting.gif)
 
 ## Approximations in Bayesian inference
 
 Bayesian inference requires likelihoods, but...
 
 - Intractable likelihoods
-  - Require approximations 
+  - Use approximations 
   
 - Computationally expensive likelihoods
-  - Want good approximations
+  - Use approximations
   
 - Posterior evaluation
-   - Need good approximations*
-
-## Bayesian Inference
-
-![](imgs/little_rascals_our_gang_waiting.gif)
+   - Use approximations
 
 ## Approximations everywhere... {.center}
 
@@ -91,7 +90,9 @@ Bayesian inference requires likelihoods, but...
 
 ![](imgs/buster-keaton.gif){fig-align="center"}
 
-## Can we correct posteriors based on approximation(s)? {.center}
+## Can we check posteriors based on approximation(s)? {.center}
+
+## Can we [correct]{style="color:red;"} posteriors based on approximation(s)? {.center}
 
 ## Correcting approximate posteriors
 
@@ -367,7 +368,8 @@ It still works!
 
 $$\underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[w({\color{red}\theta}, \tilde{y})S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
 
-$$w(\theta, \tilde{y}) = \frac{\pi(\theta)}{\bar\pi(\theta)} v(\tilde{y})$$
+$$w({\color{red}\theta}, \tilde{y}) = \frac{\pi({\color{red}\theta})}{\bar\pi({\color{red}\theta})} v(\tilde{y})$$
+
 
 ## Moment-correcting transformation
 
@@ -417,7 +419,7 @@ $$X_\infty  \sim \mathcal{N}\left(\mu, \frac{D}{\gamma}\right)$$
 
 {{< pdf figs/ou-process-plot-uni-1.pdf height=460 width=1000 >}}
 
-$M = 100$ and $\bar\Pi = \hat\Pi(\cdot~\vert~y)$ with variance scaled by 2
+$M = 100$ and $\bar\Pi = \hat\Pi(\cdot~\vert~y)$ scaled by 2
 
 ## OU Process (limiting approximation)
 
@@ -483,7 +485,7 @@ $$\begin{aligned}&L(\beta_{1:4}, \tau ~\vert~ x_{1:n}, y_{1:n}) \\
 
 {{< pdf figs/lotka-calcheck.pdf height=600 width=900 >}}
 
-## Lotka-Volterra SDE (EKF)
+## Lotka-Volterra SDE
 
 $$\text{d} X_{t} = (\beta_1 X_{t} - \beta_2 X_{t} Y_{t} ) \text{d} t+ \sigma_1 \text{d} B_{t}^{1}$$ $$\text{d} Y_{t} = (\beta_4 X_{t} Y_{t} - \beta_3 Y_{t} ) \text{d} t+ \sigma_2 \text{d} B_{t}^{2}$$
 
@@ -500,7 +502,7 @@ ggplot(lv,aes(x = t, y = Value, color = Species)) +
 
 ```
 
-## Lotka-Volterra SDE (EKF)
+## Lotka-Volterra SDE
 
 Use extended Kalman Filter as **approximate likelihood**
 
@@ -508,11 +510,18 @@ Use extended Kalman Filter as **approximate likelihood**
 - Assume Gaussian at each $t_i$
 - Approximate transition dynamics by linear assumption
 
-## Lotka-Volterra SDE (EKF)
+. . .
+
+BSRC settings
+
+- $M = 200$
+- $\bar\Pi = \hat\Pi(\cdot~\vert~y)$ scaled by 2
+
+## Lotka-Volterra SDE
 
 {{< pdf figs/lotka-ekf-calcheck.pdf height=600 width=900 >}}
 
-## Lotka-Volterra SDE (EKF)
+## Lotka-Volterra SDE
 
 {{< pdf figs/lotka-ekf-posterior-comparison.pdf height=650 width=850 >}}
 
@@ -628,6 +637,10 @@ Approximations:
 1. Large count limit (MJP $\rightarrow$ SDE)
 2. EKF for likelihood approximation ($dt = 1$)
 3. $N=1000$ samples from HMC
+
+. . .
+
+BSRC settings: $M = 200$ and $\bar\Pi = \hat\Pi(\cdot~\vert~y)$, scaled by 1.5
 
 ## MAPK: Biological network
 
@@ -828,7 +841,7 @@ corr_tab <- tribble(
 knitr::kable(corr_tab, format = "html")
 ```
 
-$M = 100$ and $\bar\Pi = \hat\Pi(\cdot~\vert~y)$ with variance scaled by 2
+$M = 100$ and $\bar\Pi = \hat\Pi(\cdot~\vert~y)$ scaled by 2
 
 ## Bivariate OU Process (VI)
 
