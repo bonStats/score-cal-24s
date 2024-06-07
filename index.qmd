@@ -391,6 +391,8 @@ $$f(x) = A[x - \hat{\mu}(y)] + \hat{\mu}(y) + b$$
 
 ![](figs/score-cal-schem.png)
 
+- Focus on Energy Score: $S(\Pi, \theta) = \frac{1}{2}\mathbb{E}_{X,X^\prime \sim \Pi}\Vert X - X^\prime\Vert_2^\beta - \mathbb{E}_{X \sim \Pi}\Vert X - \theta\Vert_2^\beta$
+
 # Examples
 
 ## OU Process

@@ -235,7 +235,7 @@
     "href": "index.html#bayesian-scoring-rule-calibration",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "Bayesian scoring rule calibration",
-    "text": "Bayesian scoring rule calibration"
+    "text": "Bayesian scoring rule calibration\n\n\nFocus on Energy Score: \\(S(\\Pi, \\theta) = \\frac{1}{2}\\mathbb{E}_{X,X^\\prime \\sim \\Pi}\\Vert X - X^\\prime\\Vert_2^\\beta - \\mathbb{E}_{X \\sim \\Pi}\\Vert X - \\theta\\Vert_2^\\beta\\)"
   },
   {
     "objectID": "index.html#ou-process",
