@@ -5,10 +5,11 @@ library(tidyr)
 library(RColorBrewer)
 
 rn_raw <- read_csv("figs/rn-dataset.csv")
-
-rn <- pivot_longer(rn_raw, -all_of("t"), names_to = "protein", values_to = "count") 
-
 plevels = c("X", "E", "XE", "X^*", "P1", "X^*P[1]", "Y", "X^*Y", "Y^*", "P[2]", "Y^*P[2]")
+
+rn <- pivot_longer(rn_raw, -all_of("t"), names_to = "protein", values_to = "count") %>%
+  mutate(protein = ordered(protein,plevels))
+
 plabels = c(expression(X), expression(E), expression(XE), expression(X^a), expression(P1), expression(X^a~P[1]), expression(Y), expression(X^a~Y), expression(Y^a), expression(P[2]), expression(Y^a~P[2]))
 
 rn %>% mutate(protein = ordered(protein, level = plevels, labels = plabels))
