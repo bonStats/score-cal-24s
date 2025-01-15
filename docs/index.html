@@ -8,7 +8,7 @@
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.553">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Joshua J Bon">
   <title>Bayesian scoring rule calibration for approximate models</title>
@@ -587,12 +587,9 @@ Figure&nbsp;5: After correction
 <section id="what-we-cant-do" class="slide level2">
 <h2>What we can’t do</h2>
 <p><br></p>
-<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f}\in \mathcal{F}}{\arg\max}~ S[{\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]\]</span></p>
-</section>
-<section id="what-we-cant-do-1" class="slide level2">
-<h2>What we can’t do</h2>
-<p><br></p>
-<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\theta) \right]\]</span></p>
+<p><span class="math display">\[\begin{aligned}\Pi(\cdot ~\vert~y ) &amp;= \underset{ {\color{green}f}\in \mathcal{F}}{\arg\max}~ S[{\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]\\
+&amp;= \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\theta) \right]
+\end{aligned}\]</span></p>
 </section>
 <section id="what-we-can-do" class="slide level2">
 <h2>What we can do</h2>
@@ -686,8 +683,7 @@ Figure&nbsp;5: After correction
 <p>Comparison for <span class="math inline">\(\mu\)</span></p>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<table data-quarto-postprocess="true">
+<table class="caption-top" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Posterior</th>
@@ -732,7 +728,6 @@ Figure&nbsp;5: After correction
 
 </div>
 </div>
-</div>
 <p>Estimated from independent replications of the method.</p>
 </section>
 <section id="ou-process-limiting-approximation-3" class="slide level2">
@@ -740,8 +735,7 @@ Figure&nbsp;5: After correction
 <p>Comparison for <span class="math inline">\(D\)</span></p>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<table data-quarto-postprocess="true">
+<table class="caption-top" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Posterior</th>
@@ -784,7 +778,6 @@ Figure&nbsp;5: After correction
 </table>
 
 
-</div>
 </div>
 </div>
 <p>Estimated from independent replications of the method.</p>
@@ -858,8 +851,7 @@ Y^{a} + P_2 &amp;\overset{k_{10}}{\rightarrow} [Y^{a}P_2] \\
 [X^{a}Y] &amp;\overset{k_9}{\rightarrow} X^{a} + Y^{a}, \\
 [Y^{a}P_2] &amp;\overset{k_{12}}{\rightarrow} Y + P_2. \\
 \end{aligned}\]</span></p>
-</div>
-</div>
+</div></div>
 <ul>
 <li class="fragment"><span class="math inline">\(k_1,\ldots,k_{12}\)</span> are kinetic rate parameters</li>
 <li class="fragment">Cascade reactions essential for cell signalling processes</li>
@@ -909,11 +901,11 @@ Figure&nbsp;9: Observed molecules from MAPK MJP
 <p><object data="figs/rn-posterior-comparison-20240603.pdf" type="application/pdf" width="850" height="650"><p>Unable to display PDF file. <a href="figs/rn-posterior-comparison-20240603.pdf">Download</a> instead.</p></object></p>
 </section></section>
 <section>
-<section id="theory" class="title-slide slide level1 center">
-<h1>Theory</h1>
+<section id="supporting-theory" class="title-slide slide level1 center">
+<h1>Supporting theory</h1>
 
 </section>
-<section id="supporting-theory" class="slide level2">
+<section id="supporting-theory-1" class="slide level2">
 <h2>Supporting theory</h2>
 <ul>
 <li class="fragment"><p>Strictly proper scoring rule <span class="math inline">\(S\)</span> w.r.t. <span class="math inline">\(\mathcal{P}\)</span></p></li>
@@ -1108,8 +1100,7 @@ Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
 <p><strong>Correlation summaries</strong></p>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<table data-quarto-postprocess="true">
+<table class="caption-top" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Posterior</th>
@@ -1147,7 +1138,6 @@ Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
 </table>
 
 
-</div>
 </div>
 </div>
 <p><span class="math inline">\(M = 100\)</span> and <span class="math inline">\(\bar\Pi = \hat\Pi(\cdot~\vert~y)\)</span> scaled by 2</p>
@@ -1442,18 +1432,7 @@ Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1485,7 +1464,29 @@ Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1493,7 +1494,7 @@ Q(\text{d}\tilde{y}) \propto P(\text{d}\tilde{y}) v(\tilde{y})
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

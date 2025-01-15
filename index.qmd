@@ -316,13 +316,10 @@ $$V = \arg\max_{U \in \mathcal{U}} S(U, V)$$
 
 <br>
 
-$$\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f}\in \mathcal{F}}{\arg\max}~ S[{\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]$$
+$$\begin{aligned}\Pi(\cdot ~\vert~y ) &= \underset{ {\color{green}f}\in \mathcal{F}}{\arg\max}~ S[{\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]\\
+&= \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\theta) \right]
+\end{aligned}$$
 
-## What we can't do
-
-<br>
-
-$$\Pi(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\theta) \right]$$
 
 ## What we can do
 
@@ -652,7 +649,7 @@ BSRC settings: $M = 200$ and $\bar\Pi = \hat\Pi(\cdot~\vert~y)$, scaled by 1.5
 
 {{< pdf figs/rn-posterior-comparison-20240603.pdf height=650 width=850 >}}
 
-# Theory
+# Supporting theory
 
 ## Supporting theory
 
