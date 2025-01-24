@@ -362,7 +362,7 @@ Consider the joint data-parameter space instead
 
 . . .
 
-$$\Pi(\text{d}\theta ~\vert~\tilde{y} )P(\text{d}\tilde{y}) = P(\tilde{y}~\vert~\theta)\Pi(\text{d}\theta )$$
+$$\Pi(\text{d}\theta ~\vert~\tilde{y} )P(\text{d}\tilde{y}) = P(\text{d}\tilde{y}~\vert~\theta)\Pi(\text{d}\theta )$$
 
 . . .
 

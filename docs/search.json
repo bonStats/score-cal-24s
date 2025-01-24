@@ -172,7 +172,7 @@
     "href": "index.html#what-we-can-do",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "What we can do",
-    "text": "What we can do\n\nConsider the joint data-parameter space instead\n\n\\[\\Pi(\\text{d}\\theta ~\\vert~\\tilde{y} )P(\\text{d}\\tilde{y}) = P(\\tilde{y}~\\vert~\\theta)\\Pi(\\text{d}\\theta )\\]\n\n\nSee Pacchiardi and Dutta (2022) and Bon et al. (2022)"
+    "text": "What we can do\n\nConsider the joint data-parameter space instead\n\n\\[\\Pi(\\text{d}\\theta ~\\vert~\\tilde{y} )P(\\text{d}\\tilde{y}) = P(\\text{d}\\tilde{y}~\\vert~\\theta)\\Pi(\\text{d}\\theta )\\]\n\n\nSee Pacchiardi and Dutta (2022) and Bon et al. (2022)"
   },
   {
     "objectID": "index.html#what-we-can-do-1",
