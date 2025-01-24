@@ -10,7 +10,7 @@ format:
     df-print: paged
     incremental: true 
     css: style.css
-editor: visual
+editor: source
 ---
 
 ```{r setup, load_refs, include=FALSE, cache=FALSE}
@@ -31,18 +31,33 @@ source("figs/lv-data-plot.R")
 
 ## Talk overview
 
+:::: {layout="[ 40, 60 ]"}
+
+::: {#first-column}
+
+::: {.nonincremental}
+
 -   Motivation
 -   Method
 -   Examples
 -   Theory
 
-. . .
+:::
 
-Joint work with
+:::
 
--   **Christopher Drovandi**, QUT
--   **David Warne**, QUT
--   **David Nott**, NUS
+::: {#second-column}
+
+![](imgs/score-cal-paper.png)
+
+:::
+
+::::
+
+arXiv: [https://doi.org/10.48550/arXiv.2211.05357](https://doi.org/10.48550/arXiv.2211.05357)
+
+Slides: [https://bonstats.github.io/score-cal-24s/](https://bonstats.github.io/score-cal-24s/)
+
 
 ## Bayesian Inference
 
@@ -53,17 +68,19 @@ Joint work with
 Bayesian inference requires likelihoods, but...
 
 - Intractable likelihoods
-  - Use approximations 
+  - *Use approximations*
   
 - Computationally expensive likelihoods
-  - Use approximations
+  - *Use approximations*
   
 - Posterior evaluation
-   - Use approximations
+   - *Use approximations*
 
 ## Approximations everywhere... {.center}
 
 ## Likelihood approximations
+
+::: {.nonincremental}
 
 -   Limiting distributions
 -   Whittle likelihood
@@ -72,7 +89,11 @@ Bayesian inference requires likelihoods, but...
 -   Kalman filter
 -   Particle filters
 
+:::
+
 ## Posterior approximations
+
+::: {.nonincremental}
 
 -   Laplace
 -   INLA
@@ -80,11 +101,20 @@ Bayesian inference requires likelihoods, but...
 -   Psuedo-marginal MCMC
 -   Approximate Bayesian Computation
 
+:::
+
 ## Sampling approximations
+
+::: {.nonincremental}
 
 -   Importance sampling
 -   Sequential Monte Carlo
--   Markov chain Monte Carlo (MH, ULA, MALA, HMC)
+-   Markov chain Monte Carlo
+    - Metropolis-Hastings 
+    - (Un)adjusted Langevin Algorithms
+    - Hamiltonian Monte Carlo
+
+:::
 
 ## A good approximation?
 
@@ -100,16 +130,17 @@ $$\begin{aligned}&\text{True posterior}:\quad &\Pi(\cdot\vert y) \\
 &\text{Approximate posterior}:\quad &\check{\Pi}(\cdot\vert y) \\ 
 &\text{Finite-sample approximate posterior}:\quad &\hat{\Pi}(\cdot\vert y)\end{aligned}$$
 
-## Correcting approximate posteriors
+. . .
 
-- Generally theory motivating $\Pi(\cdot\vert y) \approx \check{\Pi}(\cdot\vert y)$
-  - But not for finite and/or given realisation of the data
-- Theory for $\check{\Pi}(\cdot\vert y) \approx \hat{\Pi}(\cdot\vert y)$ as $N \rightarrow \infty$ 
-  - and empirical tests for finite $N$
+**Large-sample approximation to likelihood**
+
+- Good approximation, $\Pi(\cdot\vert y_n) \approx \check{\Pi}(\cdot\vert y_n)$ as $n\rightarrow \infty$
+
+- Good approximation, $\check{\Pi}(\cdot\vert y) \approx \hat{\Pi}(\cdot\vert y)$ as $N \rightarrow \infty$ 
   
 . . . 
 
-What about $\Pi(\cdot\vert y) \approx \hat{\Pi}(\cdot\vert y)$?
+What about $\Pi(\cdot\vert y) \approx \hat{\Pi}(\cdot\vert y)$ for finite $n$ and $N$?
 
 ## Transforming approximate posteriors
 
@@ -197,35 +228,33 @@ ggplot() +
 
 ```
 
-## Measure the similarity
+## How to score an approximation when we know the truth?
 
-Let ${\color{blue}K}$ be a Markov kernel, e.g. ${\color{blue}K}(\cdot\vert\tilde{y}) = \hat{\Pi}(\cdot\vert\tilde{y})$.
+Let ${\color{blue}K}$ be a conditional probability (i.e. Markov kernel)
 
-. . . 
+- We want ${\color{blue}K}(\cdot\vert\tilde{y}) \approx \Pi(\cdot\vert\tilde{y})$
+    - e.g. ${\color{blue}K}(\cdot\vert\tilde{y}) = {\color{green}f}_\sharp\hat{\Pi}(\cdot\vert \tilde{y})$
+- We have prior predictive draws $({\color{red}\theta}, \tilde{y})$
+- Measure the similarity to the truth with $S:\mathcal{P} \times \Theta \rightarrow \mathbb{R}$ 
 
-Measure the similarity to the truth with $S:\mathcal{P} \times \Theta \rightarrow \mathbb{R}$ 
+. . .
 
 $$S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})$$
 
 $$\tilde{y} \sim P(\cdot \vert {\color{red}\theta}), \quad {\color{red}\theta} \sim {\color{purple}\Pi}$$
 
--   ${\color{red}\theta}$ is the true data generating parameter
--   $({\color{red}\theta}, \tilde{y})$ prior-predictive pairs
 
-## Optimise the similarity
+## Optimise the average score
 
 Consider the average over prior-predictive pairs $({\color{red}\theta}, \tilde{y})$
 
 $$\max_{{\color{blue}K}\in\mathcal{K}}\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]$$
 
 
-## Optimise the similarity
-
-Consider the average over prior-predictive pairs $({\color{red}\theta}, \tilde{y})$
 
 . . .
 
-Choose $\mathcal{K} = \{{\color{green}f}_\sharp\hat\Pi: {\color{green}f} \in \mathcal{F}\}$
+If we choose $\mathcal{K} = \{{\color{green}f}_\sharp\hat\Pi: {\color{green}f} \in \mathcal{F}\}$
 
 . . .
 
@@ -279,7 +308,7 @@ ggplot() +
 ## Model calibration by simulation
 
 1.  Correct coverage? *Frequentist*
-    -   $S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y), {\color{red}\theta}) = \vert 1({\color{red}\theta} \in {\color{purple}\text{CR}_\alpha}) - \alpha \vert$
+    -   $S({\color{blue}K}(\cdot\vert y), {\color{red}\theta}) = \vert 1({\color{red}\theta} \in {\color{blue}\text{CR}_\alpha}) - \alpha \vert$
 2.  Can we correct the entire distribution? **Bayesian**
     -   Proper scoring rules
 
@@ -316,9 +345,13 @@ $$V = \arg\max_{U \in \mathcal{U}} S(U, V)$$
 
 <br>
 
-$$\begin{aligned}\Pi(\cdot ~\vert~y ) &= \underset{ {\color{green}f}\in \mathcal{F}}{\arg\max}~ S[{\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]\\
-&= \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\theta) \right]
-\end{aligned}$$
+$$\Pi(\cdot ~\vert~y ) = \underset{ {\color{blue}K}\in\mathcal{K} }{\arg\max}~ S[{\color{blue}K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]$$
+
+. . .
+
+<br> 
+
+$$S[{\color{blue}K}(\cdot\vert y),\Pi(\cdot ~\vert~y )] = \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S( {\color{blue}K}(\cdot\vert y),\theta) \right]$$
 
 
 ## What we can do
@@ -339,13 +372,13 @@ See @pacchiardi2022likelihood and @bon2022bayesian
 
 <br>
 
-$${\color{purple}\Pi}(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{{\color{red}\theta} \sim {\color{purple}\Pi}(\cdot ~\vert~\tilde{y} )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
+$${\color{purple}\Pi}(\cdot ~\vert~ \cdot ) = \underset{  {\color{blue}K}\in\mathcal{K} }{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{{\color{red}\theta} \sim {\color{purple}\Pi}(\cdot ~\vert~\tilde{y} )}\left[S( {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
 
 ## What we can do
 
 <br>
 
-$${\color{purple}\Pi}(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim {\color{purple}\Pi}} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
+$${\color{purple}\Pi}(\cdot ~\vert~ \cdot ) = \underset{  {\color{blue}K}\in\mathcal{K} }{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim \Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[S( {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
 
 ## Two steps further
 
@@ -363,10 +396,18 @@ It still works!
 
 ## BSRC optimisation problem
 
-$$\underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[w({\color{red}\theta}, \tilde{y})S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
+$$\underset{ {\color{blue}K}\in\mathcal{K} }{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[w({\color{red}\theta}, \tilde{y})S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
+
 
 $$w({\color{red}\theta}, \tilde{y}) = \frac{\pi({\color{red}\theta})}{\bar\pi({\color{red}\theta})} v(\tilde{y})$$
 
+. . . 
+
+If we choose $\mathcal{K} = \{{\color{green}f}_\sharp\hat\Pi: {\color{green}f} \in \mathcal{F}\}$
+
+. . .
+
+$$\underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[w({\color{red}\theta}, \tilde{y})S({\color{green}f}_\sharp \hat\Pi(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
 
 ## Moment-correcting transformation
 

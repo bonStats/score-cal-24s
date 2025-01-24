@@ -365,20 +365,28 @@ Joshua J Bon
 </section>
 <section id="talk-overview" class="slide level2">
 <h2>Talk overview</h2>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout="[ 40, 60 ]">
+<div class="quarto-layout-row">
+<div id="first-column" class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: flex-start;">
+<div>
 <ul>
-<li class="fragment">Motivation</li>
-<li class="fragment">Method</li>
-<li class="fragment">Examples</li>
-<li class="fragment">Theory</li>
-</ul>
-<div class="fragment">
-<p>Joint work with</p>
-<ul>
-<li class="fragment"><strong>Christopher Drovandi</strong>, QUT</li>
-<li class="fragment"><strong>David Warne</strong>, QUT</li>
-<li class="fragment"><strong>David Nott</strong>, NUS</li>
+<li>Motivation</li>
+<li>Method</li>
+<li>Examples</li>
+<li>Theory</li>
 </ul>
 </div>
+</div>
+<div id="second-column" class="quarto-layout-cell" style="flex-basis: 60.0%;justify-content: center;">
+<p><img data-src="imgs/score-cal-paper.png"></p>
+</div>
+</div>
+</div>
+<p>arXiv: <a href="https://doi.org/10.48550/arXiv.2211.05357">https://doi.org/10.48550/arXiv.2211.05357</a></p>
+<p>Slides: <a href="https://bonstats.github.io/score-cal-24s/">https://bonstats.github.io/score-cal-24s/</a></p>
 </section>
 <section id="bayesian-inference" class="slide level2">
 <h2>Bayesian Inference</h2>
@@ -390,15 +398,15 @@ Joshua J Bon
 <ul>
 <li class="fragment">Intractable likelihoods
 <ul>
-<li class="fragment">Use approximations</li>
+<li class="fragment"><em>Use approximations</em></li>
 </ul></li>
 <li class="fragment">Computationally expensive likelihoods
 <ul>
-<li class="fragment">Use approximations</li>
+<li class="fragment"><em>Use approximations</em></li>
 </ul></li>
 <li class="fragment">Posterior evaluation
 <ul>
-<li class="fragment">Use approximations</li>
+<li class="fragment"><em>Use approximations</em></li>
 </ul></li>
 </ul>
 </section>
@@ -407,32 +415,43 @@ Joshua J Bon
 </section>
 <section id="likelihood-approximations" class="slide level2">
 <h2>Likelihood approximations</h2>
+<div>
 <ul>
-<li class="fragment">Limiting distributions</li>
-<li class="fragment">Whittle likelihood</li>
-<li class="fragment">Model simplification (e.g.&nbsp;SDE <span class="math inline">\(\rightarrow\)</span> ODE)</li>
-<li class="fragment">Linear noise approximation</li>
-<li class="fragment">Kalman filter</li>
-<li class="fragment">Particle filters</li>
+<li>Limiting distributions</li>
+<li>Whittle likelihood</li>
+<li>Model simplification (e.g.&nbsp;SDE <span class="math inline">\(\rightarrow\)</span> ODE)</li>
+<li>Linear noise approximation</li>
+<li>Kalman filter</li>
+<li>Particle filters</li>
 </ul>
+</div>
 </section>
 <section id="posterior-approximations" class="slide level2">
 <h2>Posterior approximations</h2>
+<div>
 <ul>
-<li class="fragment">Laplace</li>
-<li class="fragment">INLA</li>
-<li class="fragment">Variational inference</li>
-<li class="fragment">Psuedo-marginal MCMC</li>
-<li class="fragment">Approximate Bayesian Computation</li>
+<li>Laplace</li>
+<li>INLA</li>
+<li>Variational inference</li>
+<li>Psuedo-marginal MCMC</li>
+<li>Approximate Bayesian Computation</li>
 </ul>
+</div>
 </section>
 <section id="sampling-approximations" class="slide level2">
 <h2>Sampling approximations</h2>
+<div>
 <ul>
-<li class="fragment">Importance sampling</li>
-<li class="fragment">Sequential Monte Carlo</li>
-<li class="fragment">Markov chain Monte Carlo (MH, ULA, MALA, HMC)</li>
+<li>Importance sampling</li>
+<li>Sequential Monte Carlo</li>
+<li>Markov chain Monte Carlo
+<ul>
+<li>Metropolis-Hastings</li>
+<li>(Un)adjusted Langevin Algorithms</li>
+<li>Hamiltonian Monte Carlo</li>
+</ul></li>
 </ul>
+</div>
 </section>
 <section id="a-good-approximation" class="slide level2">
 <h2>A good approximation?</h2>
@@ -449,21 +468,15 @@ Joshua J Bon
 <p><span class="math display">\[\begin{aligned}&amp;\text{True posterior}:\quad &amp;\Pi(\cdot\vert y) \\
 &amp;\text{Approximate posterior}:\quad &amp;\check{\Pi}(\cdot\vert y) \\
 &amp;\text{Finite-sample approximate posterior}:\quad &amp;\hat{\Pi}(\cdot\vert y)\end{aligned}\]</span></p>
-</section>
-<section id="correcting-approximate-posteriors-1" class="slide level2">
-<h2>Correcting approximate posteriors</h2>
-<ul>
-<li class="fragment">Generally theory motivating <span class="math inline">\(\Pi(\cdot\vert y) \approx \check{\Pi}(\cdot\vert y)\)</span>
-<ul>
-<li class="fragment">But not for finite and/or given realisation of the data</li>
-</ul></li>
-<li class="fragment">Theory for <span class="math inline">\(\check{\Pi}(\cdot\vert y) \approx \hat{\Pi}(\cdot\vert y)\)</span> as <span class="math inline">\(N \rightarrow \infty\)</span>
-<ul>
-<li class="fragment">and empirical tests for finite <span class="math inline">\(N\)</span></li>
-</ul></li>
-</ul>
 <div class="fragment">
-<p>What about <span class="math inline">\(\Pi(\cdot\vert y) \approx \hat{\Pi}(\cdot\vert y)\)</span>?</p>
+<p><strong>Large-sample approximation to likelihood</strong></p>
+<ul>
+<li class="fragment"><p>Good approximation, <span class="math inline">\(\Pi(\cdot\vert y_n) \approx \check{\Pi}(\cdot\vert y_n)\)</span> as <span class="math inline">\(n\rightarrow \infty\)</span></p></li>
+<li class="fragment"><p>Good approximation, <span class="math inline">\(\check{\Pi}(\cdot\vert y) \approx \hat{\Pi}(\cdot\vert y)\)</span> as <span class="math inline">\(N \rightarrow \infty\)</span></p></li>
+</ul>
+</div>
+<div class="fragment">
+<p>What about <span class="math inline">\(\Pi(\cdot\vert y) \approx \hat{\Pi}(\cdot\vert y)\)</span> for finite <span class="math inline">\(n\)</span> and <span class="math inline">\(N\)</span>?</p>
 </div>
 </section>
 <section id="transforming-approximate-posteriors" class="slide level2">
@@ -504,29 +517,28 @@ Figure&nbsp;2: Real case (approximation in blue)
 <img data-src="index_files/figure-revealjs/fig-illustration-3-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">
 Figure&nbsp;3: Correct on average? (approximation in blue)
 </p></section>
-<section id="measure-the-similarity" class="slide level2">
-<h2>Measure the similarity</h2>
-<p>Let <span class="math inline">\({\color{blue}K}\)</span> be a Markov kernel, e.g.&nbsp;<span class="math inline">\({\color{blue}K}(\cdot\vert\tilde{y}) = \hat{\Pi}(\cdot\vert\tilde{y})\)</span>.</p>
+<section id="how-to-score-an-approximation-when-we-know-the-truth" class="slide level2">
+<h2>How to score an approximation when we know the truth?</h2>
+<p>Let <span class="math inline">\({\color{blue}K}\)</span> be a conditional probability (i.e.&nbsp;Markov kernel)</p>
+<ul>
+<li class="fragment">We want <span class="math inline">\({\color{blue}K}(\cdot\vert\tilde{y}) \approx \Pi(\cdot\vert\tilde{y})\)</span>
+<ul>
+<li class="fragment">e.g.&nbsp;<span class="math inline">\({\color{blue}K}(\cdot\vert\tilde{y}) = {\color{green}f}_\sharp\hat{\Pi}(\cdot\vert \tilde{y})\)</span></li>
+</ul></li>
+<li class="fragment">We have prior predictive draws <span class="math inline">\(({\color{red}\theta}, \tilde{y})\)</span></li>
+<li class="fragment">Measure the similarity to the truth with <span class="math inline">\(S:\mathcal{P} \times \Theta \rightarrow \mathbb{R}\)</span></li>
+</ul>
 <div class="fragment">
-<p>Measure the similarity to the truth with <span class="math inline">\(S:\mathcal{P} \times \Theta \rightarrow \mathbb{R}\)</span></p>
 <p><span class="math display">\[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})\]</span></p>
 <p><span class="math display">\[\tilde{y} \sim P(\cdot \vert {\color{red}\theta}), \quad {\color{red}\theta} \sim {\color{purple}\Pi}\]</span></p>
-<ul>
-<li class="fragment"><span class="math inline">\({\color{red}\theta}\)</span> is the true data generating parameter</li>
-<li class="fragment"><span class="math inline">\(({\color{red}\theta}, \tilde{y})\)</span> prior-predictive pairs</li>
-</ul>
 </div>
 </section>
-<section id="optimise-the-similarity" class="slide level2">
-<h2>Optimise the similarity</h2>
+<section id="optimise-the-average-score" class="slide level2">
+<h2>Optimise the average score</h2>
 <p>Consider the average over prior-predictive pairs <span class="math inline">\(({\color{red}\theta}, \tilde{y})\)</span></p>
 <p><span class="math display">\[\max_{{\color{blue}K}\in\mathcal{K}}\mathbb{E}[S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta})]\]</span></p>
-</section>
-<section id="optimise-the-similarity-1" class="slide level2">
-<h2>Optimise the similarity</h2>
-<p>Consider the average over prior-predictive pairs <span class="math inline">\(({\color{red}\theta}, \tilde{y})\)</span></p>
 <div class="fragment">
-<p>Choose <span class="math inline">\(\mathcal{K} = \{{\color{green}f}_\sharp\hat\Pi: {\color{green}f} \in \mathcal{F}\}\)</span></p>
+<p>If we choose <span class="math inline">\(\mathcal{K} = \{{\color{green}f}_\sharp\hat\Pi: {\color{green}f} \in \mathcal{F}\}\)</span></p>
 </div>
 <div class="fragment">
 <p><span class="math display">\[\max_{{\color{green}f} \in \mathcal{F}}\mathbb{E}[S({\color{green}f}_\sharp\hat\Pi(\cdot\vert \tilde{y}),{\color{red}\theta})]\]</span></p>
@@ -549,7 +561,7 @@ Figure&nbsp;5: After correction
 <ol type="1">
 <li class="fragment">Correct coverage? <em>Frequentist</em>
 <ul>
-<li class="fragment"><span class="math inline">\(S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y), {\color{red}\theta}) = \vert 1({\color{red}\theta} \in {\color{purple}\text{CR}_\alpha}) - \alpha \vert\)</span></li>
+<li class="fragment"><span class="math inline">\(S({\color{blue}K}(\cdot\vert y), {\color{red}\theta}) = \vert 1({\color{red}\theta} \in {\color{blue}\text{CR}_\alpha}) - \alpha \vert\)</span></li>
 </ul></li>
 <li class="fragment">Can we correct the entire distribution? <strong>Bayesian</strong>
 <ul>
@@ -587,9 +599,11 @@ Figure&nbsp;5: After correction
 <section id="what-we-cant-do" class="slide level2">
 <h2>What we can’t do</h2>
 <p><br></p>
-<p><span class="math display">\[\begin{aligned}\Pi(\cdot ~\vert~y ) &amp;= \underset{ {\color{green}f}\in \mathcal{F}}{\arg\max}~ S[{\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]\\
-&amp;= \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert y),\theta) \right]
-\end{aligned}\]</span></p>
+<p><span class="math display">\[\Pi(\cdot ~\vert~y ) = \underset{ {\color{blue}K}\in\mathcal{K} }{\arg\max}~ S[{\color{blue}K}(\cdot\vert y),\Pi(\cdot ~\vert~y )]\]</span></p>
+<div class="fragment">
+<p><br></p>
+<p><span class="math display">\[S[{\color{blue}K}(\cdot\vert y),\Pi(\cdot ~\vert~y )] = \mathbb{E}_{\theta \sim \Pi(\cdot ~\vert~y )}\left[S( {\color{blue}K}(\cdot\vert y),\theta) \right]\]</span></p>
+</div>
 </section>
 <section id="what-we-can-do" class="slide level2">
 <h2>What we can do</h2>
@@ -605,12 +619,12 @@ Figure&nbsp;5: After correction
 <section id="what-we-can-do-1" class="slide level2">
 <h2>What we can do</h2>
 <p><br></p>
-<p><span class="math display">\[{\color{purple}\Pi}(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{{\color{red}\theta} \sim {\color{purple}\Pi}(\cdot ~\vert~\tilde{y} )}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]\]</span></p>
+<p><span class="math display">\[{\color{purple}\Pi}(\cdot ~\vert~ \cdot ) = \underset{  {\color{blue}K}\in\mathcal{K} }{\arg\max}~ \mathbb{E}_{\tilde{y} \sim P} \mathbb{E}_{{\color{red}\theta} \sim {\color{purple}\Pi}(\cdot ~\vert~\tilde{y} )}\left[S( {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]\]</span></p>
 </section>
 <section id="what-we-can-do-2" class="slide level2">
 <h2>What we can do</h2>
 <p><br></p>
-<p><span class="math display">\[{\color{purple}\Pi}(\cdot ~\vert~y ) = \underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim {\color{purple}\Pi}} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]\]</span></p>
+<p><span class="math display">\[{\color{purple}\Pi}(\cdot ~\vert~ \cdot ) = \underset{  {\color{blue}K}\in\mathcal{K} }{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim \Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[S( {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]\]</span></p>
 </section>
 <section id="two-steps-further" class="slide level2">
 <h2>Two steps further</h2>
@@ -628,8 +642,14 @@ Figure&nbsp;5: After correction
 </section>
 <section id="bsrc-optimisation-problem" class="slide level2">
 <h2>BSRC optimisation problem</h2>
-<p><span class="math display">\[\underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[w({\color{red}\theta}, \tilde{y})S({\color{green}f}_\sharp {\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]\]</span></p>
+<p><span class="math display">\[\underset{ {\color{blue}K}\in\mathcal{K} }{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[w({\color{red}\theta}, \tilde{y})S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]\]</span></p>
 <p><span class="math display">\[w({\color{red}\theta}, \tilde{y}) = \frac{\pi({\color{red}\theta})}{\bar\pi({\color{red}\theta})} v(\tilde{y})\]</span></p>
+<div class="fragment">
+<p>If we choose <span class="math inline">\(\mathcal{K} = \{{\color{green}f}_\sharp\hat\Pi: {\color{green}f} \in \mathcal{F}\}\)</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[\underset{ {\color{green}f} \in \mathcal{F}}{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[w({\color{red}\theta}, \tilde{y})S({\color{green}f}_\sharp \hat\Pi(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]\]</span></p>
+</div>
 </section>
 <section id="moment-correcting-transformation" class="slide level2">
 <h2>Moment-correcting transformation</h2>

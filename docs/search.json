@@ -4,7 +4,7 @@
     "href": "index.html#talk-overview",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "Talk overview",
-    "text": "Talk overview\n\nMotivation\nMethod\nExamples\nTheory\n\n\nJoint work with\n\nChristopher Drovandi, QUT\nDavid Warne, QUT\nDavid Nott, NUS"
+    "text": "Talk overview\n\n\n\n\n\n\n\n\nMotivation\nMethod\nExamples\nTheory\n\n\n\n\n\n\n\n\narXiv: https://doi.org/10.48550/arXiv.2211.05357\nSlides: https://bonstats.github.io/score-cal-24s/"
   },
   {
     "objectID": "index.html#bayesian-inference",
@@ -32,21 +32,21 @@
     "href": "index.html#likelihood-approximations",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "Likelihood approximations",
-    "text": "Likelihood approximations\n\nLimiting distributions\nWhittle likelihood\nModel simplification (e.g. SDE \\(\\rightarrow\\) ODE)\nLinear noise approximation\nKalman filter\nParticle filters"
+    "text": "Likelihood approximations\n\n\nLimiting distributions\nWhittle likelihood\nModel simplification (e.g. SDE \\(\\rightarrow\\) ODE)\nLinear noise approximation\nKalman filter\nParticle filters"
   },
   {
     "objectID": "index.html#posterior-approximations",
     "href": "index.html#posterior-approximations",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "Posterior approximations",
-    "text": "Posterior approximations\n\nLaplace\nINLA\nVariational inference\nPsuedo-marginal MCMC\nApproximate Bayesian Computation"
+    "text": "Posterior approximations\n\n\nLaplace\nINLA\nVariational inference\nPsuedo-marginal MCMC\nApproximate Bayesian Computation"
   },
   {
     "objectID": "index.html#sampling-approximations",
     "href": "index.html#sampling-approximations",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "Sampling approximations",
-    "text": "Sampling approximations\n\nImportance sampling\nSequential Monte Carlo\nMarkov chain Monte Carlo (MH, ULA, MALA, HMC)"
+    "text": "Sampling approximations\n\n\nImportance sampling\nSequential Monte Carlo\nMarkov chain Monte Carlo\n\nMetropolis-Hastings\n(Un)adjusted Langevin Algorithms\nHamiltonian Monte Carlo"
   },
   {
     "objectID": "index.html#a-good-approximation",
@@ -74,14 +74,7 @@
     "href": "index.html#correcting-approximate-posteriors",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "Correcting approximate posteriors",
-    "text": "Correcting approximate posteriors\n\\[\\begin{aligned}&\\text{True posterior}:\\quad &\\Pi(\\cdot\\vert y) \\\\\n&\\text{Approximate posterior}:\\quad &\\check{\\Pi}(\\cdot\\vert y) \\\\\n&\\text{Finite-sample approximate posterior}:\\quad &\\hat{\\Pi}(\\cdot\\vert y)\\end{aligned}\\]"
-  },
-  {
-    "objectID": "index.html#correcting-approximate-posteriors-1",
-    "href": "index.html#correcting-approximate-posteriors-1",
-    "title": "Bayesian scoring rule calibration for approximate models",
-    "section": "Correcting approximate posteriors",
-    "text": "Correcting approximate posteriors\n\nGenerally theory motivating \\(\\Pi(\\cdot\\vert y) \\approx \\check{\\Pi}(\\cdot\\vert y)\\)\n\nBut not for finite and/or given realisation of the data\n\nTheory for \\(\\check{\\Pi}(\\cdot\\vert y) \\approx \\hat{\\Pi}(\\cdot\\vert y)\\) as \\(N \\rightarrow \\infty\\)\n\nand empirical tests for finite \\(N\\)\n\n\n\nWhat about \\(\\Pi(\\cdot\\vert y) \\approx \\hat{\\Pi}(\\cdot\\vert y)\\)?"
+    "text": "Correcting approximate posteriors\n\\[\\begin{aligned}&\\text{True posterior}:\\quad &\\Pi(\\cdot\\vert y) \\\\\n&\\text{Approximate posterior}:\\quad &\\check{\\Pi}(\\cdot\\vert y) \\\\\n&\\text{Finite-sample approximate posterior}:\\quad &\\hat{\\Pi}(\\cdot\\vert y)\\end{aligned}\\]\n\nLarge-sample approximation to likelihood\n\nGood approximation, \\(\\Pi(\\cdot\\vert y_n) \\approx \\check{\\Pi}(\\cdot\\vert y_n)\\) as \\(n\\rightarrow \\infty\\)\nGood approximation, \\(\\check{\\Pi}(\\cdot\\vert y) \\approx \\hat{\\Pi}(\\cdot\\vert y)\\) as \\(N \\rightarrow \\infty\\)\n\n\n\nWhat about \\(\\Pi(\\cdot\\vert y) \\approx \\hat{\\Pi}(\\cdot\\vert y)\\) for finite \\(n\\) and \\(N\\)?"
   },
   {
     "objectID": "index.html#transforming-approximate-posteriors",
@@ -119,25 +112,18 @@
     "text": "Correcting many posteriors\n\n\nFigure 3: Correct on average? (approximation in blue)"
   },
   {
-    "objectID": "index.html#measure-the-similarity",
-    "href": "index.html#measure-the-similarity",
+    "objectID": "index.html#how-to-score-an-approximation-when-we-know-the-truth",
+    "href": "index.html#how-to-score-an-approximation-when-we-know-the-truth",
     "title": "Bayesian scoring rule calibration for approximate models",
-    "section": "Measure the similarity",
-    "text": "Measure the similarity\nLet \\({\\color{blue}K}\\) be a Markov kernel, e.g. \\({\\color{blue}K}(\\cdot\\vert\\tilde{y}) = \\hat{\\Pi}(\\cdot\\vert\\tilde{y})\\).\n\nMeasure the similarity to the truth with \\(S:\\mathcal{P} \\times \\Theta \\rightarrow \\mathbb{R}\\)\n\\[S({\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta})\\]\n\\[\\tilde{y} \\sim P(\\cdot \\vert {\\color{red}\\theta}), \\quad {\\color{red}\\theta} \\sim {\\color{purple}\\Pi}\\]\n\n\\({\\color{red}\\theta}\\) is the true data generating parameter\n\\(({\\color{red}\\theta}, \\tilde{y})\\) prior-predictive pairs"
+    "section": "How to score an approximation when we know the truth?",
+    "text": "How to score an approximation when we know the truth?\nLet \\({\\color{blue}K}\\) be a conditional probability (i.e. Markov kernel)\n\nWe want \\({\\color{blue}K}(\\cdot\\vert\\tilde{y}) \\approx \\Pi(\\cdot\\vert\\tilde{y})\\)\n\ne.g. \\({\\color{blue}K}(\\cdot\\vert\\tilde{y}) = {\\color{green}f}_\\sharp\\hat{\\Pi}(\\cdot\\vert \\tilde{y})\\)\n\nWe have prior predictive draws \\(({\\color{red}\\theta}, \\tilde{y})\\)\nMeasure the similarity to the truth with \\(S:\\mathcal{P} \\times \\Theta \\rightarrow \\mathbb{R}\\)\n\n\n\\[S({\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta})\\]\n\\[\\tilde{y} \\sim P(\\cdot \\vert {\\color{red}\\theta}), \\quad {\\color{red}\\theta} \\sim {\\color{purple}\\Pi}\\]"
   },
   {
-    "objectID": "index.html#optimise-the-similarity",
-    "href": "index.html#optimise-the-similarity",
+    "objectID": "index.html#optimise-the-average-score",
+    "href": "index.html#optimise-the-average-score",
     "title": "Bayesian scoring rule calibration for approximate models",
-    "section": "Optimise the similarity",
-    "text": "Optimise the similarity\nConsider the average over prior-predictive pairs \\(({\\color{red}\\theta}, \\tilde{y})\\)\n\\[\\max_{{\\color{blue}K}\\in\\mathcal{K}}\\mathbb{E}[S({\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta})]\\]"
-  },
-  {
-    "objectID": "index.html#optimise-the-similarity-1",
-    "href": "index.html#optimise-the-similarity-1",
-    "title": "Bayesian scoring rule calibration for approximate models",
-    "section": "Optimise the similarity",
-    "text": "Optimise the similarity\nConsider the average over prior-predictive pairs \\(({\\color{red}\\theta}, \\tilde{y})\\)\n\nChoose \\(\\mathcal{K} = \\{{\\color{green}f}_\\sharp\\hat\\Pi: {\\color{green}f} \\in \\mathcal{F}\\}\\)\n\n\n\\[\\max_{{\\color{green}f} \\in \\mathcal{F}}\\mathbb{E}[S({\\color{green}f}_\\sharp\\hat\\Pi(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta})]\\]"
+    "section": "Optimise the average score",
+    "text": "Optimise the average score\nConsider the average over prior-predictive pairs \\(({\\color{red}\\theta}, \\tilde{y})\\)\n\\[\\max_{{\\color{blue}K}\\in\\mathcal{K}}\\mathbb{E}[S({\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta})]\\]\n\nIf we choose \\(\\mathcal{K} = \\{{\\color{green}f}_\\sharp\\hat\\Pi: {\\color{green}f} \\in \\mathcal{F}\\}\\)\n\n\n\\[\\max_{{\\color{green}f} \\in \\mathcal{F}}\\mathbb{E}[S({\\color{green}f}_\\sharp\\hat\\Pi(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta})]\\]"
   },
   {
     "objectID": "index.html#correcting-many-posteriors-1",
@@ -158,7 +144,7 @@
     "href": "index.html#model-calibration-by-simulation",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "Model calibration by simulation",
-    "text": "Model calibration by simulation\n\nCorrect coverage? Frequentist\n\n\\(S({\\color{green}f}_\\sharp {\\color{blue}K}(\\cdot\\vert y), {\\color{red}\\theta}) = \\vert 1({\\color{red}\\theta} \\in {\\color{purple}\\text{CR}_\\alpha}) - \\alpha \\vert\\)\n\nCan we correct the entire distribution? Bayesian\n\nProper scoring rules"
+    "text": "Model calibration by simulation\n\nCorrect coverage? Frequentist\n\n\\(S({\\color{blue}K}(\\cdot\\vert y), {\\color{red}\\theta}) = \\vert 1({\\color{red}\\theta} \\in {\\color{blue}\\text{CR}_\\alpha}) - \\alpha \\vert\\)\n\nCan we correct the entire distribution? Bayesian\n\nProper scoring rules"
   },
   {
     "objectID": "index.html#scoring-rules",
@@ -179,7 +165,7 @@
     "href": "index.html#what-we-cant-do",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "What we can’t do",
-    "text": "What we can’t do\n\n\\[\\begin{aligned}\\Pi(\\cdot ~\\vert~y ) &= \\underset{ {\\color{green}f}\\in \\mathcal{F}}{\\arg\\max}~ S[{\\color{green}f}_\\sharp {\\color{blue}K}(\\cdot\\vert y),\\Pi(\\cdot ~\\vert~y )]\\\\\n&= \\underset{ {\\color{green}f} \\in \\mathcal{F}}{\\arg\\max}~ \\mathbb{E}_{\\theta \\sim \\Pi(\\cdot ~\\vert~y )}\\left[S({\\color{green}f}_\\sharp {\\color{blue}K}(\\cdot\\vert y),\\theta) \\right]\n\\end{aligned}\\]"
+    "text": "What we can’t do\n\n\\[\\Pi(\\cdot ~\\vert~y ) = \\underset{ {\\color{blue}K}\\in\\mathcal{K} }{\\arg\\max}~ S[{\\color{blue}K}(\\cdot\\vert y),\\Pi(\\cdot ~\\vert~y )]\\]\n\n\n\\[S[{\\color{blue}K}(\\cdot\\vert y),\\Pi(\\cdot ~\\vert~y )] = \\mathbb{E}_{\\theta \\sim \\Pi(\\cdot ~\\vert~y )}\\left[S( {\\color{blue}K}(\\cdot\\vert y),\\theta) \\right]\\]"
   },
   {
     "objectID": "index.html#what-we-can-do",
@@ -193,14 +179,14 @@
     "href": "index.html#what-we-can-do-1",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "What we can do",
-    "text": "What we can do\n\n\\[{\\color{purple}\\Pi}(\\cdot ~\\vert~y ) = \\underset{ {\\color{green}f} \\in \\mathcal{F}}{\\arg\\max}~ \\mathbb{E}_{\\tilde{y} \\sim P} \\mathbb{E}_{{\\color{red}\\theta} \\sim {\\color{purple}\\Pi}(\\cdot ~\\vert~\\tilde{y} )}\\left[S({\\color{green}f}_\\sharp {\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta}) \\right]\\]"
+    "text": "What we can do\n\n\\[{\\color{purple}\\Pi}(\\cdot ~\\vert~ \\cdot ) = \\underset{  {\\color{blue}K}\\in\\mathcal{K} }{\\arg\\max}~ \\mathbb{E}_{\\tilde{y} \\sim P} \\mathbb{E}_{{\\color{red}\\theta} \\sim {\\color{purple}\\Pi}(\\cdot ~\\vert~\\tilde{y} )}\\left[S( {\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta}) \\right]\\]"
   },
   {
     "objectID": "index.html#what-we-can-do-2",
     "href": "index.html#what-we-can-do-2",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "What we can do",
-    "text": "What we can do\n\n\\[{\\color{purple}\\Pi}(\\cdot ~\\vert~y ) = \\underset{ {\\color{green}f} \\in \\mathcal{F}}{\\arg\\max}~ \\mathbb{E}_{ {\\color{red}\\theta} \\sim {\\color{purple}\\Pi}} \\mathbb{E}_{\\tilde{y} \\sim P(\\cdot ~\\vert~{\\color{red}\\theta})}\\left[S({\\color{green}f}_\\sharp {\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta}) \\right]\\]"
+    "text": "What we can do\n\n\\[{\\color{purple}\\Pi}(\\cdot ~\\vert~ \\cdot ) = \\underset{  {\\color{blue}K}\\in\\mathcal{K} }{\\arg\\max}~ \\mathbb{E}_{ {\\color{red}\\theta} \\sim \\Pi} \\mathbb{E}_{\\tilde{y} \\sim P(\\cdot ~\\vert~{\\color{red}\\theta})}\\left[S( {\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta}) \\right]\\]"
   },
   {
     "objectID": "index.html#two-steps-further",
@@ -214,7 +200,7 @@
     "href": "index.html#bsrc-optimisation-problem",
     "title": "Bayesian scoring rule calibration for approximate models",
     "section": "BSRC optimisation problem",
-    "text": "BSRC optimisation problem\n\\[\\underset{ {\\color{green}f} \\in \\mathcal{F}}{\\arg\\max}~ \\mathbb{E}_{ {\\color{red}\\theta} \\sim \\bar\\Pi} \\mathbb{E}_{\\tilde{y} \\sim P(\\cdot ~\\vert~{\\color{red}\\theta})}\\left[w({\\color{red}\\theta}, \\tilde{y})S({\\color{green}f}_\\sharp {\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta}) \\right]\\]\n\\[w({\\color{red}\\theta}, \\tilde{y}) = \\frac{\\pi({\\color{red}\\theta})}{\\bar\\pi({\\color{red}\\theta})} v(\\tilde{y})\\]"
+    "text": "BSRC optimisation problem\n\\[\\underset{ {\\color{blue}K}\\in\\mathcal{K} }{\\arg\\max}~ \\mathbb{E}_{ {\\color{red}\\theta} \\sim \\bar\\Pi} \\mathbb{E}_{\\tilde{y} \\sim P(\\cdot ~\\vert~{\\color{red}\\theta})}\\left[w({\\color{red}\\theta}, \\tilde{y})S({\\color{blue}K}(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta}) \\right]\\]\n\\[w({\\color{red}\\theta}, \\tilde{y}) = \\frac{\\pi({\\color{red}\\theta})}{\\bar\\pi({\\color{red}\\theta})} v(\\tilde{y})\\]\n\nIf we choose \\(\\mathcal{K} = \\{{\\color{green}f}_\\sharp\\hat\\Pi: {\\color{green}f} \\in \\mathcal{F}\\}\\)\n\n\n\\[\\underset{ {\\color{green}f} \\in \\mathcal{F}}{\\arg\\max}~ \\mathbb{E}_{ {\\color{red}\\theta} \\sim \\bar\\Pi} \\mathbb{E}_{\\tilde{y} \\sim P(\\cdot ~\\vert~{\\color{red}\\theta})}\\left[w({\\color{red}\\theta}, \\tilde{y})S({\\color{green}f}_\\sharp \\hat\\Pi(\\cdot\\vert \\tilde{y}),{\\color{red}\\theta}) \\right]\\]"
   },
   {
     "objectID": "index.html#moment-correcting-transformation",
