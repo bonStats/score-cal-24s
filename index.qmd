@@ -1,7 +1,7 @@
 ---
-title: "Bayesian scoring rule calibration for approximate models"
+title: "Bayesian score calibration and SBI"
 author: "Joshua J Bon"
-institute: "CEREMADE, Université Paris-Dauphine"
+institute: "Adelaide University"
 bibliography: refs.bib
 format:
   revealjs:
@@ -48,7 +48,7 @@ source("figs/lv-data-plot.R")
 
 ::: {#second-column}
 
-![](imgs/score-cal-paper.png)
+![](imgs/score-cal-paper2.png)
 
 :::
 
@@ -312,7 +312,7 @@ ggplot() +
 2.  Can we correct the entire distribution? **Bayesian**
     -   Proper scoring rules
 
-# BSRC method
+# BSC method
 
 ## Scoring rules
 
@@ -394,7 +394,7 @@ $${\color{purple}\Pi}(\cdot ~\vert~ \cdot ) = \underset{  {\color{blue}K}\in\mat
 
 It still works!
 
-## BSRC optimisation problem
+## BSC optimisation problem
 
 $$\underset{ {\color{blue}K}\in\mathcal{K} }{\arg\max}~ \mathbb{E}_{ {\color{red}\theta} \sim \bar\Pi} \mathbb{E}_{\tilde{y} \sim P(\cdot ~\vert~{\color{red}\theta})}\left[w({\color{red}\theta}, \tilde{y})S({\color{blue}K}(\cdot\vert \tilde{y}),{\color{red}\theta}) \right]$$
 
@@ -425,7 +425,7 @@ $$f(x) = A[x - \hat{\mu}(y)] + \hat{\mu}(y) + b$$
 -   $A$ is a square matrix with positive elements on diagonal such that $AA^\top$ is positive definite.
 
 
-## Bayesian scoring rule calibration
+## Bayesian score calibration
 
 ![](figs/score-cal-schem.png)
 
@@ -552,7 +552,7 @@ Use extended Kalman Filter as **approximate likelihood**
 
 . . .
 
-BSRC settings
+BSC settings
 
 - $M = 200$
 - $\bar\Pi = \hat\Pi(\cdot~\vert~y)$ scaled by 2
@@ -680,7 +680,7 @@ Approximations:
 
 . . .
 
-BSRC settings: $M = 200$ and $\bar\Pi = \hat\Pi(\cdot~\vert~y)$, scaled by 1.5
+BSC settings: $M = 200$ and $\bar\Pi = \hat\Pi(\cdot~\vert~y)$, scaled by 1.5
 
 ## MAPK: Biological network
 

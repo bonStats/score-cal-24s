@@ -6,3 +6,5 @@
 score-cal-24s.Rproj
 
 /.quarto/
+
+**/*.quarto_ipynb
