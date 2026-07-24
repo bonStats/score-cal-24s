@@ -63,6 +63,8 @@ Slides: [https://bonstats.github.io/score-cal-24s/](https://bonstats.github.io/s
 
 ![](imgs/little_rascals_our_gang_waiting.gif)
 
+"Waiting for Bayes" [Shout-out to Jacinta Holloway-Brown]{style="font-size: 50%;"}
+
 ## Approximations in Bayesian inference
 
 Bayesian inference requires likelihoods, but...
